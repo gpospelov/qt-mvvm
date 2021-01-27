@@ -15,7 +15,6 @@
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemcontainer.h"
-#include "mvvm/model/sessionitemdata.h"
 #include "mvvm/serialization/jsonitem_types.h"
 #include "mvvm/serialization/jsonitemdataconverter.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"

@@ -10,7 +10,6 @@
 #include "mvvm/factories/itemconverterfactory.h"
 
 #include "google_test.h"
-#include "test_utils.h"
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/propertyitem.h"
