@@ -17,7 +17,6 @@
 #include <string>
 
 class QJsonObject;
-class QJsonVariant;
 
 namespace ModelView {
 

@@ -12,11 +12,8 @@
 
 #include "mvvm/serialization/jsonitemconverterinterface.h"
 #include <QString>
-#include <memory>
 
 namespace ModelView {
-
-class ItemFactoryInterface;
 
 //! Utility class to determine, whether given JSON object can represent various parts of
 //! SessionModel. It is made a class (and not a set of free functions) to allow different formats in

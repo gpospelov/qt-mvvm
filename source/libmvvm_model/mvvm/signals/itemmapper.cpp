@@ -11,7 +11,6 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/signals/callbackcontainer.h"
-#include "mvvm/signals/modelmapper.h"
 #include <stdexcept>
 
 using namespace ModelView;

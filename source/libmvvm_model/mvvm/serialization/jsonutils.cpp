@@ -9,7 +9,6 @@
 
 #include "mvvm/serialization/jsonutils.h"
 #include "mvvm/factories/modelconverterfactory.h"
-#include "mvvm/model/sessionmodel.h"
 #include "mvvm/utils/reallimits.h"
 #include <QJsonDocument>
 #include <QJsonObject>
