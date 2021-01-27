@@ -14,11 +14,9 @@
 //! @brief Place for utils to fix back compatibility of serialized projects.
 
 #include "mvvm/model_export.h"
-#include <memory>
 
 namespace ModelView {
 
-class SessionItemData;
 class SessionItemContainer;
 class TagInfo;
 

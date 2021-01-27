@@ -21,7 +21,7 @@ using namespace ModelView;
 
 struct JsonDocument::JsonDocumentImpl {
     std::vector<SessionModel*> models;
-    JsonDocumentImpl(const std::vector<SessionModel*>& models) : models(models) {}
+    JsonDocumentImpl(std::vector<SessionModel*> models) : models(std::move(models)) {}
 };
 
 JsonDocument::JsonDocument(const std::vector<SessionModel*>& models)
