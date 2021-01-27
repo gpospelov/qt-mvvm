@@ -12,7 +12,6 @@
 #include "google_test.h"
 #include "widgetbasedtest.h"
 #include "mvvm/editors/customeditor.h"
-#include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"
