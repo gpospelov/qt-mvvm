@@ -10,7 +10,6 @@
 #ifndef MVVM_VIEWMODEL_VIEWMODELCONTROLLER_H
 #define MVVM_VIEWMODEL_VIEWMODELCONTROLLER_H
 
-#include "mvvm/model/tagrow.h"
 #include "mvvm/signals/modellistener.h"
 #include "mvvm/viewmodel_export.h"
 #include <QStringList>

@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mvvm/viewmodel/labeldatarowstrategy.h"
-#include "mvvm/model/sessionitem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 
 using namespace ModelView;

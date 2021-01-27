@@ -9,7 +9,6 @@
 
 #include "mvvm/utils/stringutils.h"
 #include <algorithm>
-#include <cmath>
 #include <iomanip>
 #include <iterator>
 #include <sstream>

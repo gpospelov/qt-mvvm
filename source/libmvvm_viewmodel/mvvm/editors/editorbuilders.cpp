@@ -18,7 +18,6 @@
 #include "mvvm/editors/scientificdoubleeditor.h"
 #include "mvvm/editors/scientificspinboxeditor.h"
 #include "mvvm/editors/selectablecomboboxeditor.h"
-#include "mvvm/model/customvariants.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/utils/reallimits.h"
 #include <cmath>
