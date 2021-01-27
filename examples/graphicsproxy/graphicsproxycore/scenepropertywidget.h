@@ -11,7 +11,6 @@
 #define GRAPHICSPROXYCORE_SCENEPROPERTYWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 class QBoxLayout;
