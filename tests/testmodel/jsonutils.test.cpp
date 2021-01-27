@@ -11,7 +11,6 @@
 
 #include "google_test.h"
 #include "mvvm/utils/reallimits.h"
-#include <limits>
 
 using namespace ModelView;
 

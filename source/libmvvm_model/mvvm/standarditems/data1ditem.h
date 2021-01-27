@@ -16,8 +16,6 @@
 
 namespace ModelView {
 
-class BinnedAxisItem;
-
 //! Represents one-dimensional data (axis and values).
 //! Values are stored in Data1DItem itself, axis is attached as a child. Corresponding plot
 //! properties will be served by GraphItem.

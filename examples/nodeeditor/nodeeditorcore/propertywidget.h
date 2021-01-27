@@ -15,7 +15,6 @@
 class QSplitter;
 
 namespace ModelView {
-class SessionModel;
 class PropertyTreeView;
 class TopItemsTreeView;
 } // namespace ModelView

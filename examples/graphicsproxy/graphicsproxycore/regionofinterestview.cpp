@@ -9,9 +9,7 @@
 
 #include "regionofinterestview.h"
 #include "regionofinterestcontroller.h"
-#include "regionofinterestitem.h"
 #include "sizehandleelement.h"
-#include "mvvm/plotting/sceneadapterinterface.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
 #include <stdexcept>

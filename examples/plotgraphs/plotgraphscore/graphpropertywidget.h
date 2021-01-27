@@ -11,7 +11,6 @@
 #define PLOTGRAPHSCORE_GRAPHPROPERTYWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 

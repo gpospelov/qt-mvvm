@@ -12,7 +12,6 @@
 #include <QTreeView>
 
 #include "mvvm/model/compounditem.h"
-#include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/viewmodel/defaultviewmodel.h"

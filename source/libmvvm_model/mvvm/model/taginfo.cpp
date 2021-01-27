@@ -9,7 +9,6 @@
 
 #include "mvvm/model/taginfo.h"
 #include "mvvm/utils/containerutils.h"
-#include <algorithm>
 #include <sstream>
 #include <stdexcept>
 

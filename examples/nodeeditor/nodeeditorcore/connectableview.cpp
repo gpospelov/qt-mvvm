@@ -13,7 +13,6 @@
 #include "nodeport.h"
 #include "sampleitems.h"
 #include "sceneutils.h"
-#include "mvvm/model/itemutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 

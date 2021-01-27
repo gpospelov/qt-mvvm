@@ -13,7 +13,6 @@
 #include <QCursor>
 #include <QPainter>
 #include <functional>
-#include <map>
 #include <stdexcept>
 
 namespace GraphicsProxy {

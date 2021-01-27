@@ -10,7 +10,6 @@
 #include "connectableitemcontroller.h"
 #include "connectableview.h"
 #include "sampleitems.h"
-#include <QDebug>
 
 using namespace ModelView;
 

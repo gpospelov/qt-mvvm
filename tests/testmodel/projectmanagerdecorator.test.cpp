@@ -15,7 +15,6 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/utils/fileutils.h"
-#include <cctype>
 
 using namespace ModelView;
 

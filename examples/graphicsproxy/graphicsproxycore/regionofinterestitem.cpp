@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "regionofinterestitem.h"
-#include "mvvm/utils/reallimits.h"
 
 namespace {
 const std::string RegionOfInterestItemType = "RegionOfInterest";

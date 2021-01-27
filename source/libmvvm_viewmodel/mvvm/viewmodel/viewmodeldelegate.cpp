@@ -10,7 +10,6 @@
 #include "mvvm/viewmodel/viewmodeldelegate.h"
 #include "mvvm/editors/customeditor.h"
 #include "mvvm/editors/defaulteditorfactory.h"
-#include "mvvm/model/comboproperty.h"
 #include "mvvm/viewmodel/defaultcelldecorator.h"
 #include <QApplication>
 

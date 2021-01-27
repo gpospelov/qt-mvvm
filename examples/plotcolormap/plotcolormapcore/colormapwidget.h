@@ -17,7 +17,6 @@ class QToolBar;
 class QAction;
 
 namespace ModelView {
-class ItemsTreeView;
 class ColorMapCanvas;
 } // namespace ModelView
 

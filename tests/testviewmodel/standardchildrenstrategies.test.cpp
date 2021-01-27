@@ -11,10 +11,10 @@
 
 #include "google_test.h"
 #include "toyitems.h"
-#include "toymodel.h"
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitem.h"
+#include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/standarditems/vectoritem.h"
 

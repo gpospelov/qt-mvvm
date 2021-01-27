@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mvvm/utils/reallimits.h"
-#include "mvvm/utils/numericutils.h"
 #include <limits>
 
 namespace {

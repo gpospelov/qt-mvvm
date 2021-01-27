@@ -12,10 +12,6 @@
 
 #include "mvvm/model/sessionmodel.h"
 
-namespace ModelView {
-class ContainerItem;
-}
-
 namespace GraphicsProxy {
 
 //! Main application model with data for graphics scene.

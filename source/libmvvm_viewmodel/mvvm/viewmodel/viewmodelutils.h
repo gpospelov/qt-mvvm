@@ -11,7 +11,6 @@
 #define MVVM_VIEWMODEL_VIEWMODELUTILS_H
 
 #include "mvvm/viewmodel_export.h"
-#include <QModelIndex>
 #include <QModelIndexList>
 #include <QVector>
 #include <functional>
@@ -21,7 +20,6 @@ class QVariant;
 
 namespace ModelView {
 
-class ViewItem;
 class SessionItem;
 
 namespace Utils {

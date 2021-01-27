@@ -10,7 +10,6 @@
 #include "mvvm/standarditems/containeritem.h"
 
 #include "google_test.h"
-#include "test_utils.h"
 #include <memory>
 
 using namespace ModelView;

@@ -21,7 +21,6 @@ class ProjectManagerInterface;
 class RecentProjectSettings;
 class UserInteractor;
 class SampleModel;
-class RecentProjectWidget;
 class QMainWindow;
 
 //! Main class to coordinate all activity on user's request to create new project,

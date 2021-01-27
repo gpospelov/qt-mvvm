@@ -13,7 +13,6 @@
 #include "mvvm/model_export.h"
 #include <memory>
 #include <string>
-#include <vector>
 
 namespace ModelView {
 

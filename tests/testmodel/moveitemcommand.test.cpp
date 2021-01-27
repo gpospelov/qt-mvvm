@@ -10,7 +10,6 @@
 #include "mvvm/commands/moveitemcommand.h"
 
 #include "google_test.h"
-#include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"

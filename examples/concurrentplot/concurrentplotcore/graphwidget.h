@@ -18,7 +18,6 @@ class GraphWidgetToolBar;
 class JobManager;
 
 namespace ModelView {
-class ItemsTreeView;
 class GraphCanvas;
 } // namespace ModelView
 

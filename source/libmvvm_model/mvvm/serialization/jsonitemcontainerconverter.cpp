@@ -10,8 +10,6 @@
 #include "mvvm/serialization/jsonitemcontainerconverter.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemcontainer.h"
-#include "mvvm/model/sessionitemtags.h"
-#include "mvvm/model/tagrow.h"
 #include "mvvm/serialization/compatibilityutils.h"
 #include "mvvm/serialization/jsonitem_types.h"
 #include "mvvm/serialization/jsonitemformatassistant.h"

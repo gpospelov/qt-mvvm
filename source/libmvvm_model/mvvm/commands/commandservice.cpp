@@ -13,6 +13,7 @@
 #include "mvvm/commands/moveitemcommand.h"
 #include "mvvm/commands/removeitemcommand.h"
 #include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/commands/undostack.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include <stdexcept>

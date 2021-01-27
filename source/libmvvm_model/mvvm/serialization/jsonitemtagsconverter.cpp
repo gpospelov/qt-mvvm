@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "mvvm/serialization/jsonitemtagsconverter.h"
-#include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/serialization/jsonitem_types.h"
@@ -17,6 +16,7 @@
 #include "mvvm/serialization/jsontaginfoconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <stdexcept>
 
 using namespace ModelView;
 

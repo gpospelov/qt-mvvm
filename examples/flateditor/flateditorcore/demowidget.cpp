@@ -9,9 +9,6 @@
 
 #include "demowidget.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/model/sessionmodel.h"
-#include "mvvm/viewmodel/defaultviewmodel.h"
-#include "mvvm/viewmodel/topitemsviewmodel.h"
 #include "mvvm/widgets/propertyflatview.h"
 #include "mvvm/widgets/standardtreeviews.h"
 #include <QBoxLayout>

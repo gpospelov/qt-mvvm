@@ -9,7 +9,6 @@
 
 #include "mvvm/plotting/pencontroller.h"
 
-#include "customplot_test_utils.h"
 #include "google_test.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/plottableitems.h"

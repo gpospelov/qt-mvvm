@@ -12,7 +12,6 @@
 #include "samplemodel.h"
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/modelutils.h"
-#include "mvvm/signals/modelmapper.h"
 
 using namespace ModelView;
 
