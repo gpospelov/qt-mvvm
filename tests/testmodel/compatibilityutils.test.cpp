@@ -14,7 +14,6 @@
 #include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemcontainer.h"
-#include "mvvm/model/sessionitemdata.h"
 
 using namespace ModelView;
 
