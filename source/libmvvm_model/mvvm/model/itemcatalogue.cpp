@@ -26,6 +26,8 @@ struct ItemCatalogue::ItemCatalogueImpl {
 
 ItemCatalogue::ItemCatalogue() : p_impl(std::make_unique<ItemCatalogueImpl>()) {}
 
+ItemCatalogue::~ItemCatalogue() = default;
+
 ItemCatalogue::ItemCatalogue(const ItemCatalogue& other)
 {
     p_impl = std::make_unique<ItemCatalogueImpl>(*other.p_impl);
@@ -46,8 +48,6 @@ void ItemCatalogue::registerItem(const std::string& modelType, item_factory_func
     p_impl->factory.add(modelType, func);
     p_impl->m_info.push_back({modelType, label});
 }
-
-ItemCatalogue::~ItemCatalogue() = default;
 
 bool ItemCatalogue::contains(const std::string& modelType) const
 {

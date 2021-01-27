@@ -11,7 +11,6 @@
 #include "mvvm/model/modelutils.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/model/sessionmodel.h"
 #include <stdexcept>
 
 using namespace ModelView;
