@@ -8,7 +8,6 @@
 // ************************************************************************** //
 
 #include "samplemodel.h"
-#include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"

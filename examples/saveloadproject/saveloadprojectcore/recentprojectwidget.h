@@ -11,7 +11,6 @@
 #define SAVELOADPROJECTCORE_RECENTPROJECTWIDGET_H
 
 #include <QWidget>
-#include <memory>
 #include <vector>
 
 class QBoxLayout;

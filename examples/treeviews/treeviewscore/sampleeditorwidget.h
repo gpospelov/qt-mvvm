@@ -11,7 +11,6 @@
 #define TREEVIEWSCORE_SAMPLEEDITORWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QTreeView;
 class QUndoView;
