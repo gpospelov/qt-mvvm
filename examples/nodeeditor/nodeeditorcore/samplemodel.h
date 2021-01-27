@@ -10,7 +10,6 @@
 #ifndef NODEEDITORCORE_SAMPLEMODEL_H
 #define NODEEDITORCORE_SAMPLEMODEL_H
 
-#include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
 #include <string>
 
