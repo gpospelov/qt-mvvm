@@ -12,7 +12,6 @@
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
-#include "mvvm/commands/commandadapter.h"
 #include "mvvm/commands/setvaluecommand.h"
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/itemutils.h"

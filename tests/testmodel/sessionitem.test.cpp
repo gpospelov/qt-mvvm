@@ -10,7 +10,6 @@
 #include "mvvm/model/sessionitem.h"
 
 #include "google_test.h"
-#include "test_utils.h"
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionitemdata.h"
