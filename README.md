@@ -23,7 +23,7 @@ Main features of the framework are:
 + Property editors.
 + Flexible layout of Qt's trees and tables.
 
-![alt text](doc/assets/examples-thumb-3.png)
+[![User examples](doc/assets/examples-thumb-3.png)](examples/README.md)
 
 ## Requirements
 
@@ -48,7 +48,7 @@ If you are familiar with Qt's reach example section you might saw
 it's funny `collidingmice` example showing basics of
 `QGraphicsScene`.
 
-![alt text](doc/assets/colliding-mice-before.png)
+![Example collidingmice](doc/assets/colliding-mice-before.png)
 
 To demonstrate the idea behind `qt-mvvm` library the code of the example was
 slightly modified. The mice data has been moved into the dedicated model, the
@@ -58,7 +58,7 @@ session back with saved mice positions. Additionally, it is possible to go back
 in time and watch how mice are moving in opposite directions by dragging a
 slider:
 
-![alt text](doc/assets/colliding-mice-after.png)
+![Example collidingmice](doc/assets/colliding-mice-after.png)
 
 The demo shows that `qt-mvvm` library allows to equip the GUI with the
 serialization and undo/redo and to provide proper model/view relations via
@@ -128,6 +128,9 @@ data source, without diving into the nightmare of `QAbstractProxyModel`.
 Particularly, the aforementioned machinery allows having something in the line
 of the ancient [Qt property browser
 framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
+
+[![Flat editor example](doc/assets/propertyeditor.png)](examples/README.md)
+
 
 Third library, `libmmv_view.so`, contains few widgets for plotting and property
 editing.
