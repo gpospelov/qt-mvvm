@@ -6,6 +6,7 @@ set(BEAUTIFICATION_TARGETS mvvm_model mvvm_viewmodel mvvm_view testmodel testvie
 set(BEAUTIFICATION_EXAMPLES celleditorscore concurrentplotcore dragandmovecore flateditorcore
     graphicsproxycore layereditorcore plotcolormapcore plotgraphscore saveloadprojectcore treeviewscore)
 
+
 # Defines new target for 'clangformat' to beautify whole project.
 # Use 'make clangformat' or 'cmake --build . --target clangformat' to beautify the code.
 # Beautification settings are located in .clang-format in project directory.

@@ -9,6 +9,11 @@ include(CodeTools)
 include(GenerateExportHeader)
 include(GNUInstallDirs)
 
+if (MVVM_GENERATE_COVERAGE)
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
+endif()
+
 # -----------------------------------------------------------------------------
 # Variables
 # -----------------------------------------------------------------------------
