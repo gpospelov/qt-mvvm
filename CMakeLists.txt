@@ -26,10 +26,17 @@ add_subdirectory(examples)
 #          )
 
 setup_target_for_coverage_lcov(NAME coverage
-    EXECUTABLE testmodel
-    DEPENDENCIES testmodel
-    EXCLUDE "${PROJECT_SOURCE_DIR}/thirdparty/*" "${PROJECT_SOURCE_DIR}/tests/*" "${PROJECT_SOURCE_DIR}/examples/*" "**CompilerId*" "/usr/*"
+    EXECUTABLE ctest -R Model.* ViewModel.* -j ${n_cores}
+    DEPENDENCIES testmodel testviewmodel testview testintegration
+    EXCLUDE "${PROJECT_SOURCE_DIR}/thirdparty/*" "${PROJECT_SOURCE_DIR}/tests/*" "${PROJECT_SOURCE_DIR}/examples/*" "**CompilerId*" "/usr/*"  "*build*"
     )
+
+#setup_target_for_coverage_lcov(NAME coverage
+#    EXECUTABLE testmodel
+#    DEPENDENCIES testmodel
+#    EXCLUDE "${PROJECT_SOURCE_DIR}/thirdparty/*" "${PROJECT_SOURCE_DIR}/tests/*" "${PROJECT_SOURCE_DIR}/examples/*" "**CompilerId*" "/usr/*" "*/build*/*"
+#    )
+
 
 
 # Defines new 'clangformat' target. See CodeTools.cmake for details.
