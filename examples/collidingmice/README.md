@@ -18,7 +18,7 @@ slider:
 
 ![colliding-mice-after](../../doc/assets/colliding-mice-after.png)
 
-See short animation [here](doc/assets/colliding-mice.gif).
+See short animation [here](../../doc/assets/colliding-mice.gif).
 
 The demo shows that `qt-mvvm` library allows 
 to equip the GUI with the serialization and undo/redo and to provide proper 
