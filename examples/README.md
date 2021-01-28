@@ -40,7 +40,7 @@
 
 <hr>
 
-### [Layereditor: how to create a tree with a custom layout
+### [Layereditor: how to create a tree with a custom layout.](graphicsproxy/README.md)
 
 ![layereditor](../doc/assets/layereditor.png)
 
