@@ -16,7 +16,9 @@ the session back with saved mice positions. Additionally, it is possible to go
 back in time and watch how mice are moving in opposite directions by dragging a 
 slider:
 
-![colliding-mice-before](../../doc/assets/colliding-mice-after.png)
+![colliding-mice-after](../../doc/assets/colliding-mice-after.png)
+
+See short animation [here](doc/assets/colliding-mice.gif).
 
 The demo shows that `qt-mvvm` library allows 
 to equip the GUI with the serialization and undo/redo and to provide proper 
