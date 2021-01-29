@@ -1,9 +1,7 @@
 name: TestCoverage
 
 on:
-  push:
-    branches: [ master, develop ]    
-  pull_request:
+  workflow_dispatch:
     branches: [ master, develop ]    
 
 jobs:
