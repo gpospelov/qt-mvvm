@@ -1,10 +1,6 @@
-name: LinuxCoverage
+name: TestCoverage
 
-on:
-  push:
-    branches: [ TestCodeCoverage ]    
-  pull_request:
-    branches: [ TestCodeCoverage ]
+on: workflow_dispatch
 
 jobs:
   build:
@@ -53,6 +49,7 @@ jobs:
         make coverage -j4        
         
     - name: Uploading to codecov
+      uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
         files: ./coverage.info
