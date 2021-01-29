@@ -9,7 +9,7 @@ include(CodeTools)
 include(GenerateExportHeader)
 include(GNUInstallDirs)
 
-if (MVVM_GENERATE_COVERAGE)
+if (MVVM_SETUP_CODECOVERAGE)
     include(CodeCoverage)
     append_coverage_compiler_flags()
 endif()
