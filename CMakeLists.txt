@@ -26,9 +26,11 @@ add_subdirectory(examples)
 #          )
 
 setup_target_for_coverage_lcov(NAME coverage
-    EXECUTABLE ctest -R Model.* ViewModel.* -j ${n_cores}
+#    EXECUTABLE ctest -R ^Model.* ^ViewModel.* -j ${n_cores}
+    EXECUTABLE ctest -j 12
     DEPENDENCIES testmodel testviewmodel testview testintegration
-    EXCLUDE "${PROJECT_SOURCE_DIR}/thirdparty/*" "${PROJECT_SOURCE_DIR}/tests/*" "${PROJECT_SOURCE_DIR}/examples/*" "**CompilerId*" "/usr/*"  "*build*"
+    EXCLUDE "${PROJECT_SOURCE_DIR}/thirdparty/*" "${PROJECT_SOURCE_DIR}/tests/*" "${PROJECT_SOURCE_DIR}/examples/*"
+    "**CompilerId*" "/usr/*"  "${CMAKE_BINARY_DIR}/*"
     )
 
 #setup_target_for_coverage_lcov(NAME coverage
