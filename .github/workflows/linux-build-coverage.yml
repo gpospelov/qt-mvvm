@@ -1,6 +1,10 @@
-name: TestCoverage2
+name: TestCoverage3
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ TestCodeCoverage ]    
+  pull_request:
+    branches: [ TestCodeCoverage ]
 
 jobs:
   build:
