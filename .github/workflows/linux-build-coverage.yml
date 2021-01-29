@@ -1,5 +1,6 @@
-name: Test Coverage
-on: [workflow_dispatch]
+name: TestCoverage
+
+on: workflow_dispatch
 
 jobs:
   build:
