@@ -1,10 +1,11 @@
 # Model View ViewModel framework for large C++ Qt applications
 
-[![Linux](https://github.com/gpospelov/qt-mvvm/workflows/Linux/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3ALinux)
-[![Windows](https://github.com/gpospelov/qt-mvvm/workflows/Windows/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AWindows)
-[![Mac OS](https://github.com/gpospelov/qt-mvvm/workflows/MacOS/badge.svg?branch=master)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AMacOS)
+[![Linux](https://github.com/gpospelov/qt-mvvm/workflows/Linux/badge.svg?branch=develop)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3ALinux)
+[![Windows](https://github.com/gpospelov/qt-mvvm/workflows/Windows/badge.svg?branch=develop)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AWindows)
+[![Mac OS](https://github.com/gpospelov/qt-mvvm/workflows/MacOS/badge.svg?branch=develop)](https://github.com/gpospelov/qt-mvvm/actions?query=workflow%3AMacOS)
 ![version](https://img.shields.io/badge/version-0.2.0-blue)
 ![](https://tokei.rs/b1/github/gpospelov/qt-mvvm/?category=code)
+[![codecov](https://codecov.io/gh/gpospelov/qt-mvvm/branch/develop/graph/badge.svg?token=ZI8SETH4SI)](https://codecov.io/gh/gpospelov/qt-mvvm)
 
 ## Overview
 
