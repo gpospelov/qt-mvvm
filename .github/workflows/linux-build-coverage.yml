@@ -1,10 +1,10 @@
-name: TestCoverage3
+name: TestCoverage
 
 on:
   push:
-    branches: [ TestCodeCoverage ]    
+    branches: [ master, develop ]    
   pull_request:
-    branches: [ TestCodeCoverage ]
+    branches: [ master, develop ]    
 
 jobs:
   build:
@@ -56,5 +56,5 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-        files: ./coverage.info
+        files: ./build/coverage.info
         verbose: true # optional (default = false)
