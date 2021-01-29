@@ -1,4 +1,4 @@
-name: TestCoverage
+name: TestCoverage2
 
 on: workflow_dispatch
 
