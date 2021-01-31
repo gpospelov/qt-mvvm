@@ -39,13 +39,13 @@ private slots:
     void onContextMenuRequest(const QPoint& point);
 
 private:
-    ModelView::SessionItem* item_from_view(QTreeView* view, const QPoint& point);
+    ModelView::SessionItem* itemFromView(QTreeView* view, const QPoint& point);
 
     QBoxLayout* createLeftLayout();
     QBoxLayout* createMiddleLayout();
     QBoxLayout* createRightLayout();
 
-    void connect_views();
+    void setupConnections();
 
     QUndoView* m_undoView{nullptr};
     ModelView::AllItemsTreeView* m_defaultTreeView{nullptr};

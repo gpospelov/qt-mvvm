@@ -40,7 +40,7 @@ SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
     layout->addLayout(createRightLayout());
     setLayout(layout);
 
-    connect_views();
+    setupConnections();
 
     m_sessionModel->setUndoRedoEnabled(true);
     m_undoView->setStack(UndoStack::qtUndoStack(m_sessionModel->undoStack()));
@@ -52,7 +52,7 @@ void SampleEditorWdiget::onContextMenuRequest(const QPoint& point)
 {
     auto treeView = qobject_cast<QTreeView*>(sender());
 
-    auto item = item_from_view(treeView, point);
+    auto item = itemFromView(treeView, point);
     auto tagrow = item->tagRow();
 
     QMenu menu;
@@ -74,7 +74,7 @@ void SampleEditorWdiget::onContextMenuRequest(const QPoint& point)
 
 //! Returns SessionItem corresponding to given coordinate in a view.
 
-SessionItem* SampleEditorWdiget::item_from_view(QTreeView* view, const QPoint& point)
+SessionItem* SampleEditorWdiget::itemFromView(QTreeView* view, const QPoint& point)
 {
     QModelIndex index = view->indexAt(point);
     auto view_item = m_defaultTreeView->viewModel()->itemFromIndex(index);
@@ -83,7 +83,7 @@ SessionItem* SampleEditorWdiget::item_from_view(QTreeView* view, const QPoint& p
 
 //! Connect tree views to provide mutual item selection.
 
-void SampleEditorWdiget::connect_views()
+void SampleEditorWdiget::setupConnections()
 {
     // select items in other views when selection in m_defaultTreeView has changed
     auto on_item_selected = [this](SessionItem* item) {
