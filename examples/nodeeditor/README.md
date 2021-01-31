@@ -36,10 +36,10 @@ only one single lattice. Particles can be rotated with the help of the
 ### `ConnectableItem, ConnectableView and ConnectableItemController`
 
 The `ConnectableItem` is a base class for all items representing nodes. Doesn't
-have own visual representation. Serves as a building block for `SampleModel`. The
+contain presentation-related details (color, shape parameters, etc). Serves as a building block for `SampleModel`. The
 `ConnectableView` is a counterpart of `ConnectableItem` on the graphics scene.
-The `ConnectableItemController` provides updates of the view's position/appearance on
-the graphics scene when the underlying item changes. Similarly, it provides an update of
+The `ConnectableItemController` provides updates of the `ConnectableView`'s position/appearance on
+the graphics scene when the underlying `ConnectableItem` changes. Similarly, it provides an update of
 the item's properties while the view is moved on the scene by the user.
 
 ### `NodePort, NodeConnection and NodeController`
