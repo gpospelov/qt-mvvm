@@ -42,8 +42,8 @@ SampleEditorWdiget::SampleEditorWdiget(SessionModel* model, QWidget* parent)
 
     setupConnections();
 
-//    m_sessionModel->setUndoRedoEnabled(true);
-//    m_undoView->setStack(UndoStack::qtUndoStack(m_sessionModel->undoStack()));
+    m_sessionModel->setUndoRedoEnabled(true);
+    m_undoView->setStack(UndoStack::qtUndoStack(m_sessionModel->undoStack()));
 }
 
 SampleEditorWdiget::~SampleEditorWdiget() = default;
@@ -88,8 +88,8 @@ void SampleEditorWdiget::setupConnections()
     // select items in other views when selection in m_defaultTreeView has changed
     auto on_item_selected = [this](SessionItem* item) {
         m_subsetTreeView->setRootSessionItem(item);
-//        m_propertyTreeView->setItem(item);
-//        m_topItemView->setSelected(item);
+        m_propertyTreeView->setItem(item);
+        m_topItemView->setSelected(item);
     };
     connect(m_defaultTreeView, &AllItemsTreeView::itemSelected, on_item_selected);
 
@@ -97,9 +97,9 @@ void SampleEditorWdiget::setupConnections()
     connect(m_defaultTreeView->treeView(), &QTreeView::customContextMenuRequested, this,
             &SampleEditorWdiget::onContextMenuRequest);
 
-//    // will notify m_defaultTreeView
-//    auto on_top_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
-//    connect(m_topItemView, &TopItemsTreeView::itemSelected, on_top_item_selected);
+    // will notify m_defaultTreeView
+    auto on_top_item_selected = [this](SessionItem* item) { m_defaultTreeView->setSelected(item); };
+    connect(m_topItemView, &TopItemsTreeView::itemSelected, on_top_item_selected);
 }
 
 QBoxLayout* SampleEditorWdiget::createLeftLayout()
