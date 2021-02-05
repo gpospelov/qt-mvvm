@@ -156,7 +156,6 @@ struct ViewModelController::ViewModelControllerImpl {
     {
         m_rootItemPath = Utils::PathFromItem(item);
         m_viewModel->setRootViewItem(std::make_unique<RootViewItem>(item));
-        init_view_model();
     }
 };
 
@@ -191,6 +190,7 @@ ViewModelController::ViewModelController(SessionModel* session_model, ViewModelB
         auto root_item = Utils::ItemFromPath(*model(), p_impl->m_rootItemPath);
         p_impl->setRootSessionItemIntern(root_item ? root_item : model()->rootItem());
         p_impl->m_viewModel->endResetModel();
+        p_impl->init_view_model();
     };
     setOnModelReset(on_model_reset);
 
@@ -236,6 +236,7 @@ void ViewModelController::setRootSessionItem(SessionItem* item)
     p_impl->m_viewModel->beginResetModel();
     p_impl->setRootSessionItemIntern(item);
     p_impl->m_viewModel->endResetModel();
+    p_impl->init_view_model();
 }
 
 SessionItem* ViewModelController::rootSessionItem() const
