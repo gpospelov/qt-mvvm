@@ -396,10 +396,14 @@ TEST_F(ViewModelControllerTest, onModelReset)
     EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());
 
     QSignalSpy spyReset(&view_model, &ViewModelBase::modelReset);
+    QSignalSpy spyRemove(&view_model, &ViewModelBase::rowsRemoved);
+    QSignalSpy spyInsert(&view_model, &ViewModelBase::rowsInserted);
 
     session_model.clear();
 
     EXPECT_EQ(spyReset.count(), 1);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyInsert.count(), 0);
     EXPECT_EQ(view_model.rowCount(), 0);
     EXPECT_EQ(view_model.columnCount(), 0);
     EXPECT_EQ(controller->rootSessionItem(), session_model.rootItem());

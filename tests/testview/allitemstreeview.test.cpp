@@ -12,7 +12,10 @@
 #include "google_test.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/standarditemincludes.h"
+#include "mvvm/viewmodel/viewmodel.h"
 #include "mvvm/widgets/allitemstreeview.h"
+#include <QItemSelectionModel>
+#include <QTreeView>
 
 using namespace ModelView;
 
@@ -25,9 +28,22 @@ class AllItemsTreeViewTest : public ::testing::Test {
 
 TEST_F(AllItemsTreeViewTest, initialState)
 {
+    // setting up model and viewmodel
     SessionModel model;
     auto vectorItem = model.insertItem<VectorItem>();
+    auto xItem = vectorItem->getItem(VectorItem::P_X);
+    AllItemsTreeView view(&model);
+    view.setRootSessionItem(vectorItem);
 
-    AllItemsTreeView view;
-    view.setRootSessionItem(model.rootItem());
+    // access to internals
+    auto selectionModel = view.treeView()->selectionModel();
+    auto viewModel = view.viewModel();
+
+    // selecting item in a widget
+    selectionModel->select(viewModel->indexOfSessionItem(xItem).front(),
+                           QItemSelectionModel::SelectCurrent);
+
+    // Changing root item. The problem was chain of signals (AboutToReset, RowIserted), which
+    // was triggering persistentModelIndex.
+    ASSERT_NO_FATAL_FAILURE(view.setRootSessionItem(model.rootItem()));
 }
