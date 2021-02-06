@@ -132,7 +132,7 @@ Particularly, the aforementioned machinery allows having something in the line
 of the ancient [Qt property browser
 framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html). 
 
-[![Flat editor example](doc/assets/propertyeditor.png)](examples/README.md)
+[![Flat editor example](doc/assets/flateditor.png)](examples/README.md)
 
 
 Third library, `libmmv_view.so`, contains few widgets for plotting and property

@@ -180,9 +180,10 @@ TEST_F(PropertyTableViewModelTest, insertItemSignaling)
     QSignalSpy spyRemove(&viewModel, &ViewModelBase::rowsRemoved);
     QSignalSpy spyAboutReset(&viewModel, &ViewModelBase::modelAboutToBeReset);
     QSignalSpy spyReset(&viewModel, &ViewModelBase::modelReset);
+    QSignalSpy spyLayout(&viewModel, &ViewModelBase::layoutChanged);
 
     // inserting item
-    auto parent = model.insertItem<VectorItem>();
+    model.insertItem<VectorItem>();
     EXPECT_EQ(viewModel.rowCount(), 1);
     EXPECT_EQ(viewModel.columnCount(), 3);
 
@@ -192,6 +193,10 @@ TEST_F(PropertyTableViewModelTest, insertItemSignaling)
     EXPECT_EQ(spyRemove.count(), 0);
     EXPECT_EQ(spyAboutReset.count(), 0);
     EXPECT_EQ(spyReset.count(), 0);
+
+    // Checking that notification from PropertyTableViewModel::insertRow works,
+    // when the model changes from columnsCount=0 to columdCount = 3
+    EXPECT_EQ(spyLayout.count(), 1);
 
     QList<QVariant> arguments = spyInsert.takeFirst();
     ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
@@ -205,8 +210,10 @@ TEST_F(PropertyTableViewModelTest, insertItemSignaling)
     EXPECT_EQ(arguments.at(1).value<int>(), 0);
     EXPECT_EQ(arguments.at(2).value<int>(), 0);
 
+    spyLayout.takeFirst(); // clearing layout signal
+
     // inserting item
-    parent = model.insertItem<VectorItem>();
+    model.insertItem<VectorItem>();
     EXPECT_EQ(viewModel.rowCount(), 2);
     EXPECT_EQ(viewModel.columnCount(), 3);
 
@@ -216,6 +223,7 @@ TEST_F(PropertyTableViewModelTest, insertItemSignaling)
     EXPECT_EQ(spyRemove.count(), 0);
     EXPECT_EQ(spyAboutReset.count(), 0);
     EXPECT_EQ(spyReset.count(), 0);
+    EXPECT_EQ(spyLayout.count(), 0); // no second call for LayoutChange
 
     arguments = spyInsert.takeFirst();
     ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
