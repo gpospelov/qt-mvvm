@@ -23,6 +23,8 @@ class MVVM_VIEWMODEL_EXPORT PropertyTableViewModel : public ViewModel {
 
 public:
     PropertyTableViewModel(SessionModel* model, QObject* parent = nullptr);
+
+    void insertRow(ViewItem* parent, int row, std::vector<std::unique_ptr<ViewItem>> items) override;
 };
 
 } // namespace ModelView

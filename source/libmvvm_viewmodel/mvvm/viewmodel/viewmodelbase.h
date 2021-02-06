@@ -53,7 +53,7 @@ public:
 
     void clearRows(ViewItem* parent);
 
-    void insertRow(ViewItem* parent, int row, std::vector<std::unique_ptr<ViewItem>> items);
+    virtual void insertRow(ViewItem* parent, int row, std::vector<std::unique_ptr<ViewItem>> items);
 
     void appendRow(ViewItem* parent, std::vector<std::unique_ptr<ViewItem>> items);
 
