@@ -16,6 +16,8 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/standarditems/vectoritem.h"
+#include <QSignalSpy>
+#include <QStandardItemModel>
 
 using namespace ModelView;
 
@@ -124,4 +126,100 @@ TEST_F(PropertyTableViewModelTest, multiLayer)
     viewModel.setRootSessionItem(model.rootItem());
     EXPECT_EQ(viewModel.rowCount(), 0);    // two layers
     EXPECT_EQ(viewModel.columnCount(), 0); // layer thickness and color
+}
+
+//! Check signaling of QStandardItemModel to learn from that.
+//! Does insertion of row trigger columns-related signaling? Answer: no.
+
+TEST_F(PropertyTableViewModelTest, standardItemModel)
+{
+    QStandardItemModel model;
+    QStandardItem* parentItem = model.invisibleRootItem();
+
+    QSignalSpy spyAboutInserInsert(&model, &ViewModelBase::rowsAboutToBeInserted);
+    QSignalSpy spyInsert(&model, &ViewModelBase::rowsInserted);
+    QSignalSpy spyAboutRemove(&model, &ViewModelBase::rowsAboutToBeRemoved);
+    QSignalSpy spyRemove(&model, &ViewModelBase::rowsRemoved);
+    QSignalSpy spyAboutReset(&model, &ViewModelBase::modelAboutToBeReset);
+    QSignalSpy spyReset(&model, &ViewModelBase::modelReset);
+
+    QList<QStandardItem*> items = {new QStandardItem("a"), new QStandardItem("b")};
+    parentItem->insertRow(0, items);
+
+    EXPECT_EQ(model.rowCount(), 1);
+    EXPECT_EQ(model.columnCount(), 2);
+
+    EXPECT_EQ(spyAboutInserInsert.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyAboutRemove.count(), 0);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 0);
+    EXPECT_EQ(spyReset.count(), 0);
+
+    QList<QVariant> arguments = spyInsert.takeFirst();
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
+}
+
+//! Initialize PropertyTableViewModel with empty SessionModel.
+//! VectorItem in a model.
+
+TEST_F(PropertyTableViewModelTest, insertItemSignaling)
+{
+    SessionModel model;
+    PropertyTableViewModel viewModel(&model);
+
+    EXPECT_EQ(viewModel.rowCount(), 0);
+    EXPECT_EQ(viewModel.columnCount(), 0);
+
+    QSignalSpy spyAboutInserInsert(&viewModel, &ViewModelBase::rowsAboutToBeInserted);
+    QSignalSpy spyInsert(&viewModel, &ViewModelBase::rowsInserted);
+    QSignalSpy spyAboutRemove(&viewModel, &ViewModelBase::rowsAboutToBeRemoved);
+    QSignalSpy spyRemove(&viewModel, &ViewModelBase::rowsRemoved);
+    QSignalSpy spyAboutReset(&viewModel, &ViewModelBase::modelAboutToBeReset);
+    QSignalSpy spyReset(&viewModel, &ViewModelBase::modelReset);
+
+    // inserting item
+    auto parent = model.insertItem<VectorItem>();
+    EXPECT_EQ(viewModel.rowCount(), 1);
+    EXPECT_EQ(viewModel.columnCount(), 3);
+
+    EXPECT_EQ(spyAboutInserInsert.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyAboutRemove.count(), 0);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 0);
+    EXPECT_EQ(spyReset.count(), 0);
+
+    QList<QVariant> arguments = spyInsert.takeFirst();
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
+
+    arguments = spyAboutInserInsert.takeFirst();
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 0);
+    EXPECT_EQ(arguments.at(2).value<int>(), 0);
+
+    // inserting item
+    parent = model.insertItem<VectorItem>();
+    EXPECT_EQ(viewModel.rowCount(), 2);
+    EXPECT_EQ(viewModel.columnCount(), 3);
+
+    EXPECT_EQ(spyAboutInserInsert.count(), 1);
+    EXPECT_EQ(spyInsert.count(), 1);
+    EXPECT_EQ(spyAboutRemove.count(), 0);
+    EXPECT_EQ(spyRemove.count(), 0);
+    EXPECT_EQ(spyAboutReset.count(), 0);
+    EXPECT_EQ(spyReset.count(), 0);
+
+    arguments = spyInsert.takeFirst();
+    ASSERT_EQ(arguments.size(), 3); // QModelIndex &parent, int first, int last
+    EXPECT_EQ(arguments.at(0).value<QModelIndex>(), QModelIndex());
+    EXPECT_EQ(arguments.at(1).value<int>(), 1);
+    EXPECT_EQ(arguments.at(2).value<int>(), 1);
 }
