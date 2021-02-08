@@ -23,7 +23,6 @@ class MVVM_MODEL_EXPORT GroupItem : public SessionItem {
 public:
     static inline const std::string T_GROUP_ITEMS = "T_GROUP_ITEMS";
 
-    GroupItem(model_type modelType = Constants::GroupItemType);
     ~GroupItem() override;
 
     int currentIndex() const;
@@ -35,6 +34,8 @@ public:
     void setCurrentType(const std::string& model_type);
 
 protected:
+    GroupItem(model_type modelType);
+
     void setCurrentIndex(int index);
     bool is_valid_index() const;
     template <typename T> void registerItem(const std::string& text, bool make_selected = false);

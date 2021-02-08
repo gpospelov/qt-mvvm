@@ -55,7 +55,7 @@ public:
     //! Test group item holding sphere and group items.
     class TestGroupItem : public GroupItem {
     public:
-        TestGroupItem()
+        TestGroupItem() : GroupItem("TestGroupItem")
         {
             registerItem<SphereItem>(SphereLabel);
             registerItem<CylinderItem>(CylinderLabel);
