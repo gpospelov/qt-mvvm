@@ -17,6 +17,7 @@
 namespace ModelView {
 
 //! Group item holds collection of predefined items.
+//! Intended for the inheritance.
 
 class MVVM_MODEL_EXPORT GroupItem : public SessionItem {
 public:
