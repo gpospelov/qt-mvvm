@@ -13,6 +13,7 @@
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/sessionitem.h"
 #include <memory>
+#include <vector>
 
 namespace ModelView {
 
@@ -42,8 +43,13 @@ protected:
     // FIXME how to make sure that init_group() was called in constructor?
     // Shell we delegate this call to CompoundItem::addProperty ?
     void init_group();
+
+    template <typename T> void addItem(const std::string& text, bool make_selected = false);
+    void updateCombo();
+
     std::unique_ptr<ItemCatalogue> m_catalogue;
     int m_default_selected_index;
+    std::vector<std::string> m_item_labels;
 };
 
 template <typename T> void GroupItem::registerItem(const std::string& text, bool make_selected)
@@ -51,6 +57,15 @@ template <typename T> void GroupItem::registerItem(const std::string& text, bool
     m_catalogue->registerItem<T>(text);
     if (make_selected)
         m_default_selected_index = m_catalogue->itemCount() - 1;
+}
+
+template <typename T> void GroupItem::addItem(const std::string& text, bool make_selected)
+{
+    m_item_labels.push_back(text);
+    insertItem(new T, TagRow::append(T_GROUP_ITEMS));
+    if (make_selected)
+        m_default_selected_index = m_item_labels.size() - 1;
+    updateCombo();
 }
 
 } // namespace ModelView

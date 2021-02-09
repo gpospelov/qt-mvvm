@@ -57,9 +57,8 @@ public:
     public:
         TestGroupItem() : GroupItem("TestGroupItem")
         {
-            registerItem<SphereItem>(SphereLabel);
-            registerItem<CylinderItem>(CylinderLabel);
-            init_group();
+            addItem<SphereItem>(SphereLabel);
+            addItem<CylinderItem>(CylinderLabel);
         }
     };
 

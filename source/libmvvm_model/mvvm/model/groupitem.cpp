@@ -15,6 +15,18 @@
 
 using namespace ModelView;
 
+namespace {
+
+//! Returns vector of model types for given vector of items.
+std::vector<std::string> modelTypes(const std::vector<SessionItem*> items)
+{
+    std::vector<std::string> result;
+    std::transform(items.begin(), items.end(), std::back_inserter(result),
+                   [](auto item) { return item->modelType(); });
+    return result;
+}
+} // namespace
+
 GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType)
@@ -45,15 +57,16 @@ SessionItem* GroupItem::currentItem()
 
 std::string GroupItem::currentType() const
 {
-    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(currentIndex())] : "";
+    return currentItem() ? currentItem()->modelType() : std::string();
+    //    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(currentIndex())] :
+    //    "";
 }
 
 //! Sets item corresponding to given model type.
 
 void GroupItem::setCurrentType(const std::string& model_type)
 {
-    auto model_types = m_catalogue->modelTypes();
-    int index = Utils::IndexOfItem(model_types, model_type);
+    int index = Utils::IndexOfItem(modelTypes(children()), model_type);
     if (index == -1)
         throw std::runtime_error("GroupItem::setCurrentType() -> Model type '" + model_type
                                  + "' doesn't belong to the group");
@@ -84,4 +97,15 @@ void GroupItem::init_group()
     setData(combo, ItemDataRole::DATA);
     for (const auto& x : m_catalogue->modelTypes())
         insertItem(m_catalogue->create(x).release(), TagRow::append(T_GROUP_ITEMS));
+}
+
+//! Updates internal data representing selection of items, and current selection.
+//! To be called during GroupItem's construction.
+
+void GroupItem::updateCombo()
+{
+    ComboProperty combo;
+    combo.setValues(m_item_labels);
+    combo.setCurrentIndex(m_default_selected_index);
+    setData(combo, ItemDataRole::DATA);
 }
