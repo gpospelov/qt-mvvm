@@ -8,4 +8,6 @@ target_link_libraries(${library_name} PRIVATE MVVM::View)
 target_sources(${library_name} PRIVATE
     mainwindow.cpp
     mainwindow.h
+    items.cpp
+    items.h
 )
