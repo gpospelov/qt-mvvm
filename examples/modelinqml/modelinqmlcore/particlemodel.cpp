@@ -66,9 +66,9 @@ AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(AnysoPyramidType)
 
 ShapeGroupItem::ShapeGroupItem() : GroupItem(ShapeGroupType)
 {
-    addItem<CylinderItem>("Cylinder");
-    addItem<SphereItem>("Full sphere", /*make_selected*/ true);
-    addItem<AnysoPyramidItem>("Anysotropical pyramid");
+    addToGroup<CylinderItem>("Cylinder");
+    addToGroup<SphereItem>("Full sphere", /*make_selected*/ true);
+    addToGroup<AnysoPyramidItem>("Anysotropical pyramid");
 }
 
 //! ---------------------------------------------------------------------------

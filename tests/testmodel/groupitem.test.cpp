@@ -57,8 +57,8 @@ public:
     public:
         TestGroupItem() : GroupItem("TestGroupItem")
         {
-            addItem<SphereItem>(SphereLabel);
-            addItem<CylinderItem>(CylinderLabel);
+            addToGroup<SphereItem>(SphereLabel);
+            addToGroup<CylinderItem>(CylinderLabel);
         }
     };
 

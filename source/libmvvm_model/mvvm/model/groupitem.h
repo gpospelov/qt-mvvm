@@ -36,16 +36,17 @@ protected:
     GroupItem(model_type modelType);
     void setCurrentIndex(int index);
     bool isValidIndex() const;
-    template <typename T> void addItem(const std::string& text, bool make_selected = false);
+    template <typename T> void addToGroup(const std::string& text, bool make_selected = false);
     void updateCombo();
 
     int m_default_selected_index;
     std::vector<std::string> m_item_labels;
 };
 
-//! Adds item of given type to the group. Make it selected if necessary.
-
-template <typename T> void GroupItem::addItem(const std::string& text, bool make_selected)
+//! Adds an item of a given type to the group.
+//! @param 'text' defines a text to be shown in ComboEditor when selecting an item in a group.
+//! @param make_selected defines whether the item should be selected by default.
+template <typename T> void GroupItem::addToGroup(const std::string& text, bool make_selected)
 {
     m_item_labels.push_back(text);
     insertItem(new T, TagRow::append(T_GROUP_ITEMS));

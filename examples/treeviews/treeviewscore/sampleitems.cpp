@@ -101,9 +101,9 @@ AnysoPyramidItem::AnysoPyramidItem() : CompoundItem(::Constants::AnysoPyramidIte
 
 ShapeGroupItem::ShapeGroupItem() : GroupItem(::Constants::ShapeGroupItemType)
 {
-    addItem<CylinderItem>("Cylinder");
-    addItem<SphereItem>("Full sphere", /*make_selected*/ true);
-    addItem<AnysoPyramidItem>("Anysotropical pyramid");
+    addToGroup<CylinderItem>("Cylinder");
+    addToGroup<SphereItem>("Full sphere", /*make_selected*/ true);
+    addToGroup<AnysoPyramidItem>("Anysotropical pyramid");
 }
 
 } // namespace TreeViews
