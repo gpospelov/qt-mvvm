@@ -38,17 +38,17 @@ BoxItem::BoxItem() : ModelView::CompoundItem("Box")
 
 ShapeGroupItem::ShapeGroupItem() : ModelView::GroupItem("Shape")
 {
-    addToGroup<UndefinedShapeItem>("xxx");
-    addToGroup<SphereItem>("xxx");
-    addToGroup<CylinderItem>("xxx");
-    addToGroup<BoxItem>("xxx");
+    addToGroup<UndefinedShapeItem>();
+    addToGroup<SphereItem>();
+    addToGroup<CylinderItem>();
+    addToGroup<BoxItem>();
 }
 
 ParticleItem::ParticleItem() : ModelView::CompoundItem("Particle")
 {
     addProperty("Color", QColor(Qt::green));
-    addProperty<ModelView::VectorItem>("Position");
     addProperty<ShapeGroupItem>("Shape");
+    addProperty<ModelView::VectorItem>("Position");
 }
 
 } // namespace GroupProperty
