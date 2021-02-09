@@ -39,8 +39,8 @@ protected:
     template <typename T> void addToGroup(const std::string& text, bool make_selected = false);
     void updateCombo();
 
-    int m_default_selected_index;
-    std::vector<std::string> m_item_labels;
+    int m_index_to_select;
+    std::vector<std::string> m_item_text;
 };
 
 //! Adds an item of a given type to the group.
@@ -48,10 +48,10 @@ protected:
 //! @param make_selected defines whether the item should be selected by default.
 template <typename T> void GroupItem::addToGroup(const std::string& text, bool make_selected)
 {
-    m_item_labels.push_back(text);
+    m_item_text.push_back(text);
     insertItem(new T, TagRow::append(T_GROUP_ITEMS));
     if (make_selected)
-        m_default_selected_index = m_item_labels.size() - 1;
+        m_index_to_select = m_item_text.size() - 1;
     updateCombo();
 }
 

@@ -31,7 +31,7 @@ GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType)
     : SessionItem(std::move(modelType))
-    , m_default_selected_index(0)
+    , m_index_to_select(0)
 {
     registerTag(TagInfo::universalTag(T_GROUP_ITEMS), /*set_as_default*/ true);
     setData(ComboProperty());
@@ -89,7 +89,7 @@ bool GroupItem::isValidIndex() const
 void GroupItem::updateCombo()
 {
     ComboProperty combo;
-    combo.setValues(m_item_labels);
-    combo.setCurrentIndex(m_default_selected_index);
+    combo.setValues(m_item_text);
+    combo.setCurrentIndex(m_index_to_select);
     setData(combo, ItemDataRole::DATA);
 }
