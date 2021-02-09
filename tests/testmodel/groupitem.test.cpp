@@ -58,7 +58,7 @@ public:
         TestGroupItem() : GroupItem("TestGroupItem")
         {
             addToGroup<SphereItem>(SphereLabel);
-            addToGroup<CylinderItem>(CylinderLabel);
+            addToGroup<CylinderItem>(); // to check usage of default label
         }
     };
 
@@ -102,7 +102,7 @@ TEST_F(GroupItemTest, testGroupItemInitialState)
     // expected value in combo
     auto combo = item.data<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 0);
-    EXPECT_EQ(combo.values(), std::vector<std::string>({SphereLabel, CylinderLabel}));
+    EXPECT_EQ(combo.values(), std::vector<std::string>({SphereLabel, CylinderType}));
 }
 
 TEST_F(GroupItemTest, setCurrentType)
@@ -120,7 +120,7 @@ TEST_F(GroupItemTest, setCurrentType)
     // expected value in combo
     auto combo = item.data<ComboProperty>();
     EXPECT_EQ(combo.currentIndex(), 1);
-    EXPECT_EQ(combo.values(), std::vector<std::string>({SphereLabel, CylinderLabel}));
+    EXPECT_EQ(combo.values(), std::vector<std::string>({SphereLabel, CylinderType}));
 }
 
 TEST_F(GroupItemTest, currentItemNoConst)

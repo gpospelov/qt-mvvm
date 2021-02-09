@@ -36,7 +36,7 @@ protected:
     GroupItem(model_type modelType);
     void setCurrentIndex(int index);
     bool isValidIndex() const;
-    template <typename T> void addToGroup(const std::string& text, bool make_selected = false);
+    template <typename T> void addToGroup(const std::string& text = {}, bool make_selected = false);
     void updateCombo();
 
     int m_index_to_select;
@@ -48,10 +48,13 @@ protected:
 //! @param make_selected defines whether the item should be selected by default.
 template <typename T> void GroupItem::addToGroup(const std::string& text, bool make_selected)
 {
-    m_item_text.push_back(text);
-    insertItem(new T, TagRow::append(T_GROUP_ITEMS));
+    auto item = std::make_unique<T>();
+    std::string item_text = text.empty() ? item->modelType() : text;
+    m_item_text.push_back(item_text);
+    insertItem(item.release(), TagRow::append(T_GROUP_ITEMS));
     if (make_selected)
         m_index_to_select = m_item_text.size() - 1;
+
     updateCombo();
 }
 
