@@ -10,4 +10,6 @@ target_sources(${library_name} PRIVATE
     mainwindow.h
     items.cpp
     items.h
+    widget.cpp
+    widget.h
 )

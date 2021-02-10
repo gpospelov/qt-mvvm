@@ -51,4 +51,10 @@ ParticleItem::ParticleItem() : ModelView::CompoundItem("Particle")
     addProperty<ModelView::VectorItem>("Position");
 }
 
+Model::Model()
+{
+    // register custom item to use with the model
+    registerItem<ParticleItem>();
+}
+
 } // namespace GroupProperty

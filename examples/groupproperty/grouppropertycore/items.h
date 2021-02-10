@@ -12,6 +12,7 @@
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/groupitem.h"
+#include "mvvm/model/sessionmodel.h"
 
 namespace GroupProperty {
 
@@ -55,6 +56,13 @@ public:
 class ParticleItem : public ModelView::CompoundItem {
 public:
     ParticleItem();
+};
+
+//! Main model of the application.
+
+class Model : public ModelView::SessionModel {
+public:
+    Model();
 };
 
 } // namespace GroupProperty

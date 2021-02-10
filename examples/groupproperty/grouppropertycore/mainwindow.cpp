@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mainwindow.h"
+#include "widget.h"
 #include <QCoreApplication>
 #include <QSettings>
 
@@ -21,7 +22,7 @@ namespace GroupProperty {
 
 MainWindow::MainWindow()
 {
-    setCentralWidget(new QWidget);
+    setCentralWidget(new Widget);
     initApplication();
 }
 
