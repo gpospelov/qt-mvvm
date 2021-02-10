@@ -4,6 +4,10 @@
 
 ![helloworld](../doc/assets/helloworld.png)
 
+### [`Groupproperty`: a convenient way to edit active properties and hide unused.](groupproperty/README.md)
+
+![groupproperty](../doc/assets/groupproperty.png)
+
 ### [Treeviews: how to represent the model using trees with different layouts.](treeviews/README.md)
 
 ![treeviews](../doc/assets/treeviews1.png)
