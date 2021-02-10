@@ -15,12 +15,23 @@
 
 using namespace ModelView;
 
+namespace {
+
+//! Returns vector of model types for given vector of items.
+std::vector<std::string> modelTypes(const std::vector<SessionItem*> items)
+{
+    std::vector<std::string> result;
+    std::transform(items.begin(), items.end(), std::back_inserter(result),
+                   [](auto item) { return item->modelType(); });
+    return result;
+}
+} // namespace
+
 GroupItem::~GroupItem() = default;
 
 GroupItem::GroupItem(model_type modelType)
     : SessionItem(std::move(modelType))
-    , m_catalogue(std::make_unique<ItemCatalogue>())
-    , m_default_selected_index(0)
+    , m_index_to_select(0)
 {
     registerTag(TagInfo::universalTag(T_GROUP_ITEMS), /*set_as_default*/ true);
     setData(ComboProperty());
@@ -35,7 +46,7 @@ int GroupItem::currentIndex() const
 
 const SessionItem* GroupItem::currentItem() const
 {
-    return is_valid_index() ? getItem("", currentIndex()) : nullptr;
+    return isValidIndex() ? getItem("", currentIndex()) : nullptr;
 }
 
 SessionItem* GroupItem::currentItem()
@@ -45,15 +56,14 @@ SessionItem* GroupItem::currentItem()
 
 std::string GroupItem::currentType() const
 {
-    return is_valid_index() ? m_catalogue->modelTypes()[static_cast<size_t>(currentIndex())] : "";
+    return currentItem() ? currentItem()->modelType() : std::string();
 }
 
 //! Sets item corresponding to given model type.
 
 void GroupItem::setCurrentType(const std::string& model_type)
 {
-    auto model_types = m_catalogue->modelTypes();
-    int index = Utils::IndexOfItem(model_types, model_type);
+    int index = Utils::IndexOfItem(modelTypes(children()), model_type);
     if (index == -1)
         throw std::runtime_error("GroupItem::setCurrentType() -> Model type '" + model_type
                                  + "' doesn't belong to the group");
@@ -68,20 +78,18 @@ void GroupItem::setCurrentIndex(int index)
     setData(combo, ItemDataRole::DATA);
 }
 
-bool GroupItem::is_valid_index() const
+bool GroupItem::isValidIndex() const
 {
     return currentIndex() != -1;
 }
 
-//! Inits group item by creating all registered items and constructing combo property
-//! for switching between items.
+//! Updates internal data representing selection of items, and current selection.
+//! To be called during GroupItem's construction.
 
-void GroupItem::init_group()
+void GroupItem::updateCombo()
 {
     ComboProperty combo;
-    combo.setValues(m_catalogue->labels());
-    combo.setCurrentIndex(m_default_selected_index);
+    combo.setValues(m_item_text);
+    combo.setCurrentIndex(m_index_to_select);
     setData(combo, ItemDataRole::DATA);
-    for (const auto& x : m_catalogue->modelTypes())
-        insertItem(m_catalogue->create(x).release(), TagRow::append(T_GROUP_ITEMS));
 }

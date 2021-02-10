@@ -10,19 +10,18 @@
 #ifndef MVVM_MODEL_GROUPITEM_H
 #define MVVM_MODEL_GROUPITEM_H
 
-#include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/sessionitem.h"
-#include <memory>
+#include <vector>
 
 namespace ModelView {
 
 //! Group item holds collection of predefined items.
+//! Intended for the inheritance.
 
 class MVVM_MODEL_EXPORT GroupItem : public SessionItem {
 public:
     static inline const std::string T_GROUP_ITEMS = "T_GROUP_ITEMS";
 
-    GroupItem(model_type modelType = Constants::GroupItemType);
     ~GroupItem() override;
 
     int currentIndex() const;
@@ -34,21 +33,29 @@ public:
     void setCurrentType(const std::string& model_type);
 
 protected:
+    GroupItem(model_type modelType);
     void setCurrentIndex(int index);
-    bool is_valid_index() const;
-    template <typename T> void registerItem(const std::string& text, bool make_selected = false);
-    // FIXME how to make sure that init_group() was called in constructor?
-    // Shell we delegate this call to CompoundItem::addProperty ?
-    void init_group();
-    std::unique_ptr<ItemCatalogue> m_catalogue;
-    int m_default_selected_index;
+    bool isValidIndex() const;
+    template <typename T> void addToGroup(const std::string& text = {}, bool make_selected = false);
+    void updateCombo();
+
+    int m_index_to_select;
+    std::vector<std::string> m_item_text;
 };
 
-template <typename T> void GroupItem::registerItem(const std::string& text, bool make_selected)
+//! Adds an item of a given type to the group.
+//! @param 'text' defines a text to be shown in ComboEditor when selecting an item in a group.
+//! @param make_selected defines whether the item should be selected by default.
+template <typename T> void GroupItem::addToGroup(const std::string& text, bool make_selected)
 {
-    m_catalogue->registerItem<T>(text);
+    auto item = std::make_unique<T>();
+    std::string item_text = text.empty() ? item->modelType() : text;
+    m_item_text.push_back(item_text);
+    insertItem(item.release(), TagRow::append(T_GROUP_ITEMS));
     if (make_selected)
-        m_default_selected_index = m_catalogue->itemCount() - 1;
+        m_index_to_select = m_item_text.size() - 1;
+
+    updateCombo();
 }
 
 } // namespace ModelView

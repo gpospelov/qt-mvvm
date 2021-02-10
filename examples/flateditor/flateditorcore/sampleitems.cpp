@@ -101,9 +101,8 @@ DistributionTrapezoidItem::DistributionTrapezoidItem()
 
 DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::DistributionGroupItemType)
 {
-    registerItem<DistributionNoneItem>("Fixed value");
-    registerItem<DistributionGaussianItem>("Gaussian");
-    registerItem<DistributionLogNormalItem>("Log normal");
-    registerItem<DistributionTrapezoidItem>("Trapezoid");
-    init_group();
+    addToGroup<DistributionNoneItem>("Fixed value");
+    addToGroup<DistributionGaussianItem>("Gaussian");
+    addToGroup<DistributionLogNormalItem>("Log normal");
+    addToGroup<DistributionTrapezoidItem>("Trapezoid");
 }
