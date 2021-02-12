@@ -25,10 +25,11 @@ size_t total_bin_count(Data2DItem* item)
 
 Data2DItem::Data2DItem() : CompoundItem(Constants::Data2DItemType)
 {
+    // prevent editing in widgets, since there is no corresponding editor
+    addProperty(P_VALUES, std::vector<double>())->setDisplayName("Values")->setEditable(false);
+
     registerTag(TagInfo(T_XAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
     registerTag(TagInfo(T_YAXIS, 0, 1, {Constants::FixedBinAxisItemType}));
-    setContent(std::vector<double>()); // prevent editing in widgets, since there is no
-                                       // corresponding editor
 }
 
 //! Sets axes and put data points to zero.
@@ -59,15 +60,14 @@ void Data2DItem::setContent(const std::vector<double>& data)
 {
     if (total_bin_count(this) != data.size())
         throw std::runtime_error("Data1DItem::setContent() -> Data doesn't match size of axis");
-
-    setData(data);
+    setProperty(P_VALUES, data);
 }
 
-//! Returns 2d vector representing 2d data.
+//! Returns 1d buffer representing 2d data.
 
 std::vector<double> Data2DItem::content() const
 {
-    return data<std::vector<double>>();
+    return property<std::vector<double>>(P_VALUES);
 }
 
 //! Insert axis under given tag. Previous axis will be deleted and data points invalidated.
