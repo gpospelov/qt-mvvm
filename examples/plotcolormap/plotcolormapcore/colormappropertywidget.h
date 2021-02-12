@@ -36,9 +36,9 @@ public:
     void setModel(ColorMapModel* model);
 
 private:
-    void setup_slider();
+    void setupSlider();
     QSlider* m_slider{nullptr};
-    ModelView::ItemsTreeView* m_treeView{nullptr};
+    ModelView::ItemsTreeView* m_tree_view{nullptr};
     ColorMapModel* m_model{nullptr};
 };
 
