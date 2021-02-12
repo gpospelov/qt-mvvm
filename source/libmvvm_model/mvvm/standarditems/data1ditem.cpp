@@ -31,7 +31,6 @@ Data1DItem::Data1DItem() : CompoundItem(Constants::Data1DItemType)
     registerTag(
         TagInfo(T_AXIS, 0, 1, {Constants::FixedBinAxisItemType, Constants::PointwiseAxisItemType}),
         true);
-    setValues(std::vector<double>());
 }
 
 //! Sets axis. Bin content will be set to zero.
