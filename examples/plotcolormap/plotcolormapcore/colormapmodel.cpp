@@ -43,20 +43,20 @@ namespace PlotColorMap {
 
 ColorMapModel::ColorMapModel() : SessionModel("ColorMapModel")
 {
-    init_model();
+    populateModel();
 }
 
 //! Updates data.
 
-void ColorMapModel::update_data(double scale)
+void ColorMapModel::updateData(double scale)
 {
-    auto data_item = data_container()->item<Data2DItem>(ContainerItem::T_ITEMS);
+    auto data_item = dataContainer()->item<Data2DItem>(ContainerItem::T_ITEMS);
     fill_data(data_item, scale);
 }
 
-void ColorMapModel::add_colormap()
+void ColorMapModel::addColormap()
 {
-    auto data_item = insertItem<Data2DItem>(data_container());
+    auto data_item = insertItem<Data2DItem>(dataContainer());
     data_item->setAxes(FixedBinAxisItem::create(nbinsx, -5.0, 5.0),
                        FixedBinAxisItem::create(nbinsy, 0.0, 5.0));
     fill_data(data_item);
@@ -66,17 +66,17 @@ void ColorMapModel::add_colormap()
     colormap_item->setDataItem(data_item);
 }
 
-ContainerItem* ColorMapModel::data_container()
+ContainerItem* ColorMapModel::dataContainer()
 {
     return topItem<ContainerItem>();
 }
 
-void ColorMapModel::init_model()
+void ColorMapModel::populateModel()
 {
     auto container = insertItem<ContainerItem>();
     container->setDisplayName("Data container");
 
-    add_colormap();
+    addColormap();
 }
 
 } // namespace PlotColorMap

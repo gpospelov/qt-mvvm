@@ -24,12 +24,12 @@ class ColorMapModel : public ModelView::SessionModel {
 public:
     ColorMapModel();
 
-    void update_data(double scale);
+    void updateData(double scale);
 
 private:
-    ModelView::ContainerItem* data_container();
-    void init_model();
-    void add_colormap();
+    ModelView::ContainerItem* dataContainer();
+    void populateModel();
+    void addColormap();
 };
 
 } // namespace PlotColorMap

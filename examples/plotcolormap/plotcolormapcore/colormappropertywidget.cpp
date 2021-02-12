@@ -20,14 +20,14 @@ using namespace ModelView;
 namespace PlotColorMap {
 
 ColorMapPropertyWidget::ColorMapPropertyWidget(ColorMapModel* model, QWidget* parent)
-    : QWidget(parent), m_slider(new QSlider), m_treeView(new ItemsTreeView), m_model(model)
+    : QWidget(parent), m_slider(new QSlider), m_tree_view(new ItemsTreeView), m_model(model)
 {
     auto layout = new QVBoxLayout;
     layout->addWidget(m_slider);
-    layout->addWidget(m_treeView);
+    layout->addWidget(m_tree_view);
     setLayout(layout);
     setModel(model);
-    setup_slider();
+    setupSlider();
 }
 
 void ColorMapPropertyWidget::setModel(ColorMapModel* model)
@@ -37,18 +37,18 @@ void ColorMapPropertyWidget::setModel(ColorMapModel* model)
 
     m_model = model;
 
-    m_treeView->setViewModel(Factory::CreateDefaultViewModel(model));
+    m_tree_view->setViewModel(Factory::CreateDefaultViewModel(model));
 }
 
 //! Slider to regenerate the data in the model.
 
-void ColorMapPropertyWidget::setup_slider()
+void ColorMapPropertyWidget::setupSlider()
 {
     m_slider->setOrientation(Qt::Horizontal);
     m_slider->setRange(0, 100);
     m_slider->setValue(50.0);
 
-    auto on_value_changed = [this](int value) { m_model->update_data(value / 10.0); };
+    auto on_value_changed = [this](int value) { m_model->updateData(value / 10.0); };
     connect(m_slider, &QSlider::valueChanged, on_value_changed);
 }
 

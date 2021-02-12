@@ -23,6 +23,7 @@ class BinnedAxisItem;
 
 class MVVM_MODEL_EXPORT Data2DItem : public CompoundItem {
 public:
+    static inline const std::string P_VALUES = "P_VALUES";
     static inline const std::string T_XAXIS = "T_XAXIS";
     static inline const std::string T_YAXIS = "T_YAXIS";
 

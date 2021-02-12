@@ -32,8 +32,7 @@ TEST_F(Data2DItemTest, initialState)
     EXPECT_EQ(item.xAxis(), nullptr);
     EXPECT_EQ(item.yAxis(), nullptr);
     EXPECT_EQ(item.content(), std::vector<double>());
-    EXPECT_TRUE(item.hasData());
-    EXPECT_TRUE(item.data<std::vector<double>>().empty());
+    EXPECT_FALSE(item.hasData());
 }
 
 //! Checking the method ::setAxis.
@@ -83,8 +82,8 @@ TEST_F(Data2DItemTest, checkSignalsOnAxisChange)
 
     MockWidgetForItem widget(item);
 
-    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
-    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, Data2DItem::P_VALUES)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(item, _)).Times(2);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);
@@ -103,8 +102,8 @@ TEST_F(Data2DItemTest, checkSignalsOnContentChange)
 
     MockWidgetForItem widget(item);
 
-    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(1); // values should change
-    EXPECT_CALL(widget, onPropertyChange(_, _)).Times(0);
+    EXPECT_CALL(widget, onDataChange(item, ItemDataRole::DATA)).Times(0);
+    EXPECT_CALL(widget, onPropertyChange(_, Data2DItem::P_VALUES)).Times(1);
     EXPECT_CALL(widget, onChildPropertyChange(_, _)).Times(0);
     EXPECT_CALL(widget, onItemInserted(_, _)).Times(0);
     EXPECT_CALL(widget, onAboutToRemoveItem(_, _)).Times(0);

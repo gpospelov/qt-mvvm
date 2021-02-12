@@ -76,8 +76,11 @@ Data2DPlotController::~Data2DPlotController() = default;
 
 void Data2DPlotController::subscribe()
 {
-    auto on_data_change = [this](SessionItem*, int) { p_impl->update_data_points(); };
-    setOnDataChange(on_data_change);
+    auto on_property_change = [this](SessionItem*, const std::string& name) {
+        if (name == Data2DItem::P_VALUES)
+            p_impl->update_data_points();
+    };
+    setOnPropertyChange(on_property_change);
 
     p_impl->update_data_points();
 }
