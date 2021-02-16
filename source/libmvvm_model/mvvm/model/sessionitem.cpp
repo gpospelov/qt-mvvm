@@ -209,7 +209,12 @@ SessionItemTags* SessionItem::itemTags()
 
 bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
-    // think of passing unique_ptr directly
+    return insertItem(std::unique_ptr<SessionItem>(item), tagrow);
+}
+
+bool SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow)
+{
+    auto item = p_item.release();
 
     if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
