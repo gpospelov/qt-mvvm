@@ -69,13 +69,11 @@ TEST_F(SessionModelTest, insertItem)
 
     // taking child back
     auto taken = item->takeItem({"", 0});
-    EXPECT_EQ(taken, child);
+    EXPECT_EQ(taken.get(), child);
     EXPECT_EQ(child->model(), nullptr);
 
     // childitem not registered anymore
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-
-    delete taken;
 }
 
 TEST_F(SessionModelTest, insertNewItem)
@@ -111,13 +109,11 @@ TEST_F(SessionModelTest, insertNewItem)
 
     // taking child back
     auto taken = item->takeItem({"", 0});
-    EXPECT_EQ(taken, child);
+    EXPECT_EQ(taken.get(), child);
     EXPECT_EQ(child->model(), nullptr);
 
     // childitem not registered anymore
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-
-    delete taken;
 }
 
 TEST_F(SessionModelTest, insertNewItemWithTag)
@@ -211,7 +207,6 @@ TEST_F(SessionModelTest, takeRowFromRootItem)
     auto taken = model.rootItem()->takeItem({"", 0});
     EXPECT_EQ(pool->item_for_key(parent_key), nullptr);
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-    delete taken;
 }
 
 TEST_F(SessionModelTest, moveItem)

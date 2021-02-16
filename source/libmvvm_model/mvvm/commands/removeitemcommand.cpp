@@ -50,8 +50,7 @@ void RemoveItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     if (auto child = parent->takeItem(p_impl->tagrow); child) {
-        p_impl->backup_strategy->saveItem(child);
-        delete child;
+        p_impl->backup_strategy->saveItem(child.get());
         setResult(true);
     }
     else {

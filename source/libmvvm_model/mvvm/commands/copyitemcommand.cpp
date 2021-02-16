@@ -48,7 +48,7 @@ CopyItemCommand::~CopyItemCommand() = default;
 void CopyItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    delete parent->takeItem(p_impl->tagrow);
+    parent->takeItem(p_impl->tagrow);
     setResult(nullptr);
 }
 

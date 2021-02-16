@@ -241,11 +241,12 @@ bool SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& 
 }
 
 //! Removes item from given row from given tag, returns it to the caller.
+//! Ownership is granted to the caller.
 
-SessionItem* SessionItem::takeItem(const TagRow& tagrow)
+std::unique_ptr<SessionItem> SessionItem::takeItem(const TagRow& tagrow)
 {
     if (!p_impl->m_tags->canTakeItem(tagrow))
-        return nullptr;
+        return {};
 
     if (p_impl->m_model)
         p_impl->m_model->mapper()->callOnItemAboutToBeRemoved(this, tagrow);
@@ -257,7 +258,7 @@ SessionItem* SessionItem::takeItem(const TagRow& tagrow)
     if (p_impl->m_model)
         p_impl->m_model->mapper()->callOnItemRemoved(this, tagrow);
 
-    return result;
+    return std::unique_ptr<SessionItem>(result);
 }
 
 //! Returns true if this item has `editable` flag set.

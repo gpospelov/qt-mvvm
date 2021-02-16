@@ -352,8 +352,6 @@ TEST_F(SessionItemTest, takeItem)
     EXPECT_EQ(taken->parent(), nullptr);
     std::vector<SessionItem*> expected = {child2, child3};
     EXPECT_EQ(parent->children(), expected);
-
-    delete taken;
 }
 
 //! Insert and take tagged items.
@@ -389,10 +387,10 @@ TEST_F(SessionItemTest, singleTagAndItems)
     EXPECT_EQ(parent->getItems(tag1), expected);
 
     // removing first item
-    delete parent->takeItem({tag1, 0});
+    parent->takeItem({tag1, 0});
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {child2});
     // removing second item
-    delete parent->takeItem({tag1, 0});
+    parent->takeItem({tag1, 0});
     EXPECT_EQ(parent->getItems(tag1), std::vector<SessionItem*>() = {});
 
     // removing from already empty container
@@ -450,7 +448,7 @@ TEST_F(SessionItemTest, twoTagsAndItems)
     EXPECT_EQ(parent->getItems(tag2), expected);
 
     // removing item from the middle of tag2
-    delete parent->takeItem({tag2, 1});
+    parent->takeItem({tag2, 1});
     expected = {child_t1_a, child_t1_b};
     EXPECT_EQ(parent->getItems(tag1), expected);
     expected = {child_t2_a, child_t2_c};
@@ -480,7 +478,7 @@ TEST_F(SessionItemTest, tagWithLimits)
     EXPECT_FALSE(parent->insertItem(extra, {tag1, -1}));
 
     // removing first element
-    delete parent->takeItem({tag1, 0});
+    parent->takeItem({tag1, 0});
     expected.erase(expected.begin());
     EXPECT_EQ(parent->getItems(tag1), expected);
 

@@ -68,7 +68,7 @@ void MoveItemCommand::undo_command()
 
     // then make manipulations
     auto taken = current_parent->takeItem(p_impl->target_tagrow);
-    target_parent->insertItem(taken, p_impl->original_tagrow);
+    target_parent->insertItem(std::move(taken), p_impl->original_tagrow);
 
     // adjusting new addresses
     p_impl->target_parent_path = pathFromItem(current_parent);
@@ -87,7 +87,7 @@ void MoveItemCommand::execute_command()
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(taken, p_impl->target_tagrow);
+    bool succeeded = target_parent->insertItem(std::move(taken), p_impl->target_tagrow);
     if (!succeeded)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 

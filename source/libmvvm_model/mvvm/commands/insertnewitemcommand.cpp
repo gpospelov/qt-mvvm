@@ -46,7 +46,6 @@ void InsertNewItemCommand::undo_command()
     // saving identifier for later redo
     if (p_impl->initial_identifier.empty())
         p_impl->initial_identifier = item->identifier();
-    delete item;
     setResult(nullptr);
 }
 
