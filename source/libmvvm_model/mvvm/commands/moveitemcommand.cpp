@@ -87,8 +87,7 @@ void MoveItemCommand::execute_command()
     if (!taken)
         throw std::runtime_error("MoveItemCommand::execute() -> Can't take an item.");
 
-    bool succeeded = target_parent->insertItem(std::move(taken), p_impl->target_tagrow);
-    if (!succeeded)
+    if (!target_parent->insertItem(std::move(taken), p_impl->target_tagrow))
         throw std::runtime_error("MoveItemCommand::execute() -> Can't insert item.");
 
     // adjusting new addresses

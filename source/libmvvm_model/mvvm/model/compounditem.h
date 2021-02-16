@@ -37,11 +37,10 @@ public:
 
 template <typename T> T* CompoundItem::addProperty(const std::string& name)
 {
-    T* property = new T;
+    auto property = std::make_unique<T>();
     registerTag(TagInfo::propertyTag(name, property->modelType()));
     property->setDisplayName(name);
-    insertItem(property, {name, 0});
-    return property;
+    return static_cast<T*>(insertItem(std::move(property), {name, 0}));
 }
 
 inline PropertyItem* CompoundItem::addProperty(const std::string& name, const char* value)
