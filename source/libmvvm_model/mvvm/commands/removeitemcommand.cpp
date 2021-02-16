@@ -43,8 +43,7 @@ RemoveItemCommand::~RemoveItemCommand() = default;
 void RemoveItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    auto reco_item = p_impl->backup_strategy->restoreItem();
-    parent->insertItem(reco_item.release(), p_impl->tagrow);
+    parent->insertItem(p_impl->backup_strategy->restoreItem(), p_impl->tagrow);
 }
 
 void RemoveItemCommand::execute_command()

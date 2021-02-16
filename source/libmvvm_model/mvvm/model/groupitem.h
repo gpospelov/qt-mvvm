@@ -51,7 +51,7 @@ template <typename T> void GroupItem::addToGroup(const std::string& text, bool m
     auto item = std::make_unique<T>();
     std::string item_text = text.empty() ? item->modelType() : text;
     m_item_text.push_back(item_text);
-    insertItem(item.release(), TagRow::append(T_GROUP_ITEMS));
+    insertItem(std::move(item), TagRow::append(T_GROUP_ITEMS));
     if (make_selected)
         m_index_to_select = m_item_text.size() - 1;
 
