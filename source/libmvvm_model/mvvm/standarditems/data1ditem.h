@@ -52,15 +52,8 @@ template <typename T, typename... Args> T* Data1DItem::setAxis(Args&&... args)
     if (getItem(T_AXIS, 0))
         throw std::runtime_error("Axis was already set. Currently we do not support axis change");
 
-    T* result{nullptr};
-    if (model()) {
-        // acting through the model to enable undo/redo
-        result = model()->insertItem<T>(this);
-    }
-    else {
-        result = new T;
-        insertItem(result, {T_AXIS, 0});
-    }
+    // acting through the model, if model exists, to enable undo/redo
+    auto result = model() ? model()->insertItem<T>(this) : insertItem<T>({T_AXIS, 0});
     result->setParameters(std::forward<Args>(args)...);
     setValues(std::vector<double>(result->size(), 0.0));
     return result;

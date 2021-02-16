@@ -12,6 +12,7 @@
 #include "google_test.h"
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/itemutils.h"
+#include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"
@@ -273,6 +274,31 @@ TEST_F(SessionItemTest, insertItem)
     EXPECT_EQ(parent->children()[0], inserted);
     EXPECT_EQ(parent->getItem("", 0), inserted);
     EXPECT_EQ(inserted->parent(), parent.get());
+}
+
+//! Simple child insert.
+
+TEST_F(SessionItemTest, insertItemTemplated)
+{
+    auto parent = std::make_unique<SessionItem>();
+    parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
+
+    // inserting child
+    auto inserted = parent->insertItem({"", 0});
+    EXPECT_EQ(parent->childrenCount(), 1);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), inserted), 0);
+    EXPECT_EQ(parent->children()[0], inserted);
+    EXPECT_EQ(parent->getItem("", 0), inserted);
+    EXPECT_EQ(inserted->parent(), parent.get());
+
+    // inserting property item
+    auto property = parent->insertItem<PropertyItem>({"", 1});
+    EXPECT_EQ(parent->childrenCount(), 2);
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), property), 1);
+    EXPECT_EQ(parent->children()[1], property);
+    EXPECT_EQ(parent->getItem("", 1), property);
+    EXPECT_EQ(property->parent(), parent.get());
+
 }
 
 //! Simple children insert.
