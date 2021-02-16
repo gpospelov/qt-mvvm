@@ -90,7 +90,7 @@ public:
 
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    bool insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow);
+    SessionItem *insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow);
 
     std::unique_ptr<SessionItem> takeItem(const TagRow& tagrow);
 

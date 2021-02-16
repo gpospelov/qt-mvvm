@@ -212,7 +212,10 @@ bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
     return insertItem(std::unique_ptr<SessionItem>(item), tagrow);
 }
 
-bool SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow)
+//! Insert item into given tag under the given row. Will take ownership of inserted item.
+//! Returns back a pointer to the same item for convenience.
+
+SessionItem* SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow)
 {
     auto item = p_item.release();
 
@@ -237,7 +240,7 @@ bool SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& 
         }
     }
 
-    return result;
+    return result ? item : nullptr;
 }
 
 //! Removes item from given row from given tag, returns it to the caller.

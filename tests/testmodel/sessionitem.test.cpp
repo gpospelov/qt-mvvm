@@ -254,7 +254,8 @@ TEST_F(SessionItemTest, insertItem)
     auto parent = std::make_unique<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    std::unique_ptr<SessionItem> child(new SessionItem);
+    auto child = std::make_unique<SessionItem>();
+    auto p_child = child.get();
 
     // empty parent
     EXPECT_EQ(parent->childrenCount(), 0);
@@ -265,13 +266,13 @@ TEST_F(SessionItemTest, insertItem)
     EXPECT_EQ(parent->getItem("", 10), nullptr);
 
     // inserting child
-    auto p_child = child.release();
-    parent->insertItem(p_child, {"", 0});
+    auto inserted = parent->insertItem(std::move(child), {"", 0});
+    EXPECT_EQ(inserted, p_child);
     EXPECT_EQ(parent->childrenCount(), 1);
-    EXPECT_EQ(Utils::IndexOfChild(parent.get(), p_child), 0);
-    EXPECT_EQ(parent->children()[0], p_child);
-    EXPECT_EQ(parent->getItem("", 0), p_child);
-    EXPECT_EQ(p_child->parent(), parent.get());
+    EXPECT_EQ(Utils::IndexOfChild(parent.get(), inserted), 0);
+    EXPECT_EQ(parent->children()[0], inserted);
+    EXPECT_EQ(parent->getItem("", 0), inserted);
+    EXPECT_EQ(inserted->parent(), parent.get());
 }
 
 //! Simple children insert.
