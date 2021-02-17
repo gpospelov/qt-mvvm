@@ -73,7 +73,7 @@ void InsertNewItemCommand::execute_command()
                        /*direct*/ true);
 
     setDescription(generate_description(child->modelType(), p_impl->tagrow));
-    if (parent->insertItem(child, p_impl->tagrow)) {
+    if (parent->insertItem(std::unique_ptr<SessionItem>(child), p_impl->tagrow)) {
         setResult(child);
     }
     else {

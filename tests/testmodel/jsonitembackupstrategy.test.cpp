@@ -80,9 +80,9 @@ TEST_F(JsonItemBackupStrategyTest, customItem)
     auto parent = std::make_unique<SessionItem>(model_type);
     parent->setDisplayName("parent_name");
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
-    auto child = new SessionItem(model_type);
+
+    auto child = parent->insertItem(std::make_unique<SessionItem>(model_type), TagRow::append());
     child->setDisplayName("child_name");
-    parent->insertItem(child, TagRow::append());
 
     // creating copy
     strategy->saveItem(parent.get());
