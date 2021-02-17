@@ -52,8 +52,7 @@ void RemoveItemCommand::execute_command()
     if (auto child = parent->takeItem(p_impl->tagrow); child) {
         p_impl->backup_strategy->saveItem(child.get());
         setResult(true);
-    }
-    else {
+    } else {
         setResult(false);
         setObsolete(true);
     }
