@@ -59,6 +59,13 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
     return container(tag_name)->itemCount();
 }
 
+//! Returns true if item can be inserted.
+
+bool SessionItemTags::canInsertItem(const SessionItem* item, const TagRow &tagrow) const
+{
+    return container(tagrow.tag)->canInsertItem(item, tagrow.row);
+}
+
 //! Inserts item in container with given tag name and at given row.
 //! Returns true in the case of success. If tag name is empty, default tag will be used.
 
@@ -69,18 +76,18 @@ bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
     return container(tagrow.tag)->insertItem(item, row);
 }
 
-//! Removes item at given row and for given tag, returns it to the user.
-
-SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
-{
-    return container(tagrow.tag)->takeItem(tagrow.row);
-}
-
 //! Returns true if item can be taken.
 
 bool SessionItemTags::canTakeItem(const TagRow& tagrow) const
 {
     return container(tagrow.tag)->canTakeItem(tagrow.row);
+}
+
+//! Removes item at given row and for given tag, returns it to the user.
+
+SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
+{
+    return container(tagrow.tag)->takeItem(tagrow.row);
 }
 
 //! Returns item at given row of given tag.

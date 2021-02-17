@@ -55,6 +55,19 @@ TEST_F(SessionItemTagsTest, registerTag)
     EXPECT_THROW(tag.registerTag(TagInfo::universalTag("abc")), std::runtime_error);
 }
 
+//! Testing ::canInsertItem.
+
+TEST_F(SessionItemTagsTest, canInsertItem)
+{
+    SessionItemTags tag;
+    tag.registerTag(TagInfo::universalTag("tag1"));
+    tag.registerTag(TagInfo::propertyTag("tag2", "Property"));
+
+    auto item = std::make_unique<SessionItem>();
+    EXPECT_TRUE(tag.canInsertItem(item.get(), {"tag1", 0}));
+    EXPECT_FALSE(tag.canInsertItem(item.get(), {"tag2", 0}));
+}
+
 //! Insert item.
 
 TEST_F(SessionItemTagsTest, insertItem)
