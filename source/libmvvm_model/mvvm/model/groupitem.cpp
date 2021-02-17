@@ -18,7 +18,7 @@ using namespace ModelView;
 namespace {
 
 //! Returns vector of model types for given vector of items.
-std::vector<std::string> modelTypes(const std::vector<SessionItem*> items)
+std::vector<std::string> modelTypes(const std::vector<SessionItem*>& items)
 {
     std::vector<std::string> result;
     std::transform(items.begin(), items.end(), std::back_inserter(result),
@@ -29,9 +29,7 @@ std::vector<std::string> modelTypes(const std::vector<SessionItem*> items)
 
 GroupItem::~GroupItem() = default;
 
-GroupItem::GroupItem(model_type modelType)
-    : SessionItem(std::move(modelType))
-    , m_index_to_select(0)
+GroupItem::GroupItem(model_type modelType) : SessionItem(std::move(modelType)), m_index_to_select(0)
 {
     registerTag(TagInfo::universalTag(T_GROUP_ITEMS), /*set_as_default*/ true);
     setData(ComboProperty());
@@ -46,7 +44,7 @@ int GroupItem::currentIndex() const
 
 const SessionItem* GroupItem::currentItem() const
 {
-    return isValidIndex() ? getItem("", currentIndex()) : nullptr;
+    return currentIndex() != -1 ? getItem("", currentIndex()) : nullptr;
 }
 
 SessionItem* GroupItem::currentItem()
@@ -67,7 +65,6 @@ void GroupItem::setCurrentType(const std::string& model_type)
     if (index == -1)
         throw std::runtime_error("GroupItem::setCurrentType() -> Model type '" + model_type
                                  + "' doesn't belong to the group");
-
     setCurrentIndex(index);
 }
 
@@ -76,11 +73,6 @@ void GroupItem::setCurrentIndex(int index)
     auto combo = data<ComboProperty>();
     combo.setCurrentIndex(index);
     setData(combo, ItemDataRole::DATA);
-}
-
-bool GroupItem::isValidIndex() const
-{
-    return currentIndex() != -1;
 }
 
 //! Updates internal data representing selection of items, and current selection.
