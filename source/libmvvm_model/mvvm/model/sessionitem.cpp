@@ -209,7 +209,10 @@ SessionItemTags* SessionItem::itemTags()
 
 bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
+//    if (!p_impl->m_tags->canInsertItem(item, tagrow))
+//        return false;
     return insertItem(std::unique_ptr<SessionItem>(item), tagrow);
+//    return true;
 }
 
 //! Insert item into given tag under the given row. Will take ownership of inserted item.
