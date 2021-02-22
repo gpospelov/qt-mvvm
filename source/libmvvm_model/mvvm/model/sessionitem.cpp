@@ -222,34 +222,31 @@ bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 
 SessionItem* SessionItem::insertItem(std::unique_ptr<SessionItem> item, const TagRow& tagrow)
 {
-    auto p_item = item.release();
-
-    if (!p_item)
+    if (!item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
 
-    if (p_item->parent())
+    if (item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    if (p_item->model())
+    if (item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(p_item, tagrow);
-    if (!result)
+    SessionItem* result = item.get();
+    if (!p_impl->m_tags->insertItem(item.release(), tagrow))
         throw std::runtime_error("SessionItem::insertItem() -> Can't insert item.");
 
-    if (result) {
-        p_item->setParent(this);
-        p_item->setModel(model());
+    result->setParent(this);
+    result->setModel(model());
 
-        if (p_impl->m_model) {
-            // FIXME think of actual_tagrow removal if input tag,row will be always valid
-            auto actual_tagrow = tagRowOfItem(p_item);
-            p_impl->m_model->mapper()->callOnItemInserted(this, actual_tagrow);
-        }
+    if (p_impl->m_model) {
+        // FIXME think of actual_tagrow removal if input tag,row will be always valid
+        auto actual_tagrow = tagRowOfItem(result);
+        p_impl->m_model->mapper()->callOnItemInserted(this, actual_tagrow);
     }
 
-    return result ? p_item : nullptr;
+    return result;
 }
+
 
 //! Removes item from given row from given tag, returns it to the caller.
 //! Ownership is granted to the caller.
