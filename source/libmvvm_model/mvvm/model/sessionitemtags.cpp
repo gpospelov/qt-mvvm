@@ -63,7 +63,10 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
 
 bool SessionItemTags::canInsertItem(const SessionItem* item, const TagRow &tagrow) const
 {
-    return container(tagrow.tag)->canInsertItem(item, tagrow.row);
+    auto tag_container = container(tagrow.tag);
+    // negative row means appending to the vector
+    auto row = tagrow.row < 0 ? tag_container->itemCount() : tagrow.row;
+    return container(tagrow.tag)->canInsertItem(item, row);
 }
 
 //! Inserts item in container with given tag name and at given row.
@@ -72,6 +75,7 @@ bool SessionItemTags::canInsertItem(const SessionItem* item, const TagRow &tagro
 bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
 {
     auto tag_container = container(tagrow.tag);
+    // negative row means appending to the vector
     auto row = tagrow.row < 0 ? tag_container->itemCount() : tagrow.row;
     return container(tagrow.tag)->insertItem(item, row);
 }

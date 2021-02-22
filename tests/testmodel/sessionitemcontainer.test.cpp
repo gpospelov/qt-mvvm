@@ -277,6 +277,37 @@ TEST_F(SessionItemContainerTest, canInsertItemForPropertyTag)
     EXPECT_FALSE(tag.canInsertItem(child2.get(), 0));
 }
 
+//! Checking ::canInsertItem.
+
+TEST_F(SessionItemContainerTest, canInsertItemForUniversalTag)
+{
+    const std::string tag1 = "tag1";
+    const int maxItems = 2;
+    auto parent = std::make_unique<SessionItem>();
+    SessionItemContainer tag(TagInfo(tag1, 0, maxItems, std::vector<std::string>() = {}));
+
+    // inserting child
+    auto child1 = std::make_unique<SessionItem>();
+    EXPECT_FALSE(tag.canInsertItem(child1.get(), -1)); // implementation requires exact index
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), 0));
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), tag.itemCount()));
+    EXPECT_TRUE(tag.insertItem(child1.release(), tag.itemCount()));
+
+    // inserting second child
+    auto child2 = std::make_unique<SessionItem>();
+    EXPECT_FALSE(tag.canInsertItem(child2.get(), -1));
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), 0));
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), tag.itemCount()));
+    EXPECT_TRUE(tag.insertItem(child2.release(), tag.itemCount()));
+
+    // inserting third child is not possible
+    auto child3 = std::make_unique<SessionItem>();
+    EXPECT_FALSE(tag.canInsertItem(child3.get(), -1));
+    EXPECT_FALSE(tag.canInsertItem(child3.get(), 0));
+    EXPECT_FALSE(tag.canInsertItem(child3.get(), tag.itemCount()));
+}
+
+
 //! Checking ::takeItem when tag is related to property tag.
 
 TEST_F(SessionItemContainerTest, takeItemPropertyType)

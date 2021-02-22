@@ -205,14 +205,16 @@ SessionItemTags* SessionItem::itemTags()
     return const_cast<SessionItemTags*>(static_cast<const SessionItem*>(this)->itemTags());
 }
 
-//! Insert item into given tag under the given row.
+//! Inserts the item into the given tag under the given row.
+//! Returns 'true' in the case of success, take ownership over the item.
+//! If an item can't be inserted for a given TagRow (i.e. when the container is full, or not
+//! intended for items of a given type) will return false and will not take ownership.
 
 bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 {
-//    if (!p_impl->m_tags->canInsertItem(item, tagrow))
-//        return false;
-    return insertItem(std::unique_ptr<SessionItem>(item), tagrow);
-//    return true;
+    if (!p_impl->m_tags->canInsertItem(item, tagrow))
+        return false;
+    return insertItem(std::unique_ptr<SessionItem>(item), tagrow) != nullptr;
 }
 
 //! Insert item into given tag under the given row. Will take ownership of inserted item.

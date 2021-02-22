@@ -68,6 +68,33 @@ TEST_F(SessionItemTagsTest, canInsertItem)
     EXPECT_FALSE(tag.canInsertItem(item.get(), {"tag2", 0}));
 }
 
+//! Testing ::canInsertItem.
+
+TEST_F(SessionItemTagsTest, canInsertItemForUniversalTag)
+{
+    SessionItemTags tag;
+    const std::string tagname = "tag1";
+    const int maxItems = 2;
+    tag.registerTag(TagInfo(tagname, 0, maxItems, std::vector<std::string>() = {}));
+
+    auto child1 = std::make_unique<SessionItem>();
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), {tagname, 0}));
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), {tagname, -1}));
+    EXPECT_TRUE(tag.canInsertItem(child1.get(), {tagname, tag.itemCount(tagname)}));
+    EXPECT_TRUE(tag.insertItem(child1.release(), {tagname, -1}));
+
+    // inserting second child
+    auto child2 = std::make_unique<SessionItem>();
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), {tagname, 0}));
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), {tagname, -1}));
+    EXPECT_TRUE(tag.canInsertItem(child2.get(), {tagname, tag.itemCount(tagname)}));
+    EXPECT_TRUE(tag.insertItem(child2.release(), {tagname, -1}));
+
+    // inserting third child is not possible
+    auto child3 = std::make_unique<SessionItem>();
+    EXPECT_FALSE(tag.canInsertItem(child3.get(), {tagname, -1}));
+}
+
 //! Insert item.
 
 TEST_F(SessionItemTagsTest, insertItem)
