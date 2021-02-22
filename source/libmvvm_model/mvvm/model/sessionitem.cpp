@@ -220,32 +220,32 @@ bool SessionItem::insertItem(SessionItem* item, const TagRow& tagrow)
 //! Insert item into given tag under the given row. Will take ownership of inserted item.
 //! Returns back a pointer to the same item for convenience.
 
-SessionItem* SessionItem::insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow)
+SessionItem* SessionItem::insertItem(std::unique_ptr<SessionItem> item, const TagRow& tagrow)
 {
-    auto item = p_item.release();
+    auto p_item = item.release();
 
-    if (!item)
+    if (!p_item)
         throw std::runtime_error("SessionItem::insertItem() -> Invalid item.");
 
-    if (item->parent())
+    if (p_item->parent())
         throw std::runtime_error("SessionItem::insertItem() -> Existing parent.");
 
-    if (item->model())
+    if (p_item->model())
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
-    auto result = p_impl->m_tags->insertItem(item, tagrow);
+    auto result = p_impl->m_tags->insertItem(p_item, tagrow);
     if (result) {
-        item->setParent(this);
-        item->setModel(model());
+        p_item->setParent(this);
+        p_item->setModel(model());
 
         if (p_impl->m_model) {
             // FIXME think of actual_tagrow removal if input tag,row will be always valid
-            auto actual_tagrow = tagRowOfItem(item);
+            auto actual_tagrow = tagRowOfItem(p_item);
             p_impl->m_model->mapper()->callOnItemInserted(this, actual_tagrow);
         }
     }
 
-    return result ? item : nullptr;
+    return result ? p_item : nullptr;
 }
 
 //! Removes item from given row from given tag, returns it to the caller.

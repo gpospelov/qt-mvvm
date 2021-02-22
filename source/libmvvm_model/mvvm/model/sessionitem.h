@@ -90,7 +90,7 @@ public:
 
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    SessionItem* insertItem(std::unique_ptr<SessionItem> p_item, const TagRow& tagrow);
+    SessionItem* insertItem(std::unique_ptr<SessionItem> item, const TagRow& tagrow);
     template <typename T = SessionItem> T* insertItem(const TagRow& tagrow);
 
     std::unique_ptr<SessionItem> takeItem(const TagRow& tagrow);
