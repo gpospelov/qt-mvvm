@@ -56,6 +56,7 @@ void CopyItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
     auto item = parent->insertItem(p_impl->backup_strategy->restoreItem(), p_impl->tagrow);
+    // FIXME revise behaviour in the case of invalid operation. Catch or not here?
     setResult(item);
     setObsolete(!item); // command is osbolete if insertion failed
 }

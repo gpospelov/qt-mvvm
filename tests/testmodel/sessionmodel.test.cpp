@@ -356,9 +356,8 @@ TEST_F(SessionModelTest, forbiddenCopy)
     auto property = model.insertItem<PropertyItem>(parent0, "property");
 
     // copying property to same property tag is not allowed
-    auto copy = model.copyItem(property, parent0, {"property", -1});
+    EXPECT_THROW(model.copyItem(property, parent0, {"property", -1}), std::runtime_error);
     EXPECT_EQ(parent0->childrenCount(), 1);
-    EXPECT_EQ(copy, nullptr);
 }
 
 //! Test item find using identifier.

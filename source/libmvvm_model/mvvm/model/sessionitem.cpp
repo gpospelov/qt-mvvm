@@ -234,6 +234,9 @@ SessionItem* SessionItem::insertItem(std::unique_ptr<SessionItem> item, const Ta
         throw std::runtime_error("SessionItem::insertItem() -> Existing model.");
 
     auto result = p_impl->m_tags->insertItem(p_item, tagrow);
+    if (!result)
+        throw std::runtime_error("SessionItem::insertItem() -> Can't insert item.");
+
     if (result) {
         p_item->setParent(this);
         p_item->setModel(model());

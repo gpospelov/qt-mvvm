@@ -343,9 +343,9 @@ TEST_F(SessionItemTest, insertChildren)
                  std::runtime_error);
 
     // attempt to insert item using out of scope index
-    // FIXME revise behaviour
     auto child5 = std::make_unique<SessionItem>();
-    EXPECT_FALSE(parent->insertItem(std::move(child5), {"", parent->childrenCount() + 1}));
+    EXPECT_THROW(parent->insertItem(std::move(child5), {"", parent->childrenCount() + 1}),
+                 std::runtime_error);
 }
 
 //! Removing (taking) item from parent.
@@ -467,7 +467,7 @@ TEST_F(SessionItemTest, twoTagsAndItems)
 
 //! Inserting and removing items when tag has limits.
 
- TEST_F(SessionItemTest, tagWithLimits)
+TEST_F(SessionItemTest, tagWithLimits)
 {
     const std::string tag1 = "tag1";
     const int maxItems = 3;
