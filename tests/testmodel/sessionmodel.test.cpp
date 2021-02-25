@@ -266,8 +266,10 @@ TEST_F(SessionModelTest, clearRebuildModel)
     model.insertItem<SessionItem>();
     EXPECT_EQ(model.rootItem()->childrenCount(), 2);
 
-    SessionItem* new_item {nullptr};
-    auto rebuild = [&new_item](auto parent) { new_item = parent->insertItem(TagRow::append()); };
+//    SessionItem* new_item {nullptr};
+//    auto rebuild = [&new_item](auto parent) { new_item = parent->insertItem(TagRow::append()); };
+    auto new_item = new SessionItem;
+       auto rebuild = [new_item](auto parent) { parent->insertItem(new_item, TagRow::append()); };
 
     model.clear(rebuild);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
