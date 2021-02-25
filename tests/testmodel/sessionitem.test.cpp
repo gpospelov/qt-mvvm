@@ -338,10 +338,6 @@ TEST_F(SessionItemTest, insertChildren)
     EXPECT_EQ(child3->parent(), parent.get());
     EXPECT_EQ(child4->parent(), parent.get());
 
-    // attempt to insert item having a parent
-    EXPECT_THROW(parent->insertItem(std::unique_ptr<SessionItem>(child2), TagRow::append()),
-                 std::runtime_error);
-
     // attempt to insert item using out of scope index
     auto child5 = std::make_unique<SessionItem>();
     EXPECT_THROW(parent->insertItem(std::move(child5), {"", parent->childrenCount() + 1}),
