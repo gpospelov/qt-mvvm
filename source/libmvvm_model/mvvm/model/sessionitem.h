@@ -90,7 +90,10 @@ public:
 
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    SessionItem* takeItem(const TagRow& tagrow);
+    SessionItem* insertItem(std::unique_ptr<SessionItem> item, const TagRow& tagrow);
+    template <typename T = SessionItem> T* insertItem(const TagRow& tagrow);
+
+    std::unique_ptr<SessionItem> takeItem(const TagRow& tagrow);
 
     // more convenience methods
 
@@ -171,6 +174,14 @@ template <typename T> std::vector<T*> SessionItem::items(const std::string& tag)
         if (auto casted = dynamic_cast<T*>(item); casted)
             result.push_back(casted);
     return result;
+}
+
+//! Creates a new item and insert it into given tag under the given row.
+//! Returns pointer to inserted item to the user.
+
+template <typename T> inline T* SessionItem::insertItem(const TagRow& tagrow)
+{
+    return static_cast<T*>(insertItem(std::make_unique<T>(), tagrow));
 }
 
 //! Returns data stored in property item.

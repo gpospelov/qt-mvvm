@@ -80,8 +80,7 @@ void JsonModelConverter::from_json(const QJsonObject& json, SessionModel& model)
 
     auto rebuild_root = [&json, &itemConverter](auto parent) {
         for (const auto ref : json[JsonItemFormatAssistant::itemsKey].toArray()) {
-            auto item = itemConverter->from_json(ref.toObject());
-            parent->insertItem(item.release(), TagRow::append());
+            parent->insertItem(itemConverter->from_json(ref.toObject()), TagRow::append());
         }
     };
     model.clear(rebuild_root);

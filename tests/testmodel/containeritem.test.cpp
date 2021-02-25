@@ -29,11 +29,7 @@ TEST_F(ContainerItemTest, initialState)
 TEST_F(ContainerItemTest, isEmpty)
 {
     ContainerItem item;
-
-    // inserting two children
-    auto property = new PropertyItem;
-    item.insertItem(property, {"", 0});
-
+    item.insertItem<PropertyItem>({"", 0});
     EXPECT_EQ(item.size(), 1);
     EXPECT_FALSE(item.empty());
 }

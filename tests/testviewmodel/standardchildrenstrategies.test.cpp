@@ -29,7 +29,7 @@ public:
         {
             addProperty("length", 8.0);
             registerTag(TagInfo::universalTag("children"), /*set_as_default*/ true);
-            insertItem(new SessionItem, TagRow::append());
+            insertItem<SessionItem>(TagRow::append());
             addProperty("height", 12.0);
         }
     };

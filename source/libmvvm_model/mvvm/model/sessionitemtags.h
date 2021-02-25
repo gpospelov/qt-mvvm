@@ -47,11 +47,13 @@ public:
 
     // adding and removal
 
+    bool canInsertItem(const SessionItem *item, const TagRow& tagrow) const;
+
     bool insertItem(SessionItem* item, const TagRow& tagrow);
 
-    SessionItem* takeItem(const TagRow& tagrow);
-
     bool canTakeItem(const TagRow& tagrow) const;
+
+    SessionItem* takeItem(const TagRow& tagrow);
 
     // item access
     SessionItem* getItem(const TagRow& tagrow) const;

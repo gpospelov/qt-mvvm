@@ -69,13 +69,11 @@ TEST_F(SessionModelTest, insertItem)
 
     // taking child back
     auto taken = item->takeItem({"", 0});
-    EXPECT_EQ(taken, child);
+    EXPECT_EQ(taken.get(), child);
     EXPECT_EQ(child->model(), nullptr);
 
     // childitem not registered anymore
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-
-    delete taken;
 }
 
 TEST_F(SessionModelTest, insertNewItem)
@@ -111,13 +109,11 @@ TEST_F(SessionModelTest, insertNewItem)
 
     // taking child back
     auto taken = item->takeItem({"", 0});
-    EXPECT_EQ(taken, child);
+    EXPECT_EQ(taken.get(), child);
     EXPECT_EQ(child->model(), nullptr);
 
     // childitem not registered anymore
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-
-    delete taken;
 }
 
 TEST_F(SessionModelTest, insertNewItemWithTag)
@@ -211,7 +207,6 @@ TEST_F(SessionModelTest, takeRowFromRootItem)
     auto taken = model.rootItem()->takeItem({"", 0});
     EXPECT_EQ(pool->item_for_key(parent_key), nullptr);
     EXPECT_EQ(pool->item_for_key(child_key), nullptr);
-    delete taken;
 }
 
 TEST_F(SessionModelTest, moveItem)
@@ -271,8 +266,10 @@ TEST_F(SessionModelTest, clearRebuildModel)
     model.insertItem<SessionItem>();
     EXPECT_EQ(model.rootItem()->childrenCount(), 2);
 
+//    SessionItem* new_item {nullptr};
+//    auto rebuild = [&new_item](auto parent) { new_item = parent->insertItem(TagRow::append()); };
     auto new_item = new SessionItem;
-    auto rebuild = [new_item](auto parent) { parent->insertItem(new_item, TagRow::append()); };
+       auto rebuild = [new_item](auto parent) { parent->insertItem(new_item, TagRow::append()); };
 
     model.clear(rebuild);
     EXPECT_EQ(model.rootItem()->childrenCount(), 1);
@@ -361,9 +358,8 @@ TEST_F(SessionModelTest, forbiddenCopy)
     auto property = model.insertItem<PropertyItem>(parent0, "property");
 
     // copying property to same property tag is not allowed
-    auto copy = model.copyItem(property, parent0, {"property", -1});
+    EXPECT_THROW(model.copyItem(property, parent0, {"property", -1}), std::runtime_error);
     EXPECT_EQ(parent0->childrenCount(), 1);
-    EXPECT_EQ(copy, nullptr);
 }
 
 //! Test item find using identifier.

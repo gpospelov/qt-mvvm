@@ -48,22 +48,17 @@ CopyItemCommand::~CopyItemCommand() = default;
 void CopyItemCommand::undo_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    delete parent->takeItem(p_impl->tagrow);
+    parent->takeItem(p_impl->tagrow);
     setResult(nullptr);
 }
 
 void CopyItemCommand::execute_command()
 {
     auto parent = itemFromPath(p_impl->item_path);
-    auto item = p_impl->backup_strategy->restoreItem();
-    if (parent->insertItem(item.get(), p_impl->tagrow)) {
-        auto result = item.release();
-        setResult(result);
-    }
-    else {
-        setResult(nullptr);
-        setObsolete(true);
-    }
+    auto item = parent->insertItem(p_impl->backup_strategy->restoreItem(), p_impl->tagrow);
+    // FIXME revise behaviour in the case of invalid operation. Catch or not here?
+    setResult(item);
+    setObsolete(!item); // command is osbolete if insertion failed
 }
 
 namespace {

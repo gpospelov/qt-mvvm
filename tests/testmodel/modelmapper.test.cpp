@@ -217,6 +217,6 @@ TEST(ModelMapperTest, onClearRebuild)
     EXPECT_CALL(*widget, onModelAboutToBeReset(_)).Times(1);
     EXPECT_CALL(*widget, onModelReset(model.get())).Times(1);
 
-    auto rebuild = [](auto item) { item->insertItem(new SessionItem, TagRow::append()); };
+    auto rebuild = [](auto item) { item->insertItem(TagRow::append()); };
     model->clear(rebuild);
 }

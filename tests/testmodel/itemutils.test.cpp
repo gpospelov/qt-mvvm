@@ -43,10 +43,8 @@ TEST_F(ItemUtilsTest, iterateItem)
     EXPECT_EQ(visited_items, expected);
 
     // adding children
-    auto child1 = new SessionItem;
-    auto child2 = new SessionItem;
-    parent->insertItem(child1, TagRow::append());
-    parent->insertItem(child2, TagRow::append());
+    auto child1 = parent->insertItem<SessionItem>(TagRow::append());
+    auto child2 = parent->insertItem<SessionItem>(TagRow::append());
 
     visited_items.clear();
     Utils::iterate(parent.get(), fun);
@@ -71,10 +69,8 @@ TEST_F(ItemUtilsTest, iterateIfItem)
     std::unique_ptr<SessionItem> parent(new SessionItem);
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    auto child1 = new SessionItem;
-    auto child2 = new SessionItem;
-    parent->insertItem(child1, TagRow::append());
-    parent->insertItem(child2, TagRow::append());
+    parent->insertItem<SessionItem>(TagRow::append());
+    parent->insertItem<SessionItem>(TagRow::append());
 
     std::vector<const SessionItem*> expected = {parent.get()};
     Utils::iterate_if(parent.get(), fun);

@@ -16,6 +16,7 @@
 namespace ModelView {
 
 //! Aggregate to hold (tag, row) information for SessionModel.
+//! row=-1 is a special value for appending to the end of the in the SessionIteTags context.
 
 class MVVM_MODEL_EXPORT TagRow {
 public:

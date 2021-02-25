@@ -70,11 +70,13 @@ TEST_F(CopyItemCommandTest, invalidCopyAttempt)
 
     // making copy of child
     auto command = std::make_unique<CopyItemCommand>(child0, parent, TagRow{"thickness", 0});
-    command->execute();
+    EXPECT_THROW(command->execute(), std::runtime_error);
 
     // checking that parent has now three children
-    EXPECT_TRUE(command->isObsolete());
-    EXPECT_EQ(std::get<SessionItem*>(command->result()), nullptr);
+    // FIXME revise command behavior in the case of invalid operation
+    // Exception or catch?
+    // EXPECT_TRUE(command->isObsolete());
+//    EXPECT_EQ(std::get<SessionItem*>(command->result()), nullptr);
 
     // undoing of obsolete command is not possible
     EXPECT_THROW(command->undo(), std::runtime_error);
