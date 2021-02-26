@@ -12,6 +12,8 @@
 
 #include "mvvm/model/sessionmodel.h"
 
+namespace FlatEditor {
+
 //! Main application model.
 
 class SampleModel : public ModelView::SessionModel {
@@ -21,5 +23,7 @@ public:
 private:
     void populateModel();
 };
+
+} // namespace FlatEditor
 
 #endif // FLATEDITORCORE_SAMPLEMODEL_H

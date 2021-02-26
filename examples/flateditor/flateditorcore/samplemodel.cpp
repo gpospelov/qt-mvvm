@@ -9,27 +9,20 @@
 
 #include "samplemodel.h"
 #include "sampleitems.h"
-#include "mvvm/model/itemcatalogue.h"
 
 using namespace ModelView;
 
-namespace {
-std::unique_ptr<ModelView::ItemCatalogue> CreateItemCatalogue()
-{
-    auto result = std::make_unique<ItemCatalogue>();
-    result->registerItem<BeamItem>();
-    result->registerItem<DistributionNoneItem>();
-    result->registerItem<DistributionGaussianItem>();
-    result->registerItem<DistributionLogNormalItem>();
-    result->registerItem<DistributionTrapezoidItem>();
-    result->registerItem<DistributionGroupItem>();
-    return result;
-}
-} // namespace
+namespace FlatEditor {
 
 SampleModel::SampleModel() : SessionModel("SampleModel")
 {
-    setItemCatalogue(CreateItemCatalogue());
+    registerItem<BeamItem>();
+    registerItem<DistributionNoneItem>();
+    registerItem<DistributionGaussianItem>();
+    registerItem<DistributionLogNormalItem>();
+    registerItem<DistributionTrapezoidItem>();
+    registerItem<DistributionGroupItem>();
+
     populateModel();
 }
 
@@ -40,3 +33,5 @@ void SampleModel::populateModel()
     insertItem<BeamItem>();
     insertItem<DistributionGroupItem>();
 }
+
+} // namespace FlatEditor

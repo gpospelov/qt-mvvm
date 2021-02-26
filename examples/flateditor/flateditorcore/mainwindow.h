@@ -13,6 +13,8 @@
 #include <QMainWindow>
 #include <memory>
 
+namespace FlatEditor {
+
 class SampleModel;
 
 //! The main window of this application.
@@ -33,5 +35,7 @@ private:
 
     std::unique_ptr<SampleModel> m_sampleModel;
 };
+
+} // namespace FlatEditor
 
 #endif // FLATEDITORCORE_MAINWINDOW_H
