@@ -14,6 +14,8 @@
 #include "mvvm/model/groupitem.h"
 #include <string>
 
+namespace FlatEditor {
+
 namespace Constants {
 
 const std::string BeamItemType = "Beam";
@@ -89,5 +91,7 @@ class DistributionGroupItem : public ModelView::GroupItem {
 public:
     DistributionGroupItem();
 };
+
+} // namespace FlatEditor
 
 #endif // FLATEDITORCORE_SAMPLEITEMS_H

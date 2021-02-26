@@ -17,6 +17,8 @@
 
 using namespace ModelView;
 
+namespace FlatEditor {
+
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)
     : QWidget(parent)
     , m_defaultTreeView(new AllItemsTreeView(model))
@@ -62,3 +64,5 @@ QBoxLayout* DemoWidget::create_right_layout()
     result->addWidget(m_propertyFlatView);
     return result;
 }
+
+} // namespace FlatEditor

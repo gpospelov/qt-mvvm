@@ -13,6 +13,8 @@
 #include <QWidget>
 #include <memory>
 
+class QBoxLayout;
+
 namespace ModelView {
 class SessionModel;
 class AllItemsTreeView;
@@ -20,7 +22,7 @@ class PropertyTreeView;
 class PropertyFlatView;
 } // namespace ModelView
 
-class QBoxLayout;
+namespace FlatEditor {
 
 //! Demonstrates usage of PropertyFlatView.
 
@@ -42,5 +44,7 @@ private:
     ModelView::PropertyFlatView* m_propertyFlatView{nullptr};
     ModelView::SessionModel* m_sessionModel{nullptr};
 };
+
+} // namespace FlatEditor
 
 #endif // FLATEDITORCORE_DEMOWIDGET_H
