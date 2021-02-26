@@ -33,7 +33,7 @@ private:
     void initApplication();
     void writeSettings();
 
-    std::unique_ptr<SampleModel> m_sampleModel;
+    std::unique_ptr<SampleModel> m_sample_model;
 };
 
 } // namespace FlatEditor
