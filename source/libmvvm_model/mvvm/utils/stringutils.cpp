@@ -13,6 +13,7 @@
 #include <iterator>
 #include <sstream>
 #include <string_view>
+#include <limits>
 
 using namespace ModelView;
 
