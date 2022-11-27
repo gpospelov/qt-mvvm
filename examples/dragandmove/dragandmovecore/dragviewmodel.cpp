@@ -32,15 +32,15 @@ DragViewModel::DragViewModel(SessionModel* model, QObject* parent)
 
 Qt::ItemFlags DragViewModel::flags(const QModelIndex& index) const
 {
-    Qt::ItemFlags defaultFlags = PropertyTableViewModel::flags(index);
+    Qt::ItemFlags default_flags = PropertyTableViewModel::flags(index);
     if (index.isValid())
-        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
-    return Qt::ItemIsDropEnabled | defaultFlags;
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | default_flags;
+    return Qt::ItemIsDropEnabled | default_flags;
 }
 
 QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
 {
-    auto mimeData = new QMimeData;
+    auto mime_data = new QMimeData;
     auto items = Utils::ParentItemsFromIndex(index_list);
 
     // Saving list of SessionItem's identifiers related to all DemoItem
@@ -49,8 +49,8 @@ QMimeData* DragViewModel::mimeData(const QModelIndexList& index_list) const
     for (auto item : Utils::ParentItemsFromIndex(index_list))
         identifiers.append(QString::fromStdString(item->identifier()));
 
-    mimeData->setData(AppMimeType, Utils::serialize(identifiers));
-    return mimeData;
+    mime_data->setData(AppMimeType, Utils::serialize(identifiers));
+    return mime_data;
 }
 
 Qt::DropActions DragViewModel::supportedDragActions() const

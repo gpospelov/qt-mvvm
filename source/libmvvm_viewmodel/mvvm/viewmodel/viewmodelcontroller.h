@@ -30,7 +30,7 @@ class RowStrategyInterface;
 class MVVM_VIEWMODEL_EXPORT ViewModelController : public ModelListener<SessionModel> {
 public:
     ViewModelController(SessionModel* session_model, ViewModelBase* view_model = nullptr);
-    ~ViewModelController();
+    ~ViewModelController() override;
 
     void setViewModel(ViewModelBase* view_model);
 
