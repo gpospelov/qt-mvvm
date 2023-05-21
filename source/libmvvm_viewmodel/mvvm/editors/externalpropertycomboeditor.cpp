@@ -26,7 +26,7 @@ ExternalPropertyComboEditor::ExternalPropertyComboEditor(callback_t callback, QW
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
     auto layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(m_box);
     setLayout(layout);

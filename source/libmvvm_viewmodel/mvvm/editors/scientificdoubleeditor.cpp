@@ -27,7 +27,7 @@ ScientificDoubleEditor::ScientificDoubleEditor(QWidget* parent)
     setAutoFillBackground(true);
 
     auto layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     layout->addWidget(m_lineEdit);
@@ -57,9 +57,15 @@ void ScientificDoubleEditor::onEditingFinished()
 
 void ScientificDoubleEditor::update_components()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (m_data.type() != QVariant::Double)
+#else
+    if (m_data.typeId() != QMetaType::Double)
+#endif
+    {
         throw std::runtime_error(
             "ScientificDoubleEditor::update_components() -> Error. Wrong variant type");
+    }
 
     m_lineEdit->setText(QString::number(m_data.value<double>(), 'g'));
 }

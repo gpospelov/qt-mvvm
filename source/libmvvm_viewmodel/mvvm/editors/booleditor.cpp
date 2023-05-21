@@ -46,8 +46,14 @@ void BoolEditor::onCheckBoxChange(bool value)
 
 void BoolEditor::update_components()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (m_data.type() != QVariant::Bool)
+#else
+    if (m_data.typeId() != QMetaType::Bool)
+#endif
+    {
         throw std::runtime_error("BoolEditor::update_components() -> Error. Wrong variant type");
+    }
 
     bool value = m_data.value<bool>();
     m_checkBox->blockSignals(true);

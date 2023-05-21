@@ -24,7 +24,7 @@ ScientificSpinBoxEditor::ScientificSpinBoxEditor(QWidget* parent)
     m_doubleEditor->setKeyboardTracking(false);
 
     auto layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     layout->addWidget(m_doubleEditor);
@@ -67,9 +67,13 @@ void ScientificSpinBoxEditor::onEditingFinished()
 
 void ScientificSpinBoxEditor::update_components()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (m_data.type() != QVariant::Double)
+#else
+    if (m_data.typeId() != QMetaType::Double)
+#endif
+    {
         throw std::runtime_error(
-            "ScientificSpinBoxEditor::update_components() -> Error. Wrong variant type");
-
-    m_doubleEditor->setValue(m_data.value<double>());
+            "ScientificSpinBoxEditor::UpdateComponents() -> Error. Wrong variant type");
+    }
 }
