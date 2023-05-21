@@ -14,7 +14,7 @@ generate_export_header(${library_name} EXPORT_FILE_NAME ${export_filename})
 
 # -- Dependencies --
 
-target_link_libraries(${library_name} PUBLIC Qt5::Widgets Threads::Threads)
+target_link_libraries(${library_name} PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Threads::Threads)
 target_include_directories(${library_name}
     PUBLIC
     $<INSTALL_INTERFACE:include>

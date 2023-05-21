@@ -3,15 +3,12 @@ set(test testviewmodel)
 file(GLOB source_files "*.cpp")
 file(GLOB include_files "*.h")
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Test REQUIRED)
-
 # necessary for Qt creator and clang code model
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest gmock Qt5::Core Qt5::Test mvvm_viewmodel testmachinery qcustomplot)
+target_link_libraries(${test} gtest gmock Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Test mvvm_viewmodel testmachinery qcustomplot)
 
 if (MVVM_DISCOVER_TESTS)
     gtest_discover_tests(${test} TEST_PREFIX "View.")
