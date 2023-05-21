@@ -62,8 +62,14 @@ void DoubleEditor::onEditingFinished()
 
 void DoubleEditor::update_components()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (m_data.type() != QVariant::Double)
+#else
+    if (m_data.typeId() != QMetaType::Double)
+#endif
+    {
         throw std::runtime_error("DoubleEditor::update_components() -> Error. Wrong variant type");
+    }
 
     m_doubleEditor->setValue(m_data.value<double>());
 }
