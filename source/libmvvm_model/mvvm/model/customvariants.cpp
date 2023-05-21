@@ -25,9 +25,19 @@ std::string Utils::VariantName(const Variant& variant)
 
 int Utils::VariantType(const Variant& variant)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     auto result = static_cast<int>(variant.type());
-    if (result == Variant::UserType)
+    if (result == QVariant::UserType)
+    {
         result = variant.userType();
+    }
+#else
+    auto result = variant.typeId();
+    if (result == QMetaType::User)
+    {
+        result = variant.userType();
+    }
+#endif
     return result;
 }
 
@@ -87,17 +97,29 @@ Variant Utils::toCustomVariant(const Variant& standard)
 
 bool Utils::IsBoolVariant(const Variant& variant)
 {
-    return variant.type() == Variant::Bool;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return variant.type() == QVariant::Bool;
+#else
+    return variant.typeId() == QMetaType::Bool;
+#endif
 }
 
 bool Utils::IsIntVariant(const Variant& variant)
 {
-    return variant.type() == Variant::Int;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return variant.type() == QVariant::Int;
+#else
+    return variant.typeId() == QMetaType::Int;
+#endif
 }
 
 bool Utils::IsDoubleVariant(const Variant& variant)
 {
-    return variant.type() == Variant::Double;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return variant.type() == QVariant::Double;
+#else
+    return variant.typeId() == QMetaType::Double;
+#endif
 }
 
 bool Utils::IsComboVariant(const Variant& variant)
@@ -117,7 +139,11 @@ bool Utils::IsDoubleVectorVariant(const Variant& variant)
 
 bool Utils::IsColorVariant(const Variant& variant)
 {
-    return variant.type() == Variant::Color;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    return variant.type() == QVariant::Color;
+#else
+    return variant.typeId() == QMetaType::QColor;
+#endif
 }
 
 bool Utils::IsExtPropertyVariant(const Variant& variant)
