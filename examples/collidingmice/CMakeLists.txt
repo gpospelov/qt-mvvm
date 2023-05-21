@@ -10,5 +10,5 @@ set(executable_name collidingmice)
 add_executable(${executable_name} main.cpp)
 add_subdirectory(collidingmicecore)
 
-target_link_libraries(${executable_name} PRIVATE Qt5::Widgets MVVM::View)
+target_link_libraries(${executable_name} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets MVVM::View)
 target_include_directories(${executable_name} PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
