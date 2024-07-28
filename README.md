@@ -10,15 +10,15 @@
 ## Overview
 
 This model-view-viewmodel framework is intended for large Qt based scientific
-applications written in C++. Project was created as a playground toward GUI
+applications written in C++. The Project was created as a playground toward GUI
 refactoring of [BornAgain project](https://www.bornagainproject.org).
 
 Main features of the framework are:
 
 + Application model to store arbitrary data of GUI session.
 + Serialization of application models to json.
-+ Undo/redo based on command pattern.
-+ View model to show parts of application model in Qt widgets. Depends on Qt.
++ Undo/redo based on a command pattern.
++ View model to show parts of an application model in Qt widgets. Depends on Qt.
 + Scientific plotting based on [qcustomplot](https://www.qcustomplot.com/).
 + Automatic generation of widgets from model content.
 + Property editors.
@@ -34,13 +34,13 @@ Main features of the framework are:
 
 ## Installation instructions
 
-```
+```sh
 git clone --recurse-submodules  https://github.com/gpospelov/qt-mvvm.git
-mkdir <build-dir>; cd <build-dir>
-cmake <source>; make -j8; ctest
+mkdir ./build; cd ./build
+cmake ..; make -j8; ctest
 
-# run one of examples
-<build-dir>/bin/collidingmice
+# run one of examples from ./build
+./bin/collidingmice
 ```
 
 ## Example
@@ -66,7 +66,7 @@ See short animation [here](doc/assets/colliding-mice.gif).
 The demo shows that `qt-mvvm` library allows to equip the GUI with the
 serialization and undo/redo and to provide proper model/view relations via
 relatively small modifications to the original code. Implementing similar
-features from the scratch in bare metal Qt would take much more time and the
+features from scratch in bare metal Qt would take much more time and the
 resulting code wouldn't be easily transferable to another project.
 
 This and other examples can be found in [examples](examples/README.md)
@@ -149,11 +149,11 @@ editing.
 The library is intended for large GUI applications. The definition of `large` is
 quite arbitrary and means something in the range 20k - 200k lines of code. The
 main logic here is that using the additional library for smaller Qt applications
-is redundant, Qt has everything that may be required. If small GUI becomes messy
+is redundant, Qt has everything that may be required. If a small GUI becomes messy
 with time, it can always be refactored or even rewritten from scratch.
 
 However, when the number of views to show the same data is getting large, and
-the GUI enters the range 20k - 200k, this is were a given library might help in
+the GUI enters the range 20k–200k, this is where a given library might help in
 proper separation of data, logic, and UI. When the GUI grows even further, well,
 developers of such large GUI know already what they need and probably have
 already implemented similar machinery.
