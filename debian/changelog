@@ -1,0 +1,12 @@
+qt-mvvm (0.2.0) stable; urgency=medium
+
+  * This release contains mostly API refactoring and bug fixing.
+  * New features
+    * Undo/redo macro commands
+    * GraphItem improvements: errors, line style and width
+    * New widget: combo property editor with multiple selections
+    * New widget: collapsible list widget
+    * Update for Qt 5.15
+
+ -- Gennady Pospelov <gennady.pospelov@gmail.com>  Thu, 10 Dec 2020 00:00:00 +0000
+

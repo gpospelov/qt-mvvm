@@ -1,0 +1,34 @@
+Source: qt-mvvm
+Maintainer: Gennady Pospelov <gennady.pospelov@gmail.com>
+Section: libs
+Priority: optional
+Build-Depends: debhelper-compat (= 11), debhelper (>= 11), libstdc++6, cmake, qtbase5-dev, qttools5-dev, pkgconf
+Rules-Requires-Root: no
+Standards-Version: 4.1.4
+Vcs-Browser: https://github.com/gpospelov/qt-mvvm
+Vcs-Git: https://github.com/gpospelov/qt-mvvm.git
+Homepage: https://github.com/gpospelov/qt-mvvm
+Bugs: https://github.com/gpospelov/qt-mvvm/issues
+
+Package: qt-mvvm
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Model-View-ViewModel framework for Qt based applications written in C++
+ Main features of the framework are
+  * Application model to store arbitrary data of GUI session.
+  * Serialization of application models to json.
+  * Undo/redo based on command pattern.
+  * View model to show parts of application model in Qt widgets. Depends on Qt.
+  * Scientific plotting based on qcustomplot.
+  * Automatic generation of widgets from model content.
+  * Property editors.
+  * Flexible layout of Qt's trees and tables.
+
+Package: qt-mvvm-dev
+Architecture: any
+Section: libdevel
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Development files for libmvvm-qt5
+ Model-View-ViewModel framework for Qt based applications written in C++
