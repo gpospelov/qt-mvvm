@@ -6,4 +6,4 @@ find_package(MVVM REQUIRED)
 set(executable_name helloworld)
 add_executable(${executable_name} main.cpp)
 
-target_link_libraries(${executable_name} PRIVATE Qt5::Widgets MVVM::View)
+target_link_libraries(${executable_name} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets MVVM::View)

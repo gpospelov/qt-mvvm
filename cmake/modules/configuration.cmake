@@ -48,12 +48,20 @@ file(MAKE_DIRECTORY ${MVVM_AUTOGEN_DIR})
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 5.12 COMPONENTS Widgets Core Gui PrintSupport REQUIRED)
 find_package(Threads)
 
-get_target_property(Qt5Widgets_location Qt5::Widgets LOCATION_Release)
-message(STATUS " Qt5 libraries : ${Qt5Widgets_LIBRARIES} ${Qt5Widgets_location}")
-message(STATUS " Qt5 Includes  : ${Qt5Widgets_INCLUDE_DIRS}")
+if (MVVM_USE_QT6)
+  find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+else()
+  find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+endif()
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+message(STATUS "Qt${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH} found")
+message(STATUS " Includes: ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS}")
+get_target_property(QtWidgets_location Qt${QT_VERSION_MAJOR}::Core LOCATION_Release)
+message(STATUS " Core library: ${QtWidgets_location}")
+
 
 # -----------------------------------------------------------------------------
 # Generating config files

@@ -17,48 +17,52 @@
 
 using namespace ModelView;
 
+namespace FlatEditor {
+
 DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)
     : QWidget(parent)
-    , m_defaultTreeView(new AllItemsTreeView(model))
-    , m_propertyTreeView(new PropertyTreeView)
-    , m_propertyFlatView(new PropertyFlatView)
-    , m_sessionModel(model)
+    , m_default_tree_view(new AllItemsTreeView(model))
+    , m_property_tree_view(new PropertyTreeView)
+    , m_property_flat_view(new PropertyFlatView)
+    , m_sessio_model(model)
 {
 
     auto layout = new QHBoxLayout;
-    layout->addLayout(create_left_layout());
-    layout->addLayout(create_right_layout());
+    layout->addLayout(createLeftLayout());
+    layout->addLayout(createRightLayout());
     layout->addLayout(layout);
     setLayout(layout);
 
-    connect_views();
+    connectViews();
 }
 
 DemoWidget::~DemoWidget() = default;
 
 //! Connect tree views to provide mutual item selection.
 
-void DemoWidget::connect_views()
+void DemoWidget::connectViews()
 {
     // select items in other views when selection in m_defaultTreeView has changed
     auto on_item_selected = [this](SessionItem* item) {
-        m_propertyTreeView->setItem(item);
-        m_propertyFlatView->setItem(item);
+        m_property_tree_view->setItem(item);
+        m_property_flat_view->setItem(item);
     };
-    connect(m_defaultTreeView, &AllItemsTreeView::itemSelected, on_item_selected);
+    connect(m_default_tree_view, &AllItemsTreeView::itemSelected, on_item_selected);
 }
 
-QBoxLayout* DemoWidget::create_left_layout()
+QBoxLayout* DemoWidget::createLeftLayout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_defaultTreeView);
+    result->addWidget(m_default_tree_view);
     return result;
 }
 
-QBoxLayout* DemoWidget::create_right_layout()
+QBoxLayout* DemoWidget::createRightLayout()
 {
     auto result = new QVBoxLayout;
-    result->addWidget(m_propertyTreeView);
-    result->addWidget(m_propertyFlatView);
+    result->addWidget(m_property_tree_view);
+    result->addWidget(m_property_flat_view);
     return result;
 }
+
+} // namespace FlatEditor

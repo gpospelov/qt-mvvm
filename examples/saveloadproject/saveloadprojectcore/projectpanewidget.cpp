@@ -76,7 +76,11 @@ void ProjectPaneWidget::paintEvent(QPaintEvent*)
     painter.fillRect(0, 0, size().width(), size().height(), m_widget_color);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void ProjectPaneWidget::enterEvent(QEvent*)
+#else
+void ProjectPaneWidget::enterEvent(QEnterEvent*)
+#endif
 {
     if (m_active)
         m_widget_color = QColor(Qt::lightGray);

@@ -25,7 +25,7 @@ MultiLayerTreeView::MultiLayerTreeView(ApplicationModels* models, QWidget* paren
     : QWidget(parent), m_treeView(new QTreeView), m_delegate(std::make_unique<ViewModelDelegate>())
 {
     auto layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(m_treeView);
     setLayout(layout);

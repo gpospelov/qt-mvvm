@@ -10,8 +10,8 @@
 ## Overview
 
 This model-view-viewmodel framework is intended for large Qt based scientific
-applications written in C++. The Project was created as a playground toward GUI
-refactoring of [BornAgain project](https://www.bornagainproject.org).
+applications written in C++. The Project was created as a refactoring 
+playground, and it was never used for production.
 
 Main features of the framework are:
 
@@ -138,26 +138,19 @@ framework](https://doc.qt.io/archives/qq/qq18-propertybrowser.html).
 Third library, `libmmv_view.so`, contains few widgets for plotting and property
 editing.
 
-## Size of the framework
-
-+ 20k loc of libraries (`libmvvm_model.so`, `libmmv_viewmodel.so` and `libmmv_view.so`)
-+ 15k loc of tests
-+ 10k of user examples
-
 ## Disclaimer and afterword
 
-The library is intended for large GUI applications. The definition of `large` is
-quite arbitrary and means something in the range 20k - 200k lines of code. The
-main logic here is that using the additional library for smaller Qt applications
-is redundant, Qt has everything that may be required. If a small GUI becomes messy
-with time, it can always be refactored or even rewritten from scratch.
+The library is intended for large GUI applications. The definition of `large` is quite
+arbitrary and means something in the range 20k - 200k lines of code. The main logic here 
+is that using the additional library for smaller Qt applications is redundant, Qt has 
+everything that may be required. If a small GUI becomes messy with time, it can always 
+be refactored or even rewritten from scratch.
 
-However, when the number of views to show the same data is getting large, and
-the GUI enters the range 20k–200k, this is where a given library might help in
-proper separation of data, logic, and UI. When the GUI grows even further, well,
-developers of such large GUI know already what they need and probably have
-already implemented similar machinery.
+However, when the number of views to show the same data is getting large, and the GUI 
+enters the range 20k–200k, this is where a given library might help in the proper 
+separation of data, logic, and UI. When the GUI grows even further, well, developers 
+of such a large GUI know already what they need and probably have already implemented 
+similar machinery.
 
-The project is under active development.
-
-
+Please note, that the project is not actively maintained anymore. The author can't promise 
+any timely reaction to user requests and bug reports.

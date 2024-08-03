@@ -21,12 +21,15 @@ bool Comparators::m_is_registered = false;
 void Comparators::registerComparators()
 {
     if (!m_is_registered) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         QMetaType::registerComparators<std::string>();
         QMetaType::registerComparators<std::vector<double>>();
         QMetaType::registerComparators<ComboProperty>();
         QMetaType::registerComparators<ExternalProperty>();
         QMetaType::registerComparators<RealLimits>();
         m_is_registered = true;
+#endif
+
     }
 }
 

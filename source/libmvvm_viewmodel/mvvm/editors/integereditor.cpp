@@ -28,7 +28,7 @@ IntegerEditor::IntegerEditor(QWidget* parent) : CustomEditor(parent), m_intEdito
     m_intEditor->setRange(min_val, max_val);
 
     auto layout = new QVBoxLayout;
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     layout->addWidget(m_intEditor);

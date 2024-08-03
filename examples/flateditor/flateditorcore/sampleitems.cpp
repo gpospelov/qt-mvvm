@@ -17,11 +17,19 @@ using namespace ModelView;
 namespace {
 const std::string xrays = "x-rays";
 const std::string neutrons = "neutrons";
+const std::string BeamItemType = "Beam";
+const std::string DistributionNoneItemType = "DistributionNone";
+const std::string DistributionGaussianItemType = "DistributionGaussian";
+const std::string DistributionLogNormalItemType = "DistributionLogNormal";
+const std::string DistributionTrapezoidItemType = "DistributionTrapezoid";
+const std::string DistributionGroupItemType = "DistributionGroup";
 } // namespace
+
+namespace FlatEditor {
 
 // ----------------------------------------------------------------------------
 
-BeamItem::BeamItem() : ModelView::CompoundItem(::Constants::BeamItemType)
+BeamItem::BeamItem() : ModelView::CompoundItem(BeamItemType)
 {
     auto combo = ComboProperty::createFrom({xrays, neutrons});
     addProperty(P_BEAM_TYPE, combo)->setDisplayName("Type");
@@ -61,8 +69,7 @@ void BeamItem::update_appearance()
 
 // ----------------------------------------------------------------------------
 
-DistributionNoneItem::DistributionNoneItem()
-    : ModelView::CompoundItem(::Constants::DistributionNoneItemType)
+DistributionNoneItem::DistributionNoneItem() : ModelView::CompoundItem(DistributionNoneItemType)
 {
     setDisplayName("Fixed value");
     addProperty(P_MEAN, 0.5)->setDisplayName("Value");
@@ -71,7 +78,7 @@ DistributionNoneItem::DistributionNoneItem()
 // ----------------------------------------------------------------------------
 
 DistributionGaussianItem::DistributionGaussianItem()
-    : ModelView::CompoundItem(::Constants::DistributionGaussianItemType)
+    : ModelView::CompoundItem(DistributionGaussianItemType)
 {
     addProperty(P_MEAN, 0.5)->setDisplayName("Mean");
     addProperty(P_STD_DEV, 1.0)->setDisplayName("StdDev");
@@ -80,7 +87,7 @@ DistributionGaussianItem::DistributionGaussianItem()
 // ----------------------------------------------------------------------------
 
 DistributionLogNormalItem::DistributionLogNormalItem()
-    : ModelView::CompoundItem(::Constants::DistributionLogNormalItemType)
+    : ModelView::CompoundItem(DistributionLogNormalItemType)
 {
     addProperty(P_MEDIAN, 1.0)->setDisplayName("Median");
     addProperty(P_SCALE_PAR, 1.0)->setDisplayName("Scale");
@@ -89,7 +96,7 @@ DistributionLogNormalItem::DistributionLogNormalItem()
 // ----------------------------------------------------------------------------
 
 DistributionTrapezoidItem::DistributionTrapezoidItem()
-    : ModelView::CompoundItem(::Constants::DistributionTrapezoidItemType)
+    : ModelView::CompoundItem(DistributionTrapezoidItemType)
 {
     addProperty(P_CENTER, 1.0)->setDisplayName("Center");
     addProperty(P_LEFTWIDTH, 0.5)->setDisplayName("Left width");
@@ -99,10 +106,12 @@ DistributionTrapezoidItem::DistributionTrapezoidItem()
 
 // ----------------------------------------------------------------------------
 
-DistributionGroupItem::DistributionGroupItem() : GroupItem(::Constants::DistributionGroupItemType)
+DistributionGroupItem::DistributionGroupItem() : GroupItem(DistributionGroupItemType)
 {
     addToGroup<DistributionNoneItem>("Fixed value");
     addToGroup<DistributionGaussianItem>("Gaussian");
     addToGroup<DistributionLogNormalItem>("Log normal");
     addToGroup<DistributionTrapezoidItem>("Trapezoid");
 }
+
+} // namespace FlatEditor

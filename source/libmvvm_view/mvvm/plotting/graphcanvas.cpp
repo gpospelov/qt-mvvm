@@ -79,7 +79,7 @@ GraphCanvas::GraphCanvas(QWidget* parent)
     : QWidget(parent), p_impl(std::make_unique<GraphCanvasImpl>())
 {
     auto layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     layout->addWidget(p_impl->custom_plot);
     layout->addWidget(p_impl->status_label);

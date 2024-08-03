@@ -33,7 +33,11 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent*) override;
-    void enterEvent(QEvent*) override;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    void enterEvent(QEvent* event) override;
+#else
+    void enterEvent(QEnterEvent* event) override;
+#endif  // MVVM_WIDGETS_FANCYTAB_H_
     void leaveEvent(QEvent*) override;
     void mousePressEvent(QMouseEvent* event) override;
 

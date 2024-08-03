@@ -33,7 +33,7 @@ public:
     void setAlignment(Qt::Alignment);
 
 protected:
-    void paintEvent(QPaintEvent* event);
+    void paintEvent(QPaintEvent* event) override;
 
 private:
     QString m_text;

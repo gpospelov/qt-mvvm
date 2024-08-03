@@ -19,9 +19,11 @@ const QString size_key = "size";
 const QString pos_key = "pos";
 } // namespace
 
-MainWindow::MainWindow() : m_sampleModel(std::make_unique<SampleModel>())
+namespace FlatEditor {
+
+MainWindow::MainWindow() : m_sample_model(std::make_unique<SampleModel>())
 {
-    setCentralWidget(new DemoWidget(m_sampleModel.get()));
+    setCentralWidget(new DemoWidget(m_sample_model.get()));
     initApplication();
 }
 
@@ -56,3 +58,5 @@ void MainWindow::writeSettings()
     settings.setValue(pos_key, pos());
     settings.endGroup();
 }
+
+} // namespace FlatEditor

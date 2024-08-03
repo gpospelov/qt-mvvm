@@ -11,3 +11,4 @@ build
 /debian/qt-mvvm.substvars
 /debian/qt-mvvm-dev.substvars
 /obj-*
+
