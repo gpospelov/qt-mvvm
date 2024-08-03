@@ -2,3 +2,12 @@
 CMakeLists.txt.user
 *.code-workspace
 build
+/debian/qt-mvvm/
+/debian/qt-mvvm-dev/
+/debian/tmp/
+/debian/.debhelper/
+/debian/debhelper-build-stamp
+/debian/files
+/debian/qt-mvvm.substvars
+/debian/qt-mvvm-dev.substvars
+/obj-*

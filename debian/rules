@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+export DH_VERBOSE=1
+export QT_SELECT=qt5
+
+%:
+	dh $@ 
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH) \
+		-DBUILD_TESTING=OFF \
+		-DMVVM_DISCOVER_TESTS=OFF \
+		-DMVVM_ENABLE_FILESYSTEM=OFF \
+		-DMVVM_BUILD_EXAMPLES=OFF
+
