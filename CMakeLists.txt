@@ -15,7 +15,9 @@ include(configuration)
 
 add_subdirectory(source)
 add_subdirectory(thirdparty)
-add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif(BUILD_TESTING)
 
 include(installation)
 add_subdirectory(examples)

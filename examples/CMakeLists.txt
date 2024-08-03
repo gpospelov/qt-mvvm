@@ -16,9 +16,8 @@ if (MVVM_BUILD_EXAMPLES)
     add_subdirectory(plotgraphs)
     add_subdirectory(saveloadproject)
     add_subdirectory(treeviews)
+
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION share/mvvm)
 endif()
-
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION share/mvvm)
-
 
 
