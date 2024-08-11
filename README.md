@@ -29,13 +29,14 @@ Main features of the framework are:
 ## Requirements
 
 + C++-17
-+ CMake 3.14
-+ Qt 5.12
++ CMake >= 3.14
++ Qt >= 5.12
++ gtest >= 1.10
 
 ## Installation instructions
 
 ```sh
-git clone --recurse-submodules  https://github.com/gpospelov/qt-mvvm.git
+git clone https://github.com/gpospelov/qt-mvvm.git
 mkdir ./build; cd ./build
 cmake ..; make -j8; ctest
 
