@@ -1,3 +1,7 @@
+enable_testing()
+
+find_package(GTest 1.10 QUIET CONFIG)
+
 include(GoogleTest)
 
 if(WIN32)

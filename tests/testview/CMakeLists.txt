@@ -8,7 +8,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 set(CMAKE_AUTOMOC ON)
 add_executable(${test} ${source_files} ${include_files})
-target_link_libraries(${test} gtest gmock Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Test mvvm_view testmachinery qcustomplot)
+target_link_libraries(${test} Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Test mvvm_view testmachinery qcustomplot)
 
 if (MVVM_DISCOVER_TESTS)
     gtest_discover_tests(${test} TEST_PREFIX "View.")
