@@ -17,8 +17,8 @@ jobs:
 
     - name: dependencies
       run: |
-        brew install cmake qt5 ccache
-        echo "Qt5 is installed to"
+        brew install cmake qt6 ccache
+        echo "Qt6 is installed to"
         echo $QTDIR
         
     - name: ccache timestamp

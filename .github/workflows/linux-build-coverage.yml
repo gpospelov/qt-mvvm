@@ -18,8 +18,7 @@ jobs:
     - name: setup dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cmake ccache \
-          cmake lcov qt5-default qttools5-dev libqt5svg5-dev qtdeclarative5-dev libx11-xcb1
+        sudo apt-get install -y build-essential cmake cmake-extras ccache qt6-base-dev qt6-tools-dev-tools libqt6svg6 qt6-declarative-dev libx11-xcb1 libxkbcommon-dev lcov
         
     - name: ccache timestamp
       id: ccache_cache_timestamp
@@ -46,8 +45,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE && pwd && ls
         mkdir build && cd build
-        cmake -DCMAKE_BUILD_TYPE=Debug -DMVVM_SETUP_CODECOVERAGE=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
+        cmake -DCMAKE_BUILD_TYPE=Debug -DMVVM_SETUP_CODECOVERAGE=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
         make coverage -j4        
         
     - name: Uploading to codecov
