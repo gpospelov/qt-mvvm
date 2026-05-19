@@ -2,7 +2,7 @@ Source: qt-mvvm
 Maintainer: Gennady Pospelov <gennady.pospelov@gmail.com>
 Section: libs
 Priority: optional
-Build-Depends: debhelper-compat (= 11), debhelper (>= 11), libstdc++6, cmake, qtbase5-dev, qttools5-dev, pkgconf
+Build-Depends: debhelper-compat (= 11), debhelper (>= 11), libstdc++6, cmake, qtbase6-dev, qttools6-dev, pkgconf
 Rules-Requires-Root: no
 Standards-Version: 4.1.4
 Vcs-Browser: https://github.com/gpospelov/qt-mvvm
@@ -30,5 +30,5 @@ Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends},
          ${misc:Depends}
-Description: Development files for libmvvm-qt5
+Description: Development files for libmvvm-qt6
  Model-View-ViewModel framework for Qt based applications written in C++
