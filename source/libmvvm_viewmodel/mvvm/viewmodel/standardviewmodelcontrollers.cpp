@@ -13,6 +13,9 @@
 #include "mvvm/viewmodel/propertiesrowstrategy.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

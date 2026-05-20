@@ -10,7 +10,9 @@
 #include "mvvm/plotting/axistitlecontroller.h"
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 

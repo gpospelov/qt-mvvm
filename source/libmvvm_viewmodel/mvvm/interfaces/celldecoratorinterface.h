@@ -11,7 +11,6 @@
 #define MVVM_INTERFACES_CELLDECORATORINTERFACE_H
 
 #include "mvvm/viewmodel_export.h"
-#include <string>
 
 class QModelIndex;
 class QStyleOptionViewItem;

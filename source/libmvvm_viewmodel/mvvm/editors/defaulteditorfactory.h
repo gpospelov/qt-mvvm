@@ -17,6 +17,7 @@
 #include "mvvm/interfaces/editorfactoryinterface.h"
 #include <map>
 #include <memory>
+#include <string>
 
 namespace ModelView {
 

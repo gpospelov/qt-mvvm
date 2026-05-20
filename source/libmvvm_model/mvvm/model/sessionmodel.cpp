@@ -17,6 +17,10 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/signals/modelmapper.h"
+#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

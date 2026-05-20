@@ -12,6 +12,7 @@
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <string>
 
 //! Domain object to hold mouse info.
 

@@ -12,6 +12,7 @@
 #include <cmath>
 #include <stdexcept>
 #include <thread>
+#include <utility>
 
 using namespace ModelView;
 

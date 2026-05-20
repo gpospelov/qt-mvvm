@@ -12,6 +12,7 @@
 
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/itempool.h"
+#include <memory>
 
 //! Collection of toy items and models for testing purposes.
 

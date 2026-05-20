@@ -14,6 +14,7 @@
 //! Collection of items to plot in QCustomPlot context.
 
 #include "mvvm/model/compounditem.h"
+#include <string>
 
 namespace ModelView {
 

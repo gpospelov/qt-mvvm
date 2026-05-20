@@ -11,6 +11,7 @@
 #define LAYEREDITORCORE_CUSTOMEDITORFACTORY_H
 
 #include "mvvm/editors/defaulteditorfactory.h"
+#include <memory>
 
 class ApplicationModels;
 

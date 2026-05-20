@@ -14,8 +14,11 @@
 #include "mvvm/model/externalproperty.h"
 #include "mvvm/model/variant_constants.h"
 #include <QColor>
+#include <cstddef>
 #include <functional>
-#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

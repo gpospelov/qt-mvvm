@@ -13,7 +13,7 @@
 #include "mvvm/model/taginfo.h"
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/standarditems/vectoritem.h"
-#include <stdexcept>
+#include <string>
 
 using namespace ToyItems;
 

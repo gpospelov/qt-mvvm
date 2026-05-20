@@ -14,6 +14,8 @@
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 #include <map>
+#include <memory>
+#include <string>
 
 namespace {
 using gradient_map_t = std::map<std::string, QCPColorGradient::GradientPreset>;

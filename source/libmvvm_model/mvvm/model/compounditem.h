@@ -15,6 +15,7 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/utils/reallimits.h"
+#include <string>
 
 namespace ModelView {
 

@@ -80,7 +80,6 @@ namespace filesystem = experimental::filesystem;
 // We have a decent compiler and can use the normal version
 #else
 // Include it
-#include <filesystem>
 #endif
 
 #endif // #ifndef INCLUDE_STD_FILESYSTEM_EXPERIMENTAL

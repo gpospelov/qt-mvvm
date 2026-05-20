@@ -8,9 +8,13 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/insertnewitemcommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

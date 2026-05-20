@@ -17,6 +17,9 @@
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionmodel.h"
 #include <QJsonObject>
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

@@ -15,7 +15,9 @@
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 #include <QSignalSpy>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

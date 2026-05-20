@@ -10,6 +10,11 @@
 #include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/utils/containerutils.h"
+#include <cstddef>
+#include <iterator>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

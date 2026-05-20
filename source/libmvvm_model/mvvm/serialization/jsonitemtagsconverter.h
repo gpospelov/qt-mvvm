@@ -11,7 +11,6 @@
 #define MVVM_SERIALIZATION_JSONITEMTAGSCONVERTER_H
 
 #include "mvvm/model_export.h"
-#include <functional>
 #include <memory>
 
 class QJsonObject;

@@ -11,6 +11,7 @@
 #define MVVM_STANDARDITEMS_COLORMAPITEM_H
 
 #include "mvvm/model/compounditem.h"
+#include <string>
 
 namespace ModelView {
 

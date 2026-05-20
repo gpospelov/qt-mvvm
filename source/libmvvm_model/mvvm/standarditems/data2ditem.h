@@ -11,6 +11,8 @@
 #define MVVM_STANDARDITEMS_DATA2DITEM_H
 
 #include "mvvm/model/compounditem.h"
+#include <memory>
+#include <string>
 #include <vector>
 
 namespace ModelView {

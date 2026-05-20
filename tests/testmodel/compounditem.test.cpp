@@ -13,6 +13,8 @@
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/itemutils.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

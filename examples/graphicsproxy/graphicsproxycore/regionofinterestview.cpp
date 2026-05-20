@@ -12,6 +12,8 @@
 #include "sizehandleelement.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
+#include <algorithm>
+#include <memory>
 #include <stdexcept>
 
 namespace {

@@ -10,6 +10,8 @@
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/sessionitemcontainer.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

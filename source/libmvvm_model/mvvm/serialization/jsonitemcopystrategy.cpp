@@ -11,6 +11,7 @@
 #include "mvvm/factories/itemconverterfactory.h"
 #include "mvvm/model/sessionitem.h"
 #include <QJsonObject>
+#include <memory>
 
 using namespace ModelView;
 

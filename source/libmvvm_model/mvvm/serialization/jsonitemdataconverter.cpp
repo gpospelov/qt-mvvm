@@ -14,6 +14,7 @@
 #include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <memory>
 #include <set>
 #include <stdexcept>
 

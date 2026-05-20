@@ -17,7 +17,9 @@
 #include "mvvm/serialization/jsonitemformatassistant.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <cstddef>
 #include <string>
+#include <vector>
 
 using namespace ModelView;
 

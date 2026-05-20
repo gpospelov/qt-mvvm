@@ -11,6 +11,9 @@
 #define MVVM_STANDARDITEMS_GRAPHVIEWPORTITEM_H
 
 #include "mvvm/standarditems/viewportitem.h"
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace ModelView {
 

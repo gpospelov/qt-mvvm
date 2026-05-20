@@ -14,6 +14,7 @@
 #include "mvvm/model/function_types.h"
 #include "mvvm/model_export.h"
 #include <memory>
+#include <string>
 
 namespace ModelView {
 

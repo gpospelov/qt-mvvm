@@ -22,6 +22,9 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

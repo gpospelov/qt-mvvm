@@ -9,6 +9,9 @@
 
 #include "jobmanager.h"
 #include "toysimulation.h"
+#include <exception>
+#include <thread>
+#include <vector>
 
 JobManager::JobManager(QObject* parent) : QObject(parent), is_running(true)
 {

@@ -10,6 +10,9 @@
 #include "customplot_test_utils.h"
 
 #include <qcustomplot.h>
+#include <algorithm>
+#include <iterator>
+#include <vector>
 
 std::vector<double> TestUtils::binCenters(const QCPGraph* graph)
 {

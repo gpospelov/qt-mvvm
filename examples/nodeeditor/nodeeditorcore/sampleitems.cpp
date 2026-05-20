@@ -9,6 +9,8 @@
 
 #include "sampleitems.h"
 #include <QColor>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

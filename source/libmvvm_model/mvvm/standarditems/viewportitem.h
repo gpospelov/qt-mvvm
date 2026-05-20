@@ -11,6 +11,8 @@
 #define MVVM_STANDARDITEMS_VIEWPORTITEM_H
 
 #include "mvvm/model/compounditem.h"
+#include <string>
+#include <utility>
 
 namespace ModelView {
 

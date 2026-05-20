@@ -11,7 +11,6 @@
 #define PLOTCOLORMAPCORE_COLORMAPPROPERTYWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 class QBoxLayout;

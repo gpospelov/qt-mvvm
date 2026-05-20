@@ -11,6 +11,9 @@
 #define MVVM_VIEWMODEL_PROPERTIESROWSTRATEGY_H
 
 #include "mvvm/interfaces/rowstrategyinterface.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace ModelView {
 

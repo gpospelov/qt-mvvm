@@ -13,7 +13,9 @@
 #include "mockwidgets.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/axisitems.h"
+#include <numeric>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 using ::testing::_;

@@ -15,6 +15,7 @@
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewitem.h"
 #include <QStringList>
+#include <memory>
 #include <vector>
 
 //! Custom strategy to form table rows for nested multilayers and layers.

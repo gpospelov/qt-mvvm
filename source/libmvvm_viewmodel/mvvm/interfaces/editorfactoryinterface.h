@@ -12,7 +12,6 @@
 
 #include "mvvm/viewmodel_export.h"
 #include <memory>
-#include <string>
 
 class QModelIndex;
 class QWidget;

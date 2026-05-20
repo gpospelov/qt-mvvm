@@ -8,6 +8,9 @@
 // ************************************************************************** //
 
 #include "mvvm/utils/progresshandler.h"
+#include <cstddef>
+#include <mutex>
+#include <utility>
 
 using namespace ModelView;
 

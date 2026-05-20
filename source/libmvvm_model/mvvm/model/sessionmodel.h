@@ -16,7 +16,10 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/tagrow.h"
 #include "mvvm/model_export.h"
+#include <functional>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace ModelView {
 

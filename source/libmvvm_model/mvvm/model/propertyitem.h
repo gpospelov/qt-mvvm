@@ -11,6 +11,7 @@
 #define MVVM_MODEL_PROPERTYITEM_H
 
 #include "mvvm/model/sessionitem.h"
+#include <string>
 
 namespace ModelView {
 

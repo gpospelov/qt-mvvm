@@ -12,6 +12,8 @@
 
 #include <QString>
 #include <memory>
+#include <string>
+#include <vector>
 #include "mvvm/model/customvariants.h"
 
 //! @file test_utils.h

@@ -10,6 +10,7 @@
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/signals/itemmapper.h"
 #include <sstream>
+#include <string>
 
 using namespace ModelView;
 

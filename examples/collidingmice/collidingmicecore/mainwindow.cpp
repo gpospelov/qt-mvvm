@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <memory>
 
 namespace {
 const int msec_update_period = 30;

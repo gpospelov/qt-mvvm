@@ -14,6 +14,8 @@
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

@@ -11,6 +11,7 @@
 #include "mvvm/utils/stringutils.h"
 #include <qcustomplot.h>
 #include <sstream>
+#include <string>
 
 using namespace ModelView;
 

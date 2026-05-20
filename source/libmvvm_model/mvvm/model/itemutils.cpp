@@ -12,7 +12,12 @@
 #include "mvvm/model/sessionitemcontainer.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/utils/containerutils.h"
+#include <algorithm>
+#include <cstddef>
+#include <functional>
 #include <iterator>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

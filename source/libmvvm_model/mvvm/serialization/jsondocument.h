@@ -12,6 +12,7 @@
 
 #include "mvvm/interfaces/modeldocumentinterface.h"
 #include <memory>
+#include <string>
 #include <vector>
 
 namespace ModelView {

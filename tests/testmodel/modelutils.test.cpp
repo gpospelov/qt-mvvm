@@ -12,6 +12,7 @@
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
+#include <vector>
 
 using namespace ModelView;
 

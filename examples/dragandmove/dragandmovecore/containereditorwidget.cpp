@@ -17,6 +17,9 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeView>
+#include <algorithm>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

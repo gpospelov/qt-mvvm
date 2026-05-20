@@ -12,6 +12,7 @@
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/modelutils.h"
 #include "mvvm/factories/modeldocumentfactory.h"
+#include <string>
 
 using namespace ModelView;
 

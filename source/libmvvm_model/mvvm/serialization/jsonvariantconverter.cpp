@@ -16,7 +16,11 @@
 #include "mvvm/utils/reallimits.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <algorithm>
+#include <iterator>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

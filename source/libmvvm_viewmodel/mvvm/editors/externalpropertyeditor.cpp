@@ -16,7 +16,9 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QToolButton>
+#include <functional>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 

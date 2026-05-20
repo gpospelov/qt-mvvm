@@ -18,6 +18,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <string>
 
 namespace ModelView {
 

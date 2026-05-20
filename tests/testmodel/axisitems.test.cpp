@@ -10,6 +10,7 @@
 #include "mvvm/standarditems/axisitems.h"
 
 #include "google_test.h"
+#include <vector>
 
 using namespace ModelView;
 

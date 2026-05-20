@@ -17,6 +17,7 @@
 #include <QCoreApplication>
 #include <QHBoxLayout>
 #include <QSettings>
+#include <memory>
 
 namespace {
 const QString main_window_group = "MainWindow";

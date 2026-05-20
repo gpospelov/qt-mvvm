@@ -12,6 +12,7 @@
 
 #include "mockinterfaces.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace ModelView {
 class SessionItem;

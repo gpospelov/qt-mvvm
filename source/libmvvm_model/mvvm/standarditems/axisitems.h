@@ -15,6 +15,8 @@
 
 #include "mvvm/model/compounditem.h"
 #include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace ModelView {

@@ -11,7 +11,6 @@
 #define MVVM_MODEL_MVVM_TYPES_H
 
 #include "mvvm/core/types.h"
-#include <string>
 
 namespace ModelView {
 

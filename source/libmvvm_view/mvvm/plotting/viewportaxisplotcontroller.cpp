@@ -14,7 +14,9 @@
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
 #include <QObject>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 

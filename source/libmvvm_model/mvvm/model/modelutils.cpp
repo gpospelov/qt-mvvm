@@ -11,6 +11,7 @@
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/path.h"
 #include <QJsonObject>
+#include <string>
 
 using namespace ModelView;
 

@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <map>
+#include <string>
 
 using namespace ModelView;
 

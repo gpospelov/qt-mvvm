@@ -13,7 +13,11 @@
 #include "mvvm/utils/containerutils.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 using namespace ModelView;

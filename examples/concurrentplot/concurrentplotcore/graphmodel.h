@@ -11,6 +11,7 @@
 #define CONCURRENTPLOTCORE_GRAPHMODEL_H
 
 #include "mvvm/model/sessionmodel.h"
+#include <vector>
 
 namespace ModelView {
 class GraphViewportItem;

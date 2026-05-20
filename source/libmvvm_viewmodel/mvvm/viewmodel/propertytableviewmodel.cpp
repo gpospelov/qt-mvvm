@@ -10,6 +10,9 @@
 #include "mvvm/viewmodel/propertytableviewmodel.h"
 #include "mvvm/viewmodel/standardviewmodelcontrollers.h"
 #include "mvvm/viewmodel/viewitem.h"
+#include <memory>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

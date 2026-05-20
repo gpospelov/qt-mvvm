@@ -10,6 +10,7 @@
 #ifndef MVVM_UTILS_IFACTORY_H
 #define MVVM_UTILS_IFACTORY_H
 
+#include <cstddef>
 #include <functional>
 #include <map>
 #include <memory>

@@ -11,6 +11,8 @@
 #define MVVM_VIEWMODEL_PROPERTYTABLEVIEWMODEL_H
 
 #include "mvvm/viewmodel/viewmodel.h"
+#include <memory>
+#include <vector>
 
 namespace ModelView {
 

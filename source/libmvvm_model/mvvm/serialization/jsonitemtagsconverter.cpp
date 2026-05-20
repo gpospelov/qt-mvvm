@@ -16,7 +16,9 @@
 #include "mvvm/serialization/jsontaginfoconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <memory>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 

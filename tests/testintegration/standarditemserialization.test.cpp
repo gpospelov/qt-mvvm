@@ -9,6 +9,7 @@
 
 #include "google_test.h"
 #include <QJsonObject>
+#include <vector>
 #include "mvvm/model/modelutils.h"
 #include "mvvm/standarditems/standarditemincludes.h"
 

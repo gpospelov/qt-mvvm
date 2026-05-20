@@ -10,6 +10,8 @@
 #include "modelinqmlcore/particlemodel.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/standarditems/vectoritem.h"
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 

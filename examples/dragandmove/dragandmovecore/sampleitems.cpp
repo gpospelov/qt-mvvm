@@ -11,6 +11,7 @@
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/externalproperty.h"
 #include <QColor>
+#include <string>
 
 namespace {
 

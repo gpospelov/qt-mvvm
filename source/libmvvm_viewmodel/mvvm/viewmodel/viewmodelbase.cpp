@@ -9,7 +9,10 @@
 
 #include "mvvm/viewmodel/viewmodelbase.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include <memory>
 #include <stdexcept>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

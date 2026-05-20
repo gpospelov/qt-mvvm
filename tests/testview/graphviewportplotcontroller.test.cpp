@@ -18,6 +18,8 @@
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/graphviewportitem.h"
 #include <qcustomplot.h>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

@@ -15,6 +15,9 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
+#include <algorithm>
+#include <iterator>
+#include <vector>
 
 using namespace ModelView;
 using ::testing::_;

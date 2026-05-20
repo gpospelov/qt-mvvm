@@ -11,7 +11,6 @@
 #define FLATEDITORCORE_DEMOWIDGET_H
 
 #include <QWidget>
-#include <memory>
 
 class QBoxLayout;
 

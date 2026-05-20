@@ -12,6 +12,7 @@
 
 #include "mvvm/core/types.h"
 #include "mvvm/model_export.h"
+#include <cstddef>
 #include <map>
 
 namespace ModelView {

@@ -10,6 +10,7 @@
 #include "folderbasedtest.h"
 #include "test_utils.h"
 #include "mvvm/utils/fileutils.h"
+#include <string>
 
 FolderBasedTest::FolderBasedTest(const std::string& test_dir) : m_test_dir(test_dir)
 {

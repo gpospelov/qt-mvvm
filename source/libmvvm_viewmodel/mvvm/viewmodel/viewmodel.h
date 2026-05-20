@@ -11,6 +11,8 @@
 #define MVVM_VIEWMODEL_VIEWMODEL_H
 
 #include "mvvm/viewmodel/viewmodelbase.h"
+#include <memory>
+#include <vector>
 
 namespace ModelView {
 

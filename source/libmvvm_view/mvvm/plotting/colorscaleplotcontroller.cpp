@@ -11,7 +11,9 @@
 #include "mvvm/plotting/viewportaxisplotcontroller.h"
 #include "mvvm/standarditems/axisitems.h"
 #include <qcustomplot.h>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 

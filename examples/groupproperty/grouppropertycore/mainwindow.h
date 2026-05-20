@@ -11,7 +11,6 @@
 #define GROUPPROPERTYCORE_MAINWINDOW_H
 
 #include <QMainWindow>
-#include <memory>
 
 namespace GroupProperty {
 

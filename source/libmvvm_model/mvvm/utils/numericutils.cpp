@@ -9,6 +9,7 @@
 
 #include "mvvm/utils/numericutils.h"
 #include <algorithm>
+#include <cstdlib>
 #include <limits>
 #include <random>
 
