@@ -11,6 +11,11 @@ option(MVVM_BUILD_EXAMPLES "Build user examples" ON)
 option(MVVM_SETUP_CLANGFORMAT "Setups target to beautify the code with 'make clangformat'" OFF)
 option(MVVM_SETUP_CODECOVERAGE "Setups target to generate coverage information with 'make coverage'" OFF)
 
+find_program(NINJA_PROGRAM ninja)
+if(NINJA_PROGRAM)
+    message(STATUS "Found ninja: ${NINJA_PROGRAM}.")
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 include(configuration)
 

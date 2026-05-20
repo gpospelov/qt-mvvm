@@ -2,7 +2,6 @@ name: Windows
 
 env:
   CCACHE_VERSION: 3.7.7
-  NINJA_VERSION: 1.10.0
 
 on:
   push:
@@ -19,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6.0.2
 
-    - name: Download ccache and Ninja
+    - name: Download ccache
       id: ccache
       shell: cmake -P {0}
       run: |
@@ -27,10 +26,6 @@ jobs:
         file(DOWNLOAD "${ccache_url}" ./ccache.tar.xz SHOW_PROGRESS)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ccache.tar.xz)
         
-        set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v$ENV{NINJA_VERSION}/ninja-win.zip")
-        file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
-
     - name: ccache timestamp
       id: ccache_cache_timestamp
       shell: cmake -P {0}
