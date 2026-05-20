@@ -16,6 +16,19 @@ if(NINJA_PROGRAM)
     message(STATUS "Found ninja: ${NINJA_PROGRAM}.")
 endif()
 
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM)
+    message(STATUS "Found ccache: ${CCACHE_PROGRAM}.")
+endif()
+
+if(CMAKE_C_COMPILER_LAUNCHER)
+    message(STATUS "CMAKE_C_COMPILER_LAUNCHER set: ${CMAKE_C_COMPILER_LAUNCHER}.")
+endif()
+
+if(CMAKE_CXX_COMPILER_LAUNCHER)
+    message(STATUS "CMAKE_CXX_COMPILER_LAUNCHER set: ${CMAKE_CXX_COMPILER_LAUNCHER}.")
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 include(configuration)
 
