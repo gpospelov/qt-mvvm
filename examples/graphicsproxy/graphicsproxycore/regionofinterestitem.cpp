@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "regionofinterestitem.h"
+#include <string>
 
 namespace {
 const std::string RegionOfInterestItemType = "RegionOfInterest";

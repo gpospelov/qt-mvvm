@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "mvvm/model/externalproperty.h"
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

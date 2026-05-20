@@ -58,6 +58,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <cmath>
+#include <string>
 
 const qreal Pi = M_PI;
 const qreal TwoPi = 2 * M_PI;

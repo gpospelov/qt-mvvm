@@ -14,6 +14,7 @@
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;

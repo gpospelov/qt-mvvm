@@ -9,12 +9,20 @@
 
 #include "mvvm/utils/stringutils.h"
 #include <algorithm>
+#include <cstddef>
+#include <cstdlib>
 #include <iomanip>
+#include <ios>
 #include <iterator>
 #include <limits>
+#include <locale>
+#include <optional>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 #include <string_view>
 #include <limits>
+#include <vector>
 
 using namespace ModelView;
 

@@ -14,6 +14,9 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/variant_constants.h"
 #include "mvvm/viewmodel/viewmodel.h"
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

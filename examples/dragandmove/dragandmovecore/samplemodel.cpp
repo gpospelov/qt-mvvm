@@ -12,6 +12,8 @@
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QColor>
+#include <cstddef>
+#include <string>
 
 namespace DragAndMove {
 

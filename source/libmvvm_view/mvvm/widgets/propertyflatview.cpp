@@ -19,6 +19,10 @@
 #include <QDataWidgetMapper>
 #include <QGridLayout>
 #include <QLabel>
+#include <cstddef>
+#include <memory>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

@@ -13,6 +13,8 @@
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QVBoxLayout>
+#include <cstddef>
+#include <utility>
 
 using namespace ModelView;
 

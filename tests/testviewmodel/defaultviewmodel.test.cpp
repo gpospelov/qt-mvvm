@@ -26,6 +26,9 @@
 #include "mvvm/viewmodel/standardviewitems.h"
 #include <QJsonObject>
 #include <QSignalSpy>
+#include <memory>
+#include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

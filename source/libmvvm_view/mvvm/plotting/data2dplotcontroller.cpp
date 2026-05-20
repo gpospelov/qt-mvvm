@@ -12,7 +12,11 @@
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 

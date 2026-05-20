@@ -12,7 +12,10 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project.h"
 #include "mvvm/utils/fileutils.h"
+#include <algorithm>
 #include <cctype>
+#include <memory>
+#include <string>
 
 namespace {
 const std::string json_extention = ".json";

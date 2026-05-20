@@ -11,6 +11,8 @@
 #include "mvvm/model/comboproperty.h"
 #include <QComboBox>
 #include <QVBoxLayout>
+#include <string>
+#include <vector>
 
 namespace {
 QStringList toList(const std::vector<std::string>& container)

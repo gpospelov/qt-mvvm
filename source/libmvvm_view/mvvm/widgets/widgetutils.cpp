@@ -16,6 +16,8 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QSize>
+#include <string>
+#include <vector>
 
 namespace {
 

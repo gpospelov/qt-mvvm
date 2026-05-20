@@ -15,6 +15,8 @@
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemtags.h"
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 

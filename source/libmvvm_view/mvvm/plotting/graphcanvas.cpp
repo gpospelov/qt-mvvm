@@ -16,6 +16,8 @@
 #include "mvvm/widgets/statuslabel.h"
 #include <qcustomplot.h>
 #include <QBoxLayout>
+#include <memory>
+#include <string>
 
 namespace {
 

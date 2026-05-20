@@ -15,6 +15,7 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/data2ditem.h"
+#include <vector>
 
 using namespace ModelView;
 using ::testing::_;

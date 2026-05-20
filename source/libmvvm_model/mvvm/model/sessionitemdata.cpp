@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

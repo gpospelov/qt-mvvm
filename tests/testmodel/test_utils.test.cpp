@@ -10,6 +10,8 @@
 #include "test_utils.h"
 
 #include "google_test.h"
+#include <string>
+#include <vector>
 
 using TestUtils::toVector;
 

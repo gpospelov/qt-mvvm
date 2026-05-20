@@ -12,6 +12,8 @@
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
+#include <utility>
 
 namespace {
 std::unique_ptr<ModelView::ItemFactory> DefaultItemFactory()

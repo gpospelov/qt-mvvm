@@ -12,6 +12,7 @@
 #include <QDoubleValidator>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <limits>
 #include <stdexcept>
 
 namespace {

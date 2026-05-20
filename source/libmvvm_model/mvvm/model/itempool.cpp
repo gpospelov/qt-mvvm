@@ -9,7 +9,9 @@
 
 #include "mvvm/model/itempool.h"
 #include "mvvm/core/uniqueidgenerator.h"
+#include <cstddef>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 

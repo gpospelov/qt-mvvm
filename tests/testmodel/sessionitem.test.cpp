@@ -19,6 +19,9 @@
 #include "mvvm/model/variant_constants.h"
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

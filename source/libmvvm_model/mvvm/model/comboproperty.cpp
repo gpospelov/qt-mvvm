@@ -9,8 +9,13 @@
 
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/utils/containerutils.h"
+#include <algorithm>
+#include <cstddef>
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 const std::string value_separator = ";";

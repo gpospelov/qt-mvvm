@@ -23,6 +23,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

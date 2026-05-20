@@ -9,6 +9,8 @@
 
 #include "mvvm/signals/modelmapper.h"
 #include "mvvm/signals/callbackcontainer.h"
+#include <memory>
+#include <utility>
 
 using namespace ModelView;
 

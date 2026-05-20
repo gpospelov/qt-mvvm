@@ -10,7 +10,11 @@
 #include "mvvm/plotting/data1dplotcontroller.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include <qcustomplot.h>
+#include <cassert>
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 namespace {
 template <typename T> QVector<T> fromStdVector(const std::vector<T>& vec)

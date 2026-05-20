@@ -11,6 +11,7 @@
 
 #include "google_test.h"
 #include <limits>
+#include <string>
 
 using namespace ModelView;
 

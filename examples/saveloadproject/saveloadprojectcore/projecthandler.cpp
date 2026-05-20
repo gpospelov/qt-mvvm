@@ -16,6 +16,8 @@
 #include "mvvm/project/project_types.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QMainWindow>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

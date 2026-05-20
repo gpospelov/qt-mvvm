@@ -9,6 +9,7 @@
 
 #include "mvvm/viewmodel/propertyflatviewmodel.h"
 #include "mvvm/viewmodel/standardviewmodelcontrollers.h"
+#include <memory>
 
 using namespace ModelView;
 

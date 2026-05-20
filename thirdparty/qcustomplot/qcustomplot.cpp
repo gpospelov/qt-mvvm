@@ -24,6 +24,10 @@
 ****************************************************************************/
 
 #include "qcustomplot.h"
+#include <algorithm>
+#include <cstring>
+#include <iterator>
+#include <limits>
 
 
 /* including file 'src/vector2d.cpp'       */

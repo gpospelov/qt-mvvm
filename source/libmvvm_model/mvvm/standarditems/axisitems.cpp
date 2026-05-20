@@ -9,6 +9,11 @@
 
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include <cstddef>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 const double default_axis_min = 0.0;

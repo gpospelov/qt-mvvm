@@ -11,6 +11,8 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/serialization/jsonitembackupstrategy.h"
 #include "mvvm/serialization/jsonitemcopystrategy.h"
+#include <cassert>
+#include <memory>
 
 std::unique_ptr<ModelView::ItemBackupStrategy>
 ModelView::CreateItemBackupStrategy(const ModelView::SessionModel* model)

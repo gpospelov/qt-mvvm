@@ -17,6 +17,7 @@
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
+#include <memory>
 
 using namespace ModelView;
 

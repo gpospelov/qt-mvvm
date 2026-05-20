@@ -11,7 +11,10 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/signals/callbackcontainer.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

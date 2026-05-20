@@ -12,7 +12,10 @@
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

@@ -11,6 +11,7 @@
 
 #include "google_test.h"
 #include "testconfig.h"
+#include <string>
 
 using namespace ModelView;
 

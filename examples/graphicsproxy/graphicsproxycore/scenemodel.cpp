@@ -15,6 +15,7 @@
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/standarditems/data2ditem.h"
 #include <cmath>
+#include <vector>
 
 using namespace ModelView;
 

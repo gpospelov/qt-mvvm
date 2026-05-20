@@ -13,6 +13,7 @@
 #include "toymodel.h"
 #include "mvvm/model/itemutils.h"
 #include <QSignalSpy>
+#include <vector>
 
 using namespace ModelView;
 

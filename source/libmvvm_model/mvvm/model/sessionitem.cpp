@@ -15,7 +15,11 @@
 #include "mvvm/model/taginfo.h"
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/signals/modelmapper.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

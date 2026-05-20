@@ -9,6 +9,7 @@
 
 #include "mvvm/model/datarole.h"
 #include "mvvm/model/customvariants.h"
+#include <utility>
 
 using namespace ModelView;
 

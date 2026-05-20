@@ -19,6 +19,8 @@
 #include "mvvm/serialization/jsonitemtagsconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <memory>
+#include <stdexcept>
 
 using namespace ModelView;
 

@@ -17,6 +17,8 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/standarditems/vectoritem.h"
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

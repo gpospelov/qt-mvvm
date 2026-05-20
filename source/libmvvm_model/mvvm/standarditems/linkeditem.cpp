@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mvvm/standarditems/linkeditem.h"
+#include <string>
 
 using namespace ModelView;
 

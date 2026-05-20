@@ -8,11 +8,15 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/moveitemcommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

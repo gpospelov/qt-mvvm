@@ -10,6 +10,8 @@
 #include "mvvm/model/taginfo.h"
 
 #include "google_test.h"
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

@@ -13,6 +13,7 @@
 #include "modelinqmlcore/tablemodel.h"
 #include "mvvm/factories/viewmodelfactory.h"
 #include "mvvm/viewmodel/viewmodel.h"
+#include <memory>
 
 using namespace ModelView;
 

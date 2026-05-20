@@ -10,7 +10,10 @@
 #include "mvvm/project/projectmanagerdecorator.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/project/projectmanager.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

@@ -12,8 +12,12 @@
 #include "mvvm/utils/containerutils.h"
 #include <QCursor>
 #include <QPainter>
+#include <algorithm>
 #include <functional>
+#include <iterator>
 #include <stdexcept>
+#include <utility>
+#include <vector>
 
 namespace GraphicsProxy {
 

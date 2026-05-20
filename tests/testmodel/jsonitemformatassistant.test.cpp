@@ -13,6 +13,7 @@
 #include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <string>
 
 using namespace ModelView;
 

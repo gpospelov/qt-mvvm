@@ -8,6 +8,7 @@
 // ************************************************************************** //
 
 #include "mvvm/model/tagrow.h"
+#include <string>
 
 //! Constructs new tagrow representing next row in given tag.
 //! No validity check.

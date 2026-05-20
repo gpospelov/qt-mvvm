@@ -10,6 +10,9 @@
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/itemcatalogue.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

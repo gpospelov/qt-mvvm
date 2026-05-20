@@ -12,6 +12,7 @@
 #include "materialpropertycontroller.h"
 #include "samplemodel.h"
 #include "mvvm/factories/modeldocumentfactory.h"
+#include <memory>
 
 using namespace ModelView;
 

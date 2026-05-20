@@ -14,6 +14,8 @@
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

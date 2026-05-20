@@ -11,6 +11,9 @@
 #include "mvvm/plotting/colormapinfoformatter.h"
 #include "mvvm/plotting/graphinfoformatter.h"
 #include "mvvm/plotting/statusstringreporter.h"
+#include <functional>
+#include <memory>
+#include <string>
 
 namespace ModelView {
 

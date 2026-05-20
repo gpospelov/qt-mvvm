@@ -14,6 +14,9 @@
 #include "mvvm/project/projectutils.h"
 #include "mvvm/utils/fileutils.h"
 #include <functional>
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

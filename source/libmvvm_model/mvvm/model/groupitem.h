@@ -12,6 +12,7 @@
 
 #include "mvvm/model/sessionitem.h"
 #include <vector>
+#include <string>
 
 namespace ModelView {
 

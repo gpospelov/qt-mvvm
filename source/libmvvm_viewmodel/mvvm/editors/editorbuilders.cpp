@@ -21,6 +21,7 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/utils/reallimits.h"
 #include <cmath>
+#include <memory>
 
 namespace {
 double singleStep(int decimals)

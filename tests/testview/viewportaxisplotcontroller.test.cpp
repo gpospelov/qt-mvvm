@@ -17,6 +17,7 @@
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
 #include <QSignalSpy>
+#include <memory>
 
 using namespace ModelView;
 using ::testing::_;

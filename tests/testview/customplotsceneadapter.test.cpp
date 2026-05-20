@@ -11,6 +11,7 @@
 
 #include "google_test.h"
 #include <qcustomplot.h>
+#include <memory>
 
 using namespace ModelView;
 

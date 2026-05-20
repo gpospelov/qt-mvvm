@@ -15,6 +15,7 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include <QGridLayout>
+#include <vector>
 
 using namespace ModelView;
 

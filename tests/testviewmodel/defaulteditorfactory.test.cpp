@@ -29,6 +29,8 @@
 #include <QSpinBox>
 #include <QStandardItemModel>
 #include <limits>
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 

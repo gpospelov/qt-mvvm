@@ -12,6 +12,8 @@
 #include "mvvm/viewmodel/viewmodeldelegate.h"
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <memory>
+#include <utility>
 
 using namespace ModelView;
 

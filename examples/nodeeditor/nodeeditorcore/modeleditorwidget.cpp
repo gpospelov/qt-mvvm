@@ -23,6 +23,7 @@
 #include <QSplitter>
 #include <QToolBar>
 #include <QUndoStack>
+#include <memory>
 
 using namespace ModelView;
 

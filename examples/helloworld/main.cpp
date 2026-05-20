@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTreeView>
+#include <string>
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"

@@ -10,6 +10,7 @@
 #include "mvvm/standarditems/plottableitems.h"
 #include "mvvm/model/comboproperty.h"
 #include <QColor>
+#include <string>
 
 using namespace ModelView;
 

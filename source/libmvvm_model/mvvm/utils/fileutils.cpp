@@ -11,7 +11,9 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
-#include <stdexcept>
+#include <filesystem>
+#include <string>
+#include <vector>
 
 #ifdef ENABLE_FILESYSTEM
 #include "mvvm/core/filesystem.h"

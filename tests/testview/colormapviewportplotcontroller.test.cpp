@@ -17,6 +17,8 @@
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

@@ -11,7 +11,9 @@
 #include "mvvm/plotting/mousemovereporter.h"
 #include "mvvm/plotting/mouseposinfo.h"
 #include "mvvm/plotting/statusstringformatterinterface.h"
+#include <memory>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 

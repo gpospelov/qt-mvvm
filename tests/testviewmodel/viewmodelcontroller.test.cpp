@@ -18,6 +18,9 @@
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelbase.h"
 #include <QSignalSpy>
+#include <cstddef>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

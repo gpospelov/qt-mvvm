@@ -10,6 +10,7 @@
 #include "mvvm/model/tagrow.h"
 
 #include "google_test.h"
+#include <string>
 
 using namespace ModelView;
 

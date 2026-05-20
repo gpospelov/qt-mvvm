@@ -10,6 +10,7 @@
 #include "customplotsceneadapter.h"
 #include <qcustomplot.h>
 #include <QObject>
+#include <memory>
 
 using namespace ModelView;
 
