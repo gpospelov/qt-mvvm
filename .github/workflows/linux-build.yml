@@ -8,12 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       max-parallel: 3
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6.0.2
 
     - name: setup dependencies
       run: |
@@ -28,7 +28,7 @@ jobs:
         message("::set-output name=timestamp::${current_date}")
         
     - name: ccache files
-      uses: actions/cache@v1.1.0
+      uses: actions/cache@v5.0.5
       with:
         path: .ccache
         key: qtmvvm-ubuntu-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
@@ -50,7 +50,7 @@ jobs:
         make -j4        
         
     - name: Upload tarball
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7.0.1
       if: success()
       with:
          name: qt-mvvm
@@ -65,7 +65,7 @@ jobs:
         ctest -j4
 
     - name: upload test logs
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7.0.1
       if: failure()
       with:
          name: LastTest.log

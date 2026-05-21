@@ -13,7 +13,7 @@ jobs:
       max-parallel: 3
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6.0.2
 
     - name: dependencies
       run: |
@@ -29,7 +29,7 @@ jobs:
         message("::set-output name=timestamp::${current_date}")
         
     - name: ccache files
-      uses: actions/cache@v1.1.0
+      uses: actions/cache@v5.0.5
       with:
         path: .ccache
         key: qtmvvm-macos-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
@@ -67,7 +67,7 @@ jobs:
         ctest -j4
 
     - name: ctest output
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v7.0.1
       if: failure()
       with:
          name: LastTest.log
