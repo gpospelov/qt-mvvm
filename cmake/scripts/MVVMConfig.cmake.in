@@ -4,7 +4,7 @@
 get_filename_component(MVVM_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 
 include(CMakeFindDependencyMacro)
-find_dependency(Qt5 5.12 COMPONENTS Widgets REQUIRED)
+find_dependency(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_dependency(Threads)
 
 if(TARGET MVVM::Model OR TARGET MVVM::ViewModel OR TARGET MVVM::View)
