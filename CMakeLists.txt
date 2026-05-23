@@ -14,8 +14,9 @@ option(MVVM_SETUP_CODECOVERAGE "Setups target to generate coverage information w
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
 include(configuration)
 
-add_subdirectory(source)
 add_subdirectory(thirdparty)
+add_subdirectory(source)
+
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif(BUILD_TESTING)

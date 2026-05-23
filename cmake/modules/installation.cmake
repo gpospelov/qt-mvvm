@@ -14,7 +14,7 @@ install(EXPORT mvvm-targets FILE MVVMTargets.cmake NAMESPACE MVVM:: DESTINATION 
 # -----------------------------------------------------------------------------
 
 # Add all targets to the build-tree export set
-export(TARGETS mvvm_model mvvm_viewmodel mvvm_view NAMESPACE MVVM:: FILE "${PROJECT_BINARY_DIR}/MVVMTargets.cmake")
+export(TARGETS mvvm_model mvvm_viewmodel mvvm_view qcustomplot NAMESPACE MVVM:: FILE "${PROJECT_BINARY_DIR}/MVVMTargets.cmake")
 
 # Export the package for use from the build-tree (goes to $HOME/.cmake)
 set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
