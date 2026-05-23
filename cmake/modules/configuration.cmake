@@ -72,16 +72,3 @@ configure_file(${MVVM_PROJECT_DIR}/cmake/scripts/testconfig.h.in  ${MVVM_AUTOGEN
 if (MVVM_BUMP_VERSION)
     configure_file(${MVVM_PROJECT_DIR}/cmake/scripts/mvvm_version.h.in  ${MVVM_PROJECT_DIR}/source/libmvvm_model/mvvm/core/version.h @ONLY)
 endif()
-
-# -----------------------------------------------------------------------------
-# Compile options
-# -----------------------------------------------------------------------------
-
-add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
-
-# warning level
-if (MSVC)
-    add_compile_options(/W2)
-else()
-    add_compile_options(-Wall -Wextra -pedantic)
-endif()

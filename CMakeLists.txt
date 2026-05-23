@@ -44,6 +44,32 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	message(STATUS "MSVC: COMPILER=${CMAKE_CXX_COMPILER}")
 endif()
 
+# https://github.com/cpp-best-practices/cmake_template/blob/main/cmake/CompilerWarnings.cmake
+
+if((CMAKE_C_COMPILER_ID STREQUAL "MSVC") OR (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC"))
+
+	# The allowed values are:
+	#  MultiThreaded: Compile with -MT or equivalent flag(s) to use a multi-threaded statically-linked runtime library.
+	#  MultiThreadedDLL: Compile with -MD or equivalent flag(s) to use a multi-threaded dynamically-linked runtime library.
+	#  MultiThreadedDebug: Compile with -MTd or equivalent flag(s) to use a multi-threaded statically-linked runtime library.
+	#  MultiThreadedDebugDLL: Compile with -MDd or equivalent flag(s) to use a multi-threaded dynamically-linked runtime library.
+	# Must match what's set on the build of the (google) tests!
+	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL$<$<CONFIG:Debug>:Debug>")
+	
+	# Set /MP (Build with multiple processes):
+	# https://learn.microsoft.com/en-us/cpp/build/reference/mp-build-with-multiple-processes
+	add_compile_options(/MP)
+
+	# Warning level:
+    add_compile_options(/W3)
+	
+else()
+
+	# Warning level:
+    add_compile_options(-Wall -Wextra -pedantic)
+
+endif()
+
 add_subdirectory(thirdparty)
 add_subdirectory(source)
 
