@@ -4,7 +4,7 @@ fetch_googletest()
 include(GoogleTest)
 
 if(WIN32)
-    add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
+    #add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
 endif()
 
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Core Test REQUIRED)

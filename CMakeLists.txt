@@ -54,7 +54,7 @@ if((CMAKE_C_COMPILER_ID STREQUAL "MSVC") OR (CMAKE_CXX_COMPILER_ID STREQUAL "MSV
 	#  MultiThreadedDebug: Compile with -MTd or equivalent flag(s) to use a multi-threaded statically-linked runtime library.
 	#  MultiThreadedDebugDLL: Compile with -MDd or equivalent flag(s) to use a multi-threaded dynamically-linked runtime library.
 	# Must match what's set on the build of the (google) tests!
-	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDLL$<$<CONFIG:Debug>:Debug>")
+	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 	
 	# Set /MP (Build with multiple processes):
 	# https://learn.microsoft.com/en-us/cpp/build/reference/mp-build-with-multiple-processes

@@ -4,7 +4,7 @@
 
 set(library_name mvvm_view)
 
-add_library(${library_name} SHARED "")
+add_library(${library_name} STATIC "")
 add_subdirectory(mvvm)
 add_library(MVVM::View ALIAS ${library_name}) # alias for build-tree usage
 
