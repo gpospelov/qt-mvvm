@@ -70,7 +70,7 @@ TEST_F(CompoundItemTest, addDoubleProperty)
     EXPECT_EQ(propertyItem->modelType(), Constants::PropertyType);
     EXPECT_TRUE(Utils::IsDoubleVariant(propertyItem->data<QVariant>()));
     EXPECT_EQ(propertyItem->displayName(), property_name);
-    EXPECT_EQ(propertyItem->data<double>(), expected);
+    EXPECT_DOUBLE_EQ(propertyItem->data<double>(), expected);
 
     EXPECT_TRUE(propertyItem->data<QVariant>(ItemDataRole::LIMITS).isValid());
 
@@ -88,8 +88,8 @@ TEST_F(CompoundItemTest, setDoubleProperty)
     const double expected = 42.0;
     item.setProperty(property_name, expected);
 
-    EXPECT_EQ(item.property<double>(property_name), expected);
-    EXPECT_EQ(propertyItem->data<double>(), expected);
+    EXPECT_DOUBLE_EQ(item.property<double>(property_name), expected);
+    EXPECT_DOUBLE_EQ(propertyItem->data<double>(), expected);
 }
 
 TEST_F(CompoundItemTest, addCharProperty)

@@ -60,9 +60,9 @@ TEST_F(ToyItemsSerializationTest, modifiedShapeGroupItemInModel)
     // checking properties of
     EXPECT_EQ(groupCopy->currentIndex(), group->currentIndex());
     EXPECT_EQ(groupCopy->currentItem()->modelType(), group->currentItem()->modelType());
-    EXPECT_EQ(groupCopy->children().at(0)->property<double>(CylinderItem::P_RADIUS), 42.0);
-    EXPECT_EQ(groupCopy->children().at(1)->property<double>(SphereItem::P_RADIUS), 43.0);
-    EXPECT_EQ(groupCopy->children().at(2)->property<double>(AnysoPyramidItem::P_LENGTH), 44.0);
+    EXPECT_DOUBLE_EQ(groupCopy->children().at(0)->property<double>(CylinderItem::P_RADIUS), 42.0);
+    EXPECT_DOUBLE_EQ(groupCopy->children().at(1)->property<double>(SphereItem::P_RADIUS), 43.0);
+    EXPECT_DOUBLE_EQ(groupCopy->children().at(2)->property<double>(AnysoPyramidItem::P_LENGTH), 44.0);
 }
 
 //! Insert all supported items in a model and check that after serialization

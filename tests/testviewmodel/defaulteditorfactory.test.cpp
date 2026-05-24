@@ -77,8 +77,8 @@ TEST_F(DefaultEditorFactoryTest, integerProperty)
     auto spin_box = editor->findChild<QSpinBox*>();
 
     ASSERT_TRUE(spin_box != nullptr);
-    EXPECT_EQ(spin_box->minimum(), -65536);
-    EXPECT_EQ(spin_box->maximum(), 65536);
+    EXPECT_DOUBLE_EQ(spin_box->minimum(), -65536);
+    EXPECT_DOUBLE_EQ(spin_box->maximum(), 65536);
 }
 
 //! Tests editor creation on integer property with limits.
@@ -90,8 +90,8 @@ TEST_F(DefaultEditorFactoryTest, integerPropertyWithLimits)
 
     auto spin_box = editor->findChild<QSpinBox*>();
     ASSERT_TRUE(spin_box != nullptr);
-    EXPECT_EQ(spin_box->minimum(), -1);
-    EXPECT_EQ(spin_box->maximum(), 1);
+    EXPECT_DOUBLE_EQ(spin_box->minimum(), -1);
+    EXPECT_DOUBLE_EQ(spin_box->maximum(), 1);
 }
 
 //! Tests editor creation on double property.
@@ -103,8 +103,8 @@ TEST_F(DefaultEditorFactoryTest, doubleProperty)
 
     auto spin_box = editor->findChild<ScientificSpinBox*>();
     ASSERT_TRUE(spin_box != nullptr);
-    EXPECT_FLOAT_EQ(spin_box->minimum(), -std::numeric_limits<double>::max());
-    EXPECT_FLOAT_EQ(spin_box->maximum(), std::numeric_limits<double>::max());
+    EXPECT_DOUBLE_EQ(spin_box->minimum(), -std::numeric_limits<double>::max());
+    EXPECT_DOUBLE_EQ(spin_box->maximum(), std::numeric_limits<double>::max());
 }
 
 //! Tests editor creation on double property with limits.
@@ -116,8 +116,8 @@ TEST_F(DefaultEditorFactoryTest, doublePropertyWithLimits)
 
     auto spin_box = editor->findChild<ScientificSpinBox*>();
     ASSERT_TRUE(spin_box != nullptr);
-    EXPECT_FLOAT_EQ(spin_box->minimum(), 41);
-    EXPECT_FLOAT_EQ(spin_box->maximum(), 43);
+    EXPECT_DOUBLE_EQ(spin_box->minimum(), 41);
+    EXPECT_DOUBLE_EQ(spin_box->maximum(), 43);
 }
 
 //! Tests editor creation on color property.

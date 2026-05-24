@@ -72,7 +72,7 @@ TEST_F(ToyItemsShapeGroupTest, currentItemNoConst)
 {
     ToyItems::ShapeGroupItem item;
     item.currentItem()->setProperty(ToyItems::SphereItem::P_RADIUS, 42.0);
-    EXPECT_EQ(item.currentItem()->property<double>(ToyItems::SphereItem::P_RADIUS), 42.0);
+    EXPECT_DOUBLE_EQ(item.currentItem()->property<double>(ToyItems::SphereItem::P_RADIUS), 42.0);
 }
 
 TEST_F(ToyItemsShapeGroupTest, inModelContext)

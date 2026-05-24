@@ -121,7 +121,7 @@ TEST_F(SessionItemTest, setDoubleData)
     SessionItem item;
     const double expected = 42.0;
     EXPECT_TRUE(item.setData(expected));
-    EXPECT_EQ(item.data<double>(), expected);
+    EXPECT_DOUBLE_EQ(item.data<double>(), expected);
 }
 
 TEST_F(SessionItemTest, setIntData)
@@ -165,7 +165,7 @@ TEST_F(SessionItemTest, displayName)
     // checking setter
     item.setDisplayName("width");
     EXPECT_EQ(item.displayName(), "width");
-    EXPECT_EQ(item.data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(item.data<double>(), 42.0);
 }
 
 //! Attempt to set the different Variant to already existing role.

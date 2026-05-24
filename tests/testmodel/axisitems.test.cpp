@@ -23,8 +23,8 @@ class AxisItemsTest : public ::testing::Test {
 TEST_F(AxisItemsTest, viewportAxisInitialState)
 {
     ViewportAxisItem axis;
-    EXPECT_EQ(axis.property<double>(ViewportAxisItem::P_MIN), 0.0);
-    EXPECT_EQ(axis.property<double>(ViewportAxisItem::P_MAX), 1.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(ViewportAxisItem::P_MIN), 0.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(ViewportAxisItem::P_MAX), 1.0);
     EXPECT_FALSE(axis.property<bool>(ViewportAxisItem::P_IS_LOG));
 }
 
@@ -36,12 +36,12 @@ TEST_F(AxisItemsTest, viewportAxisSetRange)
 
     // default range
     auto [lower, upper] = axis.range();
-    EXPECT_EQ(lower, 0.0);
-    EXPECT_EQ(upper, 1.0);
+    EXPECT_DOUBLE_EQ(lower, 0.0);
+    EXPECT_DOUBLE_EQ(upper, 1.0);
 
     axis.set_range(1.0, 2.0);
-    EXPECT_EQ(axis.property<double>(ViewportAxisItem::P_MIN), 1.0);
-    EXPECT_EQ(axis.property<double>(ViewportAxisItem::P_MAX), 2.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(ViewportAxisItem::P_MIN), 1.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(ViewportAxisItem::P_MAX), 2.0);
 }
 
 //! Factory method for FixedBinAxisItem.
@@ -49,14 +49,14 @@ TEST_F(AxisItemsTest, viewportAxisSetRange)
 TEST_F(AxisItemsTest, fixedBinAxisInitialState)
 {
     FixedBinAxisItem axis;
-    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MIN), 0.0);
-    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MAX), 1.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(FixedBinAxisItem::P_MIN), 0.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(FixedBinAxisItem::P_MAX), 1.0);
     EXPECT_EQ(axis.property<int>(FixedBinAxisItem::P_NBINS), 1);
     EXPECT_EQ(axis.binCenters(), std::vector<double>{0.5});
     EXPECT_EQ(axis.size(), 1);
     auto [lower, upper] = axis.range();
-    EXPECT_EQ(lower, 0.0);
-    EXPECT_EQ(upper, 1.0);
+    EXPECT_DOUBLE_EQ(lower, 0.0);
+    EXPECT_DOUBLE_EQ(upper, 1.0);
 }
 
 //! Factory method for FixedBinAxisItem.
@@ -67,8 +67,8 @@ TEST_F(AxisItemsTest, fixedBinAxisSetParameters)
     axis.setParameters(3, 1.0, 4.0);
 
     EXPECT_EQ(axis.property<int>(FixedBinAxisItem::P_NBINS), 3);
-    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MIN), 1.0);
-    EXPECT_EQ(axis.property<double>(FixedBinAxisItem::P_MAX), 4.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(FixedBinAxisItem::P_MIN), 1.0);
+    EXPECT_DOUBLE_EQ(axis.property<double>(FixedBinAxisItem::P_MAX), 4.0);
 
     std::vector<double> expected{1.5, 2.5, 3.5};
     EXPECT_EQ(axis.binCenters(), expected);
@@ -82,8 +82,8 @@ TEST_F(AxisItemsTest, fixedBinAxisFactory)
     auto axis = FixedBinAxisItem::create(3, 1.0, 4.0);
 
     EXPECT_EQ(axis->property<int>(FixedBinAxisItem::P_NBINS), 3);
-    EXPECT_EQ(axis->property<double>(FixedBinAxisItem::P_MIN), 1.0);
-    EXPECT_EQ(axis->property<double>(FixedBinAxisItem::P_MAX), 4.0);
+    EXPECT_DOUBLE_EQ(axis->property<double>(FixedBinAxisItem::P_MIN), 1.0);
+    EXPECT_DOUBLE_EQ(axis->property<double>(FixedBinAxisItem::P_MAX), 4.0);
 
     std::vector<double> expected{1.5, 2.5, 3.5};
     EXPECT_EQ(axis->binCenters(), expected);
