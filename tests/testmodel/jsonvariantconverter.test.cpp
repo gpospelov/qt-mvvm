@@ -15,13 +15,25 @@
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
 #include "mvvm/model/externalproperty.h"
-#include "mvvm/model/variant_constants.h"
 #include "mvvm/utils/reallimits.h"
 #include <QColor>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <string>
 #include <vector>
+
+namespace
+{
+    inline static const QStringList expectedKeys = QStringList {"type", "value"};
+
+    //! Returns true if the given json object as all the keys required for representing variant.
+    bool isVariant(const QJsonObject& object)
+    {
+        return object.keys() == expectedKeys;
+    }
+}
+
 
 using namespace ModelView;
 
@@ -33,9 +45,8 @@ public:
 
     static QVariant ToJsonAndBack(const QVariant& variant)
     {
-        JsonVariantConverter converter;
-        auto json = converter.get_json(variant);
-        return converter.get_variant(json);
+        auto json = JsonVariantConverter::get_json(variant);
+        return JsonVariantConverter::get_variant(json);
     }
 };
 
@@ -43,16 +54,14 @@ public:
 
 TEST_F(JsonVariantConverterTest, invalidVariant)
 {
-    JsonVariantConverter converter;
-
     QVariant variant;
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_FALSE(reco_variant.isValid());
     EXPECT_EQ(variant, reco_variant);
 }
@@ -61,20 +70,18 @@ TEST_F(JsonVariantConverterTest, invalidVariant)
 
 TEST_F(JsonVariantConverterTest, boolVariant)
 {
-    JsonVariantConverter converter;
-
     const bool value(true);
     QVariant variant(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsBoolVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<bool>(), value);
-    EXPECT_EQ(reco_variant.typeName(), Constants::bool_type_name);
+    EXPECT_EQ(reco_variant.userType(), QMetaType::fromType<bool>().id());
     EXPECT_EQ(variant, reco_variant);
 
     EXPECT_EQ(ToJsonAndBack(true).value<bool>(), true);
@@ -85,20 +92,18 @@ TEST_F(JsonVariantConverterTest, boolVariant)
 
 TEST_F(JsonVariantConverterTest, intVariant)
 {
-    JsonVariantConverter converter;
-
     const int value(42);
     QVariant variant(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsIntVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<int>(), value);
-    EXPECT_EQ(reco_variant.typeName(), Constants::int_type_name);
+    EXPECT_STREQ(reco_variant.typeName(), QMetaType::fromType<int>().name());
     EXPECT_EQ(variant, reco_variant);
 }
 
@@ -106,19 +111,17 @@ TEST_F(JsonVariantConverterTest, intVariant)
 
 TEST_F(JsonVariantConverterTest, stringVariant)
 {
-    JsonVariantConverter converter;
-
     const std::string value("abc");
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsStdStringVariant(reco_variant));
-    EXPECT_EQ(reco_variant.typeName(), Constants::string_type_name);
+    EXPECT_EQ(reco_variant.userType(), QMetaType::fromType<std::string>().id());
     EXPECT_EQ(reco_variant.value<std::string>(), value);
 
     EXPECT_EQ(variant, reco_variant);
@@ -128,18 +131,16 @@ TEST_F(JsonVariantConverterTest, stringVariant)
 
 TEST_F(JsonVariantConverterTest, doubleVariant)
 {
-    JsonVariantConverter converter;
-
     double value(43.2);
     QVariant variant = QVariant::fromValue(value);
-    EXPECT_EQ(variant.typeName(), Constants::double_type_name);
+    EXPECT_STREQ(variant.typeName(), QMetaType::fromType<double>().name());
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<double>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -157,19 +158,17 @@ TEST_F(JsonVariantConverterTest, doubleVariant)
 
 TEST_F(JsonVariantConverterTest, doubleVariantWhichLooksAsInt)
 {
-    JsonVariantConverter converter;
-
     double value(43.0); // special value which Qt like to cast to int-based variant
     QVariant variant = QVariant::fromValue(value);
-    EXPECT_EQ(variant.typeName(), Constants::double_type_name);
+    EXPECT_STREQ(variant.typeName(), QMetaType::fromType<double>().name());
     EXPECT_TRUE(Utils::IsDoubleVariant(variant));
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsDoubleVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<double>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -179,17 +178,15 @@ TEST_F(JsonVariantConverterTest, doubleVariantWhichLooksAsInt)
 
 TEST_F(JsonVariantConverterTest, vectorOfDoubleVariant)
 {
-    JsonVariantConverter converter;
-
     const std::vector<double> value = {42.0, 43.0, 44.0};
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsDoubleVectorVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<std::vector<double>>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -199,8 +196,6 @@ TEST_F(JsonVariantConverterTest, vectorOfDoubleVariant)
 
 TEST_F(JsonVariantConverterTest, comboPropertyVariant)
 {
-    JsonVariantConverter converter;
-
     ComboProperty value = ComboProperty::createFrom(std::vector<std::string>({"a1", "a2", "a3"}));
     value.setSelected("a1", false);
     value.setSelected("a2", true);
@@ -209,11 +204,11 @@ TEST_F(JsonVariantConverterTest, comboPropertyVariant)
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsComboVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<ComboProperty>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -223,17 +218,15 @@ TEST_F(JsonVariantConverterTest, comboPropertyVariant)
 
 TEST_F(JsonVariantConverterTest, colorVariant)
 {
-    JsonVariantConverter converter;
-
     const QColor value(Qt::red);
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsColorVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<QColor>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -243,17 +236,15 @@ TEST_F(JsonVariantConverterTest, colorVariant)
 
 TEST_F(JsonVariantConverterTest, extPropVariant)
 {
-    JsonVariantConverter converter;
-
     const ExternalProperty value("abc", QColor(Qt::green), "123");
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsExtPropertyVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<ExternalProperty>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -263,17 +254,15 @@ TEST_F(JsonVariantConverterTest, extPropVariant)
 
 TEST_F(JsonVariantConverterTest, realLimitsVariant)
 {
-    JsonVariantConverter converter;
-
     RealLimits value = RealLimits::limited(1.0, 2.0);
     QVariant variant = QVariant::fromValue(value);
 
     // from variant to json object
-    auto object = converter.get_json(variant);
-    EXPECT_TRUE(converter.isVariant(object));
+    auto object = JsonVariantConverter::get_json(variant);
+    EXPECT_TRUE(isVariant(object));
 
     // from json object to variant
-    QVariant reco_variant = converter.get_variant(object);
+    QVariant reco_variant = JsonVariantConverter::get_variant(object);
     EXPECT_TRUE(Utils::IsRealLimitsVariant(reco_variant));
     EXPECT_EQ(reco_variant.value<RealLimits>(), value);
     EXPECT_EQ(variant, reco_variant);
@@ -317,10 +306,9 @@ TEST_F(JsonVariantConverterTest, toFileAndBack)
                                       QVariant::fromValue(RealLimits::limited(1.12, 2.32))};
 
     // preparing array of json objects
-    JsonVariantConverter converter;
     QJsonArray json_array;
     for (auto var : variants)
-        json_array.append(converter.get_json(var));
+        json_array.append(JsonVariantConverter::get_json(var));
 
     // writing to file
     auto fileName = TestUtils::TestFileName(testDir(), "variants.json");
@@ -330,7 +318,7 @@ TEST_F(JsonVariantConverterTest, toFileAndBack)
     auto document = TestUtils::LoadJson(fileName);
     std::vector<QVariant> reco_variants;
     for (const auto x : document.array())
-        reco_variants.push_back(converter.get_variant(x.toObject()));
+        reco_variants.push_back(JsonVariantConverter::get_variant(x.toObject()));
 
     // comparing initial and reconstructed variants
     EXPECT_EQ(variants, reco_variants);

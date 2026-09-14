@@ -22,6 +22,9 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/graphitem.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -168,7 +171,7 @@ TEST_F(UndoStackTest, initialState)
 
 TEST_F(UndoStackTest, insertNewItem)
 {
-    const model_type modelType(Constants::BaseType);
+    const std::string modelType(Constants::BaseType);
     SessionModel model;
     model.setUndoRedoEnabled(true);
     auto stack = model.undoStack();
@@ -490,9 +493,9 @@ TEST_F(UndoStackTest, itemIdentifierOnRemove)
     auto parent = model.insertItem<SessionItem>();
     parent->registerTag(TagInfo::universalTag("defaultTag"), /*set_as_default*/ true);
 
-    identifier_type parent_id = parent->identifier();
+    std::string parent_id = parent->identifier();
     auto child = model.insertItem<PropertyItem>(parent);
-    identifier_type child_id = child->identifier();
+    std::string child_id = child->identifier();
 
     // removing parent
     model.removeItem(model.rootItem(), {"", 0});
@@ -503,8 +506,8 @@ TEST_F(UndoStackTest, itemIdentifierOnRemove)
     stack->undo();
     auto parent_at = Utils::ChildAt(model.rootItem(), 0);
     auto child_at = Utils::ChildAt(parent_at, 0);
-    identifier_type parent_id2 = parent_at->identifier();
-    identifier_type child_id2 = child_at->identifier();
+    std::string parent_id2 = parent_at->identifier();
+    std::string child_id2 = child_at->identifier();
 
     EXPECT_EQ(parent_id, parent_id2);
     EXPECT_EQ(child_id, child_id2);
@@ -531,9 +534,9 @@ TEST_F(UndoStackTest, multiLayer)
     auto layer1 = model.insertItem<ToyItems::LayerItem>(parent);
 
     // saving identifiers for further reference
-    identifier_type id_parent = parent->identifier();
-    identifier_type id_layer0 = layer0->identifier();
-    identifier_type id_layer1 = layer1->identifier();
+    std::string id_parent = parent->identifier();
+    std::string id_layer0 = layer0->identifier();
+    std::string id_layer1 = layer1->identifier();
 
     // checking status of unddo stack
     EXPECT_EQ(stack->count(), 3);
@@ -566,8 +569,8 @@ TEST_F(UndoStackTest, multiLayer)
     EXPECT_EQ(layer1_at->identifier(), id_layer1);
 
     // checking tag
-    EXPECT_EQ(layer0_at->tagRow().tag, ToyItems::MultiLayerItem::T_LAYERS);
-    EXPECT_EQ(layer1_at->tagRow().tag, ToyItems::MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layer0_at->tagRow().m_tag, ToyItems::MultiLayerItem::T_LAYERS);
+    EXPECT_EQ(layer1_at->tagRow().m_tag, ToyItems::MultiLayerItem::T_LAYERS);
     std::vector<SessionItem*> expected = {layer0_at, layer1_at};
     EXPECT_EQ(parent_at->getItems(ToyItems::MultiLayerItem::T_LAYERS), expected);
 }
@@ -588,9 +591,9 @@ TEST_F(UndoStackTest, moveLayerFromMultiLayer)
     auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 = multilayer0->identifier();
-    identifier_type id_layer0 = layer0->identifier();
-    identifier_type id_multilayer1 = multilayer1->identifier();
+    std::string id_multilayer0 = multilayer0->identifier();
+    std::string id_layer0 = layer0->identifier();
+    std::string id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
     model.moveItem(layer0, multilayer1, {"", 0});
@@ -625,9 +628,9 @@ TEST_F(UndoStackTest, moveLayerFromMLDeleteSecond)
     auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 = multilayer0->identifier();
-    identifier_type id_layer0 = layer0->identifier();
-    identifier_type id_multilayer1 = multilayer1->identifier();
+    std::string id_multilayer0 = multilayer0->identifier();
+    std::string id_layer0 = layer0->identifier();
+    std::string id_multilayer1 = multilayer1->identifier();
 
     // moving layer from multilayer
     model.moveItem(layer0, multilayer1, {"", 0});
@@ -677,10 +680,10 @@ TEST_F(UndoStackTest, moveLayerFromMLDeleteAll)
     auto layer2 = model.insertItem<ToyItems::LayerItem>(multilayer0);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer0 = multilayer0->identifier();
-    identifier_type id_layer0 = layer0->identifier();
-    identifier_type id_layer1 = layer1->identifier();
-    identifier_type id_layer2 = layer2->identifier();
+    std::string id_multilayer0 = multilayer0->identifier();
+    std::string id_layer0 = layer0->identifier();
+    std::string id_layer1 = layer1->identifier();
+    std::string id_layer2 = layer2->identifier();
 
     // creating another multi layer with 3 layers
     auto multilayer1 = model.insertItem<ToyItems::MultiLayerItem>();
@@ -689,10 +692,10 @@ TEST_F(UndoStackTest, moveLayerFromMLDeleteAll)
     auto layer5 = model.insertItem<ToyItems::LayerItem>(multilayer1);
 
     // saving identifiers for further reference
-    identifier_type id_multilayer1 = multilayer1->identifier();
-    identifier_type id_layer3 = layer3->identifier();
-    identifier_type id_layer4 = layer4->identifier();
-    identifier_type id_layer5 = layer5->identifier();
+    std::string id_multilayer1 = multilayer1->identifier();
+    std::string id_layer3 = layer3->identifier();
+    std::string id_layer4 = layer4->identifier();
+    std::string id_layer5 = layer5->identifier();
 
     // checking status of unddo stack
     EXPECT_EQ(stack->count(), 8);
@@ -752,7 +755,7 @@ TEST_F(UndoStackTest, copyLayerFromMultilayer)
     // copying layer
     auto layer_copy = dynamic_cast<ToyItems::LayerItem*>(model.copyItem(layer0, multilayer1));
     EXPECT_EQ(multilayer1->itemCount(ToyItems::MultiLayerItem::T_LAYERS), 1);
-    EXPECT_EQ(layer_copy->property<double>(ToyItems::LayerItem::P_THICKNESS), expected_thickness);
+    EXPECT_DOUBLE_EQ(layer_copy->property<double>(ToyItems::LayerItem::P_THICKNESS), expected_thickness);
     EXPECT_TRUE(layer0->identifier() != layer_copy->identifier());
 
     auto id = layer_copy->identifier();

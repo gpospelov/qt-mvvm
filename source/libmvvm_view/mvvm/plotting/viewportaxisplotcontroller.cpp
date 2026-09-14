@@ -14,7 +14,9 @@
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
 #include <QObject>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 
@@ -40,7 +42,7 @@ struct ViewportAxisPlotController::AxesPlotControllerImpl {
         auto on_axis_range = [this](const QCPRange& newRange) {
             m_blockUpdate = true;
             auto item = m_self->currentItem();
-            item->set_range(newRange.lower, newRange.upper);
+            item->set_range(newRange.m_lower, newRange.m_upper);
             m_blockUpdate = false;
         };
 

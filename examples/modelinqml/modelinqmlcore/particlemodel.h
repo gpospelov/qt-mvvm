@@ -13,6 +13,7 @@
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/groupitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <string>
 
 //! @file particlemodel.h
 //! Collection of items and their model representing Particle.

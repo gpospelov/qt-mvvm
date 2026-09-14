@@ -10,11 +10,16 @@
 #include "dragviewmodel.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include "mvvm/viewmodel/propertytableviewmodel.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QByteArray>
 #include <QDataStream>
 #include <QMimeData>
+#include <QModelIndex>
+#include <QObject>
+#include <QStringList>
+#include <Qt>
 #include <algorithm>
 
 namespace {
@@ -82,8 +87,8 @@ bool DragViewModel::dropMimeData(const QMimeData* data, Qt::DropAction action, i
     for (const auto& id : identifiers) {
         auto item = sessionModel()->findItem(id.toStdString());
 
-        int row = std::clamp(requested_row, 0, item->parent()->itemCount(item->tagRow().tag) - 1);
-        sessionModel()->moveItem(item, rootSessionItem(), {"", row});
+        int row_ = std::clamp(requested_row, 0, item->parent()->itemCount(item->tagRow().m_tag) - 1);
+        sessionModel()->moveItem(item, rootSessionItem(), {"", row_});
     }
 
     return false;

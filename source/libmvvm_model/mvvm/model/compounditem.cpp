@@ -9,6 +9,7 @@
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/itemutils.h"
+#include <string>
 
 using namespace ModelView;
 

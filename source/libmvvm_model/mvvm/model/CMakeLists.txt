@@ -45,5 +45,4 @@ target_sources(${library_name} PRIVATE
     taginfo.h
     tagrow.cpp
     tagrow.h
-    variant_constants.h
 )

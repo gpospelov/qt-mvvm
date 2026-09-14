@@ -10,8 +10,10 @@
 #include "collidingmicecore/mainwindow.h"
 #include <QApplication>
 #include <QLocale>
+#include <QMessageLogContext>
+#include <QString>
 
-void messageHandler(QtMsgType, const QMessageLogContext&, const QString&) {}
+static void messageHandler(QtMsgType, const QMessageLogContext&, const QString&) {}
 
 int main(int argc, char** argv)
 {
@@ -22,5 +24,5 @@ int main(int argc, char** argv)
     MainWindow win;
     win.show();
 
-    return app.exec();
+    return QApplication::exec();
 }

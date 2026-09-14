@@ -11,6 +11,7 @@
 #include "mvvm/utils/stringutils.h"
 #include <qcustomplot.h>
 #include <sstream>
+#include <string>
 
 using namespace ModelView;
 
@@ -18,8 +19,8 @@ namespace {
 
 QCPGraph* find_graph_nearby(QCustomPlot* custom_plot, double x, double y)
 {
-    double widget_px = custom_plot->xAxis->coordToPixel(x);
-    double widget_py = custom_plot->yAxis->coordToPixel(y);
+    double widget_px = custom_plot->m_xAxis->coordToPixel(x);
+    double widget_py = custom_plot->m_yAxis->coordToPixel(y);
     return dynamic_cast<QCPGraph*>(custom_plot->plottableAt(QPointF(widget_px, widget_py)));
 }
 

@@ -12,6 +12,7 @@
 #include "google_test.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/sessionmodel.h"
+#include <string>
 
 using namespace ModelView;
 
@@ -32,9 +33,9 @@ TEST_F(VectorItemTest, initialState)
 
     EXPECT_FALSE(item.isEditable());
 
-    EXPECT_EQ(item.property<double>(VectorItem::P_X), 0.0);
-    EXPECT_EQ(item.property<double>(VectorItem::P_Y), 0.0);
-    EXPECT_EQ(item.property<double>(VectorItem::P_Z), 0.0);
+    EXPECT_DOUBLE_EQ(item.property<double>(VectorItem::P_X), 0.0);
+    EXPECT_DOUBLE_EQ(item.property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_DOUBLE_EQ(item.property<double>(VectorItem::P_Z), 0.0);
 
     // default label
     EXPECT_EQ(item.data<std::string>(), "(0, 0, 0)");
@@ -47,9 +48,9 @@ TEST_F(VectorItemTest, initialStateFromModel)
     SessionModel model;
     auto item = model.insertItem<VectorItem>();
 
-    EXPECT_EQ(item->property<double>(VectorItem::P_X), 0.0);
-    EXPECT_EQ(item->property<double>(VectorItem::P_Y), 0.0);
-    EXPECT_EQ(item->property<double>(VectorItem::P_Z), 0.0);
+    EXPECT_DOUBLE_EQ(item->property<double>(VectorItem::P_X), 0.0);
+    EXPECT_DOUBLE_EQ(item->property<double>(VectorItem::P_Y), 0.0);
+    EXPECT_DOUBLE_EQ(item->property<double>(VectorItem::P_Z), 0.0);
 
     // default label
     EXPECT_EQ(item->data<std::string>(), "(0, 0, 0)");

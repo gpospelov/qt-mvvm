@@ -15,6 +15,7 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
+#include <memory>
 
 using namespace ModelView;
 
@@ -73,7 +74,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandChild)
     EXPECT_EQ(restored->identifier(), child1_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(restored->data<double>(), 42.0);
 }
 
 TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
@@ -108,7 +109,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandParentWithChild)
     EXPECT_EQ(restored_child->identifier(), child1_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored_child->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(restored_child->data<double>(), 42.0);
 }
 
 //! RemoveAtCommand in multitag context
@@ -154,7 +155,7 @@ TEST_F(RemoveItemCommandTest, removeAtCommandMultitag)
     EXPECT_EQ(restored_child2->identifier(), child2_identifier);
 
     // checking the data of restored item
-    EXPECT_EQ(restored_child2->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(restored_child2->data<double>(), 42.0);
 }
 
 //! Attempt to remove property item.

@@ -16,6 +16,7 @@
 #include "mvvm/commands/undostack.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -36,10 +37,10 @@ SessionItem* CommandService::insertNewItem(const item_factory_func_t& func, Sess
     if (!parent)
         parent = m_model->rootItem();
 
-    int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
+    int actual_row = tagrow.m_row < 0 ? parent->itemCount(tagrow.m_tag) : tagrow.m_row;
 
     return std::get<SessionItem*>(
-        process_command<InsertNewItemCommand>(func, parent, TagRow{tagrow.tag, actual_row}));
+        process_command<InsertNewItemCommand>(func, parent, TagRow{tagrow.m_tag, actual_row}));
 }
 
 SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* parent,
@@ -52,10 +53,10 @@ SessionItem* CommandService::copyItem(const SessionItem* item, SessionItem* pare
         throw std::runtime_error(
             "CommandService::copyItem() -> Item doesn't belong to given model");
 
-    int actual_row = tagrow.row < 0 ? parent->itemCount(tagrow.tag) : tagrow.row;
+    int actual_row = tagrow.m_row < 0 ? parent->itemCount(tagrow.m_tag) : tagrow.m_row;
 
     return std::get<SessionItem*>(
-        process_command<CopyItemCommand>(item, parent, TagRow{tagrow.tag, actual_row}));
+        process_command<CopyItemCommand>(item, parent, TagRow{tagrow.m_tag, actual_row}));
 }
 
 bool CommandService::setData(SessionItem* item, const Variant& value, int role)
@@ -85,9 +86,9 @@ void CommandService::moveItem(SessionItem* item, SessionItem* new_parent, const 
         throw std::runtime_error(
             "CommandService::removeRow() -> Parent doesn't belong to given model");
 
-    int actual_row = tagrow.row < 0 ? new_parent->itemCount(tagrow.tag) : tagrow.row;
+    int actual_row = tagrow.m_row < 0 ? new_parent->itemCount(tagrow.m_tag) : tagrow.m_row;
 
-    process_command<MoveItemCommand>(item, new_parent, TagRow{tagrow.tag, actual_row});
+    process_command<MoveItemCommand>(item, new_parent, TagRow{tagrow.m_tag, actual_row});
 }
 
 UndoStackInterface* CommandService::undoStack() const

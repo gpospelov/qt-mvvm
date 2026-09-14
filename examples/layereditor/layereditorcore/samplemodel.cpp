@@ -11,6 +11,8 @@
 #include "materialmodel.h"
 #include "mvvm/model/externalproperty.h"
 #include <QVariant>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

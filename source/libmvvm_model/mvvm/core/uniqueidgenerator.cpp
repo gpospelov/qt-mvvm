@@ -12,7 +12,7 @@
 
 using namespace ModelView;
 
-identifier_type UniqueIdGenerator::generate()
+std::string UniqueIdGenerator::generate()
 {
     return QUuid::createUuid().toString().toStdString();
 }

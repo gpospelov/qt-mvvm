@@ -15,6 +15,7 @@
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include <qcustomplot.h>
+#include <memory>
 
 using namespace ModelView;
 
@@ -30,8 +31,8 @@ struct ColorMapViewportPlotController::ColorMapViewportPlotControllerImpl {
     ColorMapViewportPlotControllerImpl(ColorMapViewportPlotController* master, QCustomPlot* plot)
         : m_self(master), m_customPlot(plot), m_colorScale(new QCPColorScale(m_customPlot))
     {
-        m_xAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->xAxis);
-        m_yAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->yAxis);
+        m_xAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->m_xAxis);
+        m_yAxisController = std::make_unique<ViewportAxisPlotController>(m_customPlot->m_yAxis);
         m_colorScaleController = std::make_unique<ColorScalePlotController>(m_colorScale);
         m_colorMapController = std::make_unique<ColorMapPlotController>(m_customPlot, m_colorScale);
     }

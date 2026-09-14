@@ -9,6 +9,11 @@
 
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/plottableitems.h"
+#include <cstddef>
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 const double default_axis_min = 0.0;
@@ -45,8 +50,15 @@ std::pair<double, double> ViewportAxisItem::range() const
 
 void ViewportAxisItem::set_range(double lower, double upper)
 {
-    setProperty(P_MIN, lower);
-    setProperty(P_MAX, upper);
+    double prev_upper = property<double>(P_MAX);
+    
+    if (lower >= prev_upper) {
+      setProperty(P_MAX, upper);
+      setProperty(P_MIN, lower);
+    } else {
+      setProperty(P_MIN, lower);
+      setProperty(P_MAX, upper);
+    }
 }
 
 bool ViewportAxisItem::is_in_log() const

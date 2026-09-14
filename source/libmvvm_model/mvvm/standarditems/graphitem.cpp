@@ -13,6 +13,8 @@
 #include "mvvm/standarditems/linkeditem.h"
 #include "mvvm/standarditems/plottableitems.h"
 #include <QColor>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

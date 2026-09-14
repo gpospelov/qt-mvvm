@@ -16,6 +16,8 @@
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/plottableitems.h"
 #include <QColor>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 using ::testing::_;

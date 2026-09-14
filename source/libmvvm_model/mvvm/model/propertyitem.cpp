@@ -9,6 +9,7 @@
 
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/mvvm_types.h"
+#include <string>
 
 using namespace ModelView;
 

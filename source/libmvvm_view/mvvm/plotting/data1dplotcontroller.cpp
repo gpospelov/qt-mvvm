@@ -10,7 +10,11 @@
 #include "mvvm/plotting/data1dplotcontroller.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include <qcustomplot.h>
+#include <cassert>
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 namespace {
 template <typename T> QVector<T> fromStdVector(const std::vector<T>& vec)
@@ -58,7 +62,7 @@ struct Data1DPlotController::Data1DPlotControllerImpl {
         }
 
         if (!m_errorBars)
-            m_errorBars = new QCPErrorBars(customPlot()->xAxis, customPlot()->yAxis);
+            m_errorBars = new QCPErrorBars(customPlot()->m_xAxis, customPlot()->m_yAxis);
 
         m_errorBars->setData(fromStdVector<double>(errors));
         m_errorBars->setDataPlottable(m_graph);

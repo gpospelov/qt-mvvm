@@ -12,6 +12,7 @@
 
 #include "mvvm/model/sessionitem.h"
 #include <vector>
+#include <string>
 
 namespace ModelView {
 
@@ -33,7 +34,7 @@ public:
     void setCurrentType(const std::string& model_type);
 
 protected:
-    GroupItem(model_type modelType);
+    GroupItem(std::string modelType);
     void setCurrentIndex(int index);
     template <typename T> void addToGroup(const std::string& text = {}, bool make_selected = false);
     void updateCombo();

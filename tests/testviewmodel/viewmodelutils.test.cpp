@@ -19,6 +19,9 @@
 #include <QColor>
 #include <QModelIndexList>
 #include <QStandardItemModel>
+#include <memory>
+#include <utility>
+#include <vector>
 
 namespace {
 QList<QStandardItem*> get_items(const std::vector<int>& data)

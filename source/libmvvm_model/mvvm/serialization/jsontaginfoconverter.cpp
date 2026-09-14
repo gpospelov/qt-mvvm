@@ -12,7 +12,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QStringList>
+#include <algorithm>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

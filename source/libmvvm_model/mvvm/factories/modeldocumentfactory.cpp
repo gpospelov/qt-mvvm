@@ -9,6 +9,8 @@
 
 #include "mvvm/factories/modeldocumentfactory.h"
 #include "mvvm/serialization/jsondocument.h"
+#include <memory>
+#include <vector>
 
 namespace ModelView {
 

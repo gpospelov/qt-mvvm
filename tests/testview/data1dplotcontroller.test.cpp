@@ -15,7 +15,9 @@
 #include "mvvm/standarditems/axisitems.h"
 #include "mvvm/standarditems/data1ditem.h"
 #include <qcustomplot.h>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

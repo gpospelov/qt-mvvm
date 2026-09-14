@@ -10,6 +10,7 @@
 #ifndef CONCURRENTPLOTCORE_GRAPHWIDGET_H
 #define CONCURRENTPLOTCORE_GRAPHWIDGET_H
 
+#include <QObject>  // Provides Q_OBJECT (as per the Qt dopcumentation).
 #include <QWidget>
 
 class GraphModel;

@@ -16,8 +16,11 @@
 #include "mvvm/viewmodel/viewitem.h"
 #include "mvvm/viewmodel/viewmodel.h"
 #include <QStandardItemModel>
+#include <algorithm>
+#include <functional>
 #include <iterator>
 #include <set>
+#include <vector>
 
 using namespace ModelView;
 

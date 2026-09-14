@@ -14,14 +14,18 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <memory>
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 
 struct JsonDocument::JsonDocumentImpl {
-    std::vector<SessionModel*> models;
-    JsonDocumentImpl(std::vector<SessionModel*> models) : models(std::move(models)) {}
+    std::vector<SessionModel*> m_models;
+    JsonDocumentImpl(std::vector<SessionModel*> models) : m_models(std::move(models)) {}
 };
 
 JsonDocument::JsonDocument(const std::vector<SessionModel*>& models)
@@ -29,13 +33,13 @@ JsonDocument::JsonDocument(const std::vector<SessionModel*>& models)
 {
 }
 
-//! Saves models on disk.
+//! Saves m_models on disk.
 void JsonDocument::save(const std::string& file_name) const
 {
     auto converter = ModelView::CreateModelProjectConverter();
     QJsonArray array;
 
-    for (auto model : p_impl->models)
+    for (auto model : p_impl->m_models)
         array.push_back(converter->to_json(*model));
 
     QJsonDocument document(array);
@@ -49,7 +53,7 @@ void JsonDocument::save(const std::string& file_name) const
     file.close();
 }
 
-//! Loads models from disk. If models have some data already, it will be rewritten.
+//! Loads m_models from disk. If m_models have some data already, it will be rewritten.
 
 void JsonDocument::load(const std::string& file_name)
 {
@@ -59,16 +63,16 @@ void JsonDocument::load(const std::string& file_name)
 
     auto document = QJsonDocument::fromJson(file.readAll());
     auto array = document.array();
-    if (array.size() != static_cast<int>(p_impl->models.size())) {
+    if (array.size() != static_cast<int>(p_impl->m_models.size())) {
         std::ostringstream ostr;
-        ostr << "Error in JsonDocument: number of application models " << p_impl->models.size()
+        ostr << "Error in JsonDocument: number of application models " << p_impl->m_models.size()
              << " and number of json models " << array.size() << " doesn't match";
         throw std::runtime_error(ostr.str());
     }
 
     auto converter = ModelView::CreateModelProjectConverter();
     int index(0);
-    for (auto model : p_impl->models) {
+    for (auto model : p_impl->m_models) {
         converter->from_json(array.at(index).toObject(), *model);
         ++index;
     }

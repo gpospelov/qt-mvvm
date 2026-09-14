@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 set(library_name mvvm_model)
 
-add_library(${library_name} SHARED "")
+add_library(${library_name} STATIC "")
 add_subdirectory(mvvm)
 add_library(MVVM::Model ALIAS ${library_name}) # alias for build-tree usage
 

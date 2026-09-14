@@ -13,7 +13,7 @@
 #include "google_test.h"
 #include "test_utils.h"
 #include <QDir>
-#include <stdexcept>
+#include <algorithm>
 #include <string>
 
 using namespace ModelView;

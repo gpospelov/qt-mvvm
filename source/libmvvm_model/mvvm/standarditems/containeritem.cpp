@@ -8,6 +8,8 @@
 // ************************************************************************** //
 
 #include "mvvm/standarditems/containeritem.h"
+#include <cstddef>
+#include <string>
 
 using namespace ModelView;
 

@@ -15,6 +15,7 @@
 #include "mvvm/plotting/graphcanvas.h"
 #include "mvvm/standarditems/graphviewportitem.h"
 #include <QBoxLayout>
+#include <QWidget>
 
 using namespace ModelView;
 
@@ -53,9 +54,9 @@ void GraphWidget::setModel(GraphModel* model)
 
 void GraphWidget::onSimulationCompleted()
 {
-    auto data = m_jobManager->simulationResult();
-    if (!data.empty())
-        m_model->set_data(data);
+    auto result = m_jobManager->simulationResult();
+    if (!result.empty())
+        m_model->set_data(result);
 }
 
 //! Connects signals going from toolbar.

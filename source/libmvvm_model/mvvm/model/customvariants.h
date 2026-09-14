@@ -22,17 +22,15 @@
 
 namespace ModelView::Utils {
 
-//! Returns name of variant.
-MVVM_MODEL_EXPORT std::string VariantName(const Variant& variant);
-
-//! Returns type of variant (additionally checks for user type).
-MVVM_MODEL_EXPORT int VariantType(const Variant& variant);
-
-//! Returns true if variants has compatible types.
-MVVM_MODEL_EXPORT bool CompatibleVariantTypes(const Variant& oldValue, const Variant& newValue);
-
 //! Returns true if given variants have same type and value.
-MVVM_MODEL_EXPORT bool IsTheSame(const Variant& var1, const Variant& var2);
+static inline bool IsTheSame(const Variant& var1, const Variant& var2)
+{
+    // variants of different type are always reported as not the same
+    if (var1.userType() != var2.userType()) return false;
+
+    // variants of same type are compared by value
+    return var1 == var2;
+}
 
 //! Converts custom variant to standard variant which Qt views will understand.
 MVVM_MODEL_EXPORT Variant toQtVariant(const Variant& custom);

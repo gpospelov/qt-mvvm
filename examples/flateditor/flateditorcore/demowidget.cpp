@@ -26,11 +26,9 @@ DemoWidget::DemoWidget(SessionModel* model, QWidget* parent)
     , m_property_flat_view(new PropertyFlatView)
     , m_sessio_model(model)
 {
-
     auto layout = new QHBoxLayout;
     layout->addLayout(createLeftLayout());
     layout->addLayout(createRightLayout());
-    layout->addLayout(layout);
     setLayout(layout);
 
     connectViews();

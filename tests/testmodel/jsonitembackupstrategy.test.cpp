@@ -15,6 +15,8 @@
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemtags.h"
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 
@@ -64,7 +66,7 @@ TEST_F(JsonItemBackupStrategyTest, compoundItem)
 
     EXPECT_EQ(item.modelType(), restored->modelType());
     EXPECT_EQ(item.identifier(), restored->identifier());
-    EXPECT_EQ(restored->getItem("thickness")->data<double>(), property->data<double>());
+    EXPECT_DOUBLE_EQ(restored->getItem("thickness")->data<double>(), property->data<double>());
     EXPECT_EQ(restored->getItem("thickness")->identifier(), property->identifier());
 }
 

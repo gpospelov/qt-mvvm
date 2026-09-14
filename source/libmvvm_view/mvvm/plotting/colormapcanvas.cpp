@@ -15,6 +15,8 @@
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/widgets/statuslabel.h"
 #include <qcustomplot.h>
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 

@@ -27,6 +27,7 @@
 #define QCUSTOMPLOT_H
 
 #include <QtCore/qglobal.h>
+#include <cmath>
 
 // some Qt version/configuration dependent macros to include or exclude certain code paths:
 #ifdef QCUSTOMPLOT_USE_OPENGL
@@ -831,18 +832,18 @@ private:
 class QCP_LIB_DECL QCPRange
 {
 public:
-  double lower, upper;
+  double m_lower, m_upper;
   
   QCPRange();
   QCPRange(double lower, double upper);
   
-  bool operator==(const QCPRange& other) const { return lower == other.lower && upper == other.upper; }
+  bool operator==(const QCPRange& other) const { return m_lower == other.m_lower && m_upper == other.m_upper; }
   bool operator!=(const QCPRange& other) const { return !(*this == other); }
   
-  QCPRange &operator+=(const double& value) { lower+=value; upper+=value; return *this; }
-  QCPRange &operator-=(const double& value) { lower-=value; upper-=value; return *this; }
-  QCPRange &operator*=(const double& value) { lower*=value; upper*=value; return *this; }
-  QCPRange &operator/=(const double& value) { lower/=value; upper/=value; return *this; }
+  QCPRange &operator+=(const double& value) { m_lower+=value; m_upper+=value; return *this; }
+  QCPRange &operator-=(const double& value) { m_lower-=value; m_upper-=value; return *this; }
+  QCPRange &operator*=(const double& value) { m_lower*=value; m_upper*=value; return *this; }
+  QCPRange &operator/=(const double& value) { m_lower/=value; m_upper/=value; return *this; }
   friend inline const QCPRange operator+(const QCPRange&, double);
   friend inline const QCPRange operator+(double, const QCPRange&);
   friend inline const QCPRange operator-(const QCPRange& range, double value);
@@ -850,9 +851,9 @@ public:
   friend inline const QCPRange operator*(double value, const QCPRange& range);
   friend inline const QCPRange operator/(const QCPRange& range, double value);
   
-  double size() const { return upper-lower; }
-  double center() const { return (upper+lower)*0.5; }
-  void normalize() { if (lower > upper) qSwap(lower, upper); }
+  double size() const { return m_upper-m_lower; }
+  double center() const { return (m_upper+m_lower)*0.5; }
+  void normalize() { if (m_lower > m_upper) qSwap(m_lower, m_upper); }
   void expand(const QCPRange &otherRange);
   void expand(double includeCoord);
   QCPRange expanded(const QCPRange &otherRange) const;
@@ -860,7 +861,7 @@ public:
   QCPRange bounded(double lowerBound, double upperBound) const;
   QCPRange sanitizedForLogScale() const;
   QCPRange sanitizedForLinScale() const;
-  bool contains(double value) const { return value >= lower && value <= upper; }
+  bool contains(double value) const { return value >= m_lower && value <= m_upper; }
   
   static bool validRange(double lower, double upper);
   static bool validRange(const QCPRange &range);
@@ -876,7 +877,7 @@ Q_DECLARE_TYPEINFO(QCPRange, Q_MOVABLE_TYPE);
 */
 inline QDebug operator<< (QDebug d, const QCPRange &range)
 {
-    d.nospace() << "QCPRange(" << range.lower << ", " << range.upper << ")";
+    d.nospace() << "QCPRange(" << range.m_lower << ", " << range.m_upper << ")";
     return d.space();
 }
 
@@ -3178,7 +3179,7 @@ QCPRange QCPDataContainer<DataType>::keyRange(bool &foundRange, QCP::SignDomain 
       {
         if (!qIsNaN(it->mainValue()))
         {
-          range.lower = it->mainKey();
+          range.m_lower = it->mainKey();
           haveLower = true;
           break;
         }
@@ -3190,7 +3191,7 @@ QCPRange QCPDataContainer<DataType>::keyRange(bool &foundRange, QCP::SignDomain 
         --it;
         if (!qIsNaN(it->mainValue()))
         {
-          range.upper = it->mainKey();
+          range.m_upper = it->mainKey();
           haveUpper = true;
           break;
         }
@@ -3202,14 +3203,14 @@ QCPRange QCPDataContainer<DataType>::keyRange(bool &foundRange, QCP::SignDomain 
         if (!qIsNaN(it->mainValue()))
         {
           current = it->mainKey();
-          if (current < range.lower || !haveLower)
+          if (current < range.m_lower || !haveLower)
           {
-            range.lower = current;
+            range.m_lower = current;
             haveLower = true;
           }
-          if (current > range.upper || !haveUpper)
+          if (current > range.m_upper || !haveUpper)
           {
-            range.upper = current;
+            range.m_upper = current;
             haveUpper = true;
           }
         }
@@ -3223,14 +3224,14 @@ QCPRange QCPDataContainer<DataType>::keyRange(bool &foundRange, QCP::SignDomain 
       if (!qIsNaN(it->mainValue()))
       {
         current = it->mainKey();
-        if ((current < range.lower || !haveLower) && current < 0)
+        if ((current < range.m_lower || !haveLower) && current < 0)
         {
-          range.lower = current;
+          range.m_lower = current;
           haveLower = true;
         }
-        if ((current > range.upper || !haveUpper) && current < 0)
+        if ((current > range.m_upper || !haveUpper) && current < 0)
         {
-          range.upper = current;
+          range.m_upper = current;
           haveUpper = true;
         }
       }
@@ -3243,14 +3244,14 @@ QCPRange QCPDataContainer<DataType>::keyRange(bool &foundRange, QCP::SignDomain 
       if (!qIsNaN(it->mainValue()))
       {
         current = it->mainKey();
-        if ((current < range.lower || !haveLower) && current > 0)
+        if ((current < range.m_lower || !haveLower) && current > 0)
         {
-          range.lower = current;
+          range.m_lower = current;
           haveLower = true;
         }
-        if ((current > range.upper || !haveUpper) && current > 0)
+        if ((current > range.m_upper || !haveUpper) && current > 0)
         {
-          range.upper = current;
+          range.m_upper = current;
           haveUpper = true;
         }
       }
@@ -3297,24 +3298,24 @@ QCPRange QCPDataContainer<DataType>::valueRange(bool &foundRange, QCP::SignDomai
   QCPDataContainer<DataType>::const_iterator itEnd = constEnd();
   if (DataType::sortKeyIsMainKey() && restrictKeyRange)
   {
-    itBegin = findBegin(inKeyRange.lower, false);
-    itEnd = findEnd(inKeyRange.upper, false);
+    itBegin = findBegin(inKeyRange.m_lower, false);
+    itEnd = findEnd(inKeyRange.m_upper, false);
   }
   if (signDomain == QCP::sdBoth) // range may be anywhere
   {
     for (QCPDataContainer<DataType>::const_iterator it = itBegin; it != itEnd; ++it)
     {
-      if (restrictKeyRange && (it->mainKey() < inKeyRange.lower || it->mainKey() > inKeyRange.upper))
+      if (restrictKeyRange && (it->mainKey() < inKeyRange.m_lower || it->mainKey() > inKeyRange.m_upper))
         continue;
       current = it->valueRange();
-      if ((current.lower < range.lower || !haveLower) && !qIsNaN(current.lower) && std::isfinite(current.lower))
+      if ((current.m_lower < range.m_lower || !haveLower) && !qIsNaN(current.m_lower) && std::isfinite(current.m_lower))
       {
-        range.lower = current.lower;
+        range.m_lower = current.m_lower;
         haveLower = true;
       }
-      if ((current.upper > range.upper || !haveUpper) && !qIsNaN(current.upper) && std::isfinite(current.upper))
+      if ((current.m_upper > range.m_upper || !haveUpper) && !qIsNaN(current.m_upper) && std::isfinite(current.m_upper))
       {
-        range.upper = current.upper;
+        range.m_upper = current.m_upper;
         haveUpper = true;
       }
     }
@@ -3322,17 +3323,17 @@ QCPRange QCPDataContainer<DataType>::valueRange(bool &foundRange, QCP::SignDomai
   {
     for (QCPDataContainer<DataType>::const_iterator it = itBegin; it != itEnd; ++it)
     {
-      if (restrictKeyRange && (it->mainKey() < inKeyRange.lower || it->mainKey() > inKeyRange.upper))
+      if (restrictKeyRange && (it->mainKey() < inKeyRange.m_lower || it->mainKey() > inKeyRange.m_upper))
         continue;
       current = it->valueRange();
-      if ((current.lower < range.lower || !haveLower) && current.lower < 0 && !qIsNaN(current.lower) && std::isfinite(current.lower))
+      if ((current.m_lower < range.m_lower || !haveLower) && current.m_lower < 0 && !qIsNaN(current.m_lower) && std::isfinite(current.m_lower))
       {
-        range.lower = current.lower;
+        range.m_lower = current.m_lower;
         haveLower = true;
       }
-      if ((current.upper > range.upper || !haveUpper) && current.upper < 0 && !qIsNaN(current.upper) && std::isfinite(current.upper))
+      if ((current.m_upper > range.m_upper || !haveUpper) && current.m_upper < 0 && !qIsNaN(current.m_upper) && std::isfinite(current.m_upper))
       {
-        range.upper = current.upper;
+        range.m_upper = current.m_upper;
         haveUpper = true;
       }
     }
@@ -3340,17 +3341,17 @@ QCPRange QCPDataContainer<DataType>::valueRange(bool &foundRange, QCP::SignDomai
   {
     for (QCPDataContainer<DataType>::const_iterator it = itBegin; it != itEnd; ++it)
     {
-      if (restrictKeyRange && (it->mainKey() < inKeyRange.lower || it->mainKey() > inKeyRange.upper))
+      if (restrictKeyRange && (it->mainKey() < inKeyRange.m_lower || it->mainKey() > inKeyRange.m_upper))
         continue;
       current = it->valueRange();
-      if ((current.lower < range.lower || !haveLower) && current.lower > 0 && !qIsNaN(current.lower) && std::isfinite(current.lower))
+      if ((current.m_lower < range.m_lower || !haveLower) && current.m_lower > 0 && !qIsNaN(current.m_lower) && std::isfinite(current.m_lower))
       {
-        range.lower = current.lower;
+        range.m_lower = current.m_lower;
         haveLower = true;
       }
-      if ((current.upper > range.upper || !haveUpper) && current.upper > 0 && !qIsNaN(current.upper) && std::isfinite(current.upper))
+      if ((current.m_upper > range.m_upper || !haveUpper) && current.m_upper > 0 && !qIsNaN(current.m_upper) && std::isfinite(current.m_upper))
       {
-        range.upper = current.upper;
+        range.m_upper = current.m_upper;
         haveUpper = true;
       }
     }
@@ -3941,8 +3942,11 @@ public:
   Q_SLOT void replot(QCustomPlot::RefreshPriority refreshPriority=QCustomPlot::rpRefreshHint);
   double replotTime(bool average=false) const;
   
-  QCPAxis *xAxis, *yAxis, *xAxis2, *yAxis2;
-  QCPLegend *legend;
+	QCPAxis *m_xAxis;
+	QCPAxis *m_yAxis;
+	QCPAxis *m_xAxis2;
+	QCPAxis *m_yAxis2;
+  QCPLegend *m_legend;
   
 signals:
   void mouseDoubleClick(QMouseEvent *event);
@@ -4537,8 +4541,8 @@ QCPDataSelection QCPAbstractPlottable1D<DataType>::selectTestRect(const QRectF &
   typename QCPDataContainer<DataType>::const_iterator end = mDataContainer->constEnd();
   if (DataType::sortKeyIsMainKey()) // we can assume that data is sorted by main key, so can reduce the searched key interval:
   {
-    begin = mDataContainer->findBegin(keyRange.lower, false);
-    end = mDataContainer->findEnd(keyRange.upper, false);
+    begin = mDataContainer->findBegin(keyRange.m_lower, false);
+    end = mDataContainer->findEnd(keyRange.m_upper, false);
   }
   if (begin == end)
     return result;
@@ -5466,16 +5470,17 @@ public:
   QCPGraphData();
   QCPGraphData(double key, double value);
   
-  inline double sortKey() const { return key; }
+  inline double sortKey() const { return m_key; }
   inline static QCPGraphData fromSortKey(double sortKey) { return QCPGraphData(sortKey, 0); }
   inline static bool sortKeyIsMainKey() { return true; }
   
-  inline double mainKey() const { return key; }
-  inline double mainValue() const { return value; }
+  inline double mainKey() const { return m_key; }
+  inline double mainValue() const { return m_value; }
   
-  inline QCPRange valueRange() const { return QCPRange(value, value); }
+  inline QCPRange valueRange() const { return QCPRange(m_value, m_value); }
   
-  double key, value;
+	double m_key;
+	double m_value;
 };
 Q_DECLARE_TYPEINFO(QCPGraphData, Q_PRIMITIVE_TYPE);
 
@@ -5605,16 +5610,18 @@ public:
   QCPCurveData();
   QCPCurveData(double t, double key, double value);
   
-  inline double sortKey() const { return t; }
+  inline double sortKey() const { return m_t; }
   inline static QCPCurveData fromSortKey(double sortKey) { return QCPCurveData(sortKey, 0, 0); }
   inline static bool sortKeyIsMainKey() { return false; }
   
-  inline double mainKey() const { return key; }
-  inline double mainValue() const { return value; }
+  inline double mainKey() const { return m_key; }
+  inline double mainValue() const { return m_value; }
   
-  inline QCPRange valueRange() const { return QCPRange(value, value); }
+  inline QCPRange valueRange() const { return QCPRange(m_value, m_value); }
   
-  double t, key, value;
+  double m_t;
+  double m_key;
+  double m_value;
 };
 Q_DECLARE_TYPEINFO(QCPCurveData, Q_PRIMITIVE_TYPE);
 
@@ -5785,16 +5792,17 @@ public:
   QCPBarsData();
   QCPBarsData(double key, double value);
   
-  inline double sortKey() const { return key; }
+  inline double sortKey() const { return m_key; }
   inline static QCPBarsData fromSortKey(double sortKey) { return QCPBarsData(sortKey, 0); }
   inline static bool sortKeyIsMainKey() { return true; } 
   
-  inline double mainKey() const { return key; }
-  inline double mainValue() const { return value; }
+  inline double mainKey() const { return m_key; }
+  inline double mainValue() const { return m_value; }
   
-  inline QCPRange valueRange() const { return QCPRange(value, value); } // note that bar base value isn't held in each QCPBarsData and thus can't/shouldn't be returned here
+  inline QCPRange valueRange() const { return QCPRange(m_value, m_value); } // note that bar base value isn't held in each QCPBarsData and thus can't/shouldn't be returned here
   
-  double key, value;
+	double m_key;
+	double m_value;
 };
 Q_DECLARE_TYPEINFO(QCPBarsData, Q_PRIMITIVE_TYPE);
 
@@ -5908,23 +5916,28 @@ public:
   QCPStatisticalBoxData();
   QCPStatisticalBoxData(double key, double minimum, double lowerQuartile, double median, double upperQuartile, double maximum, const QVector<double>& outliers=QVector<double>());
   
-  inline double sortKey() const { return key; }
+  inline double sortKey() const { return m_key; }
   inline static QCPStatisticalBoxData fromSortKey(double sortKey) { return QCPStatisticalBoxData(sortKey, 0, 0, 0, 0, 0); }
   inline static bool sortKeyIsMainKey() { return true; }
   
-  inline double mainKey() const { return key; }
-  inline double mainValue() const { return median; }
+  inline double mainKey() const { return m_key; }
+  inline double mainValue() const { return m_median; }
   
   inline QCPRange valueRange() const
   {
-    QCPRange result(minimum, maximum);
-    for (QVector<double>::const_iterator it = outliers.constBegin(); it != outliers.constEnd(); ++it)
+    QCPRange result(m_minimum, m_maximum);
+    for (QVector<double>::const_iterator it = m_outliers.constBegin(); it != m_outliers.constEnd(); ++it)
       result.expand(*it);
     return result;
   }
   
-  double key, minimum, lowerQuartile, median, upperQuartile, maximum;
-  QVector<double> outliers;
+	double m_key;
+	double m_minimum;
+	double m_lowerQuartile;
+	double m_median;
+	double m_upperQuartile;
+	double m_maximum;
+  QVector<double> m_outliers;
 };
 Q_DECLARE_TYPEINFO(QCPStatisticalBoxData, Q_MOVABLE_TYPE);
 
@@ -6161,16 +6174,20 @@ public:
   QCPFinancialData();
   QCPFinancialData(double key, double open, double high, double low, double close);
   
-  inline double sortKey() const { return key; }
+  inline double sortKey() const { return m_key; }
   inline static QCPFinancialData fromSortKey(double sortKey) { return QCPFinancialData(sortKey, 0, 0, 0, 0); }
   inline static bool sortKeyIsMainKey() { return true; } 
   
-  inline double mainKey() const { return key; }
-  inline double mainValue() const { return open; }
+  inline double mainKey() const { return m_key; }
+  inline double mainValue() const { return m_open; }
   
-  inline QCPRange valueRange() const { return QCPRange(low, high); } // open and close must lie between low and high, so we don't need to check them
+  inline QCPRange valueRange() const { return QCPRange(m_low, m_high); } // open and close must lie between low and high, so we don't need to check them
   
-  double key, open, high, low, close;
+	double m_key;
+	double m_open;
+	double m_high;
+	double m_low;
+	double m_close;
 };
 Q_DECLARE_TYPEINFO(QCPFinancialData, Q_PRIMITIVE_TYPE);
 
@@ -6301,7 +6318,8 @@ public:
   explicit QCPErrorBarsData(double error);
   QCPErrorBarsData(double errorMinus, double errorPlus);
   
-  double errorMinus, errorPlus;
+	double m_errorMinus;
+	double m_errorPlus;
 };
 Q_DECLARE_TYPEINFO(QCPErrorBarsData, Q_PRIMITIVE_TYPE);
 
@@ -6490,8 +6508,8 @@ public:
   // reimplemented virtual methods:
   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=nullptr) const Q_DECL_OVERRIDE;
   
-  QCPItemPosition * const start;
-  QCPItemPosition * const end;
+  QCPItemPosition * const m_start;
+  QCPItemPosition * const m_end;
   
 protected:
   // property members:
@@ -6747,17 +6765,17 @@ public:
   // reimplemented virtual methods:
   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=nullptr) const Q_DECL_OVERRIDE;
   
-  QCPItemPosition * const topLeft;
-  QCPItemPosition * const bottomRight;
-  QCPItemAnchor * const topLeftRim;
-  QCPItemAnchor * const top;
-  QCPItemAnchor * const topRightRim;
-  QCPItemAnchor * const right;
-  QCPItemAnchor * const bottomRightRim;
-  QCPItemAnchor * const bottom;
-  QCPItemAnchor * const bottomLeftRim;
-  QCPItemAnchor * const left;
-  QCPItemAnchor * const center;
+  QCPItemPosition * const m_topLeft;
+  QCPItemPosition * const m_bottomRight;
+  QCPItemAnchor * const m_topLeftRim;
+  QCPItemAnchor * const m_top;
+  QCPItemAnchor * const m_topRightRim;
+  QCPItemAnchor * const m_right;
+  QCPItemAnchor * const m_bottomRightRim;
+  QCPItemAnchor * const m_bottom;
+  QCPItemAnchor * const m_bottomLeftRim;
+  QCPItemAnchor * const m_left;
+  QCPItemAnchor * const m_center;
   
 protected:
   enum AnchorIndex {aiTopLeftRim, aiTop, aiTopRightRim, aiRight, aiBottomRightRim, aiBottom, aiBottomLeftRim, aiLeft, aiCenter};
@@ -6813,14 +6831,14 @@ public:
   // reimplemented virtual methods:
   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=nullptr) const Q_DECL_OVERRIDE;
   
-  QCPItemPosition * const topLeft;
-  QCPItemPosition * const bottomRight;
-  QCPItemAnchor * const top;
-  QCPItemAnchor * const topRight;
-  QCPItemAnchor * const right;
-  QCPItemAnchor * const bottom;
-  QCPItemAnchor * const bottomLeft;
-  QCPItemAnchor * const left;
+  QCPItemPosition * const m_topLeft;
+  QCPItemPosition * const m_bottomRight;
+  QCPItemAnchor * const m_top;
+  QCPItemAnchor * const m_topRight;
+  QCPItemAnchor * const m_right;
+  QCPItemAnchor * const m_bottom;
+  QCPItemAnchor * const m_bottomLeft;
+  QCPItemAnchor * const m_left;
   
 protected:
   enum AnchorIndex {aiTop, aiTopRight, aiRight, aiBottom, aiBottomLeft, aiLeft};
@@ -6909,7 +6927,7 @@ public:
   // non-virtual methods:
   void updatePosition();
 
-  QCPItemPosition * const position;
+  QCPItemPosition * const m_position;
 
 protected:
   // property members:
@@ -6977,9 +6995,9 @@ public:
   // reimplemented virtual methods:
   virtual double selectTest(const QPointF &pos, bool onlySelectable, QVariant *details=nullptr) const Q_DECL_OVERRIDE;
   
-  QCPItemPosition * const left;
-  QCPItemPosition * const right;
-  QCPItemAnchor * const center;
+  QCPItemPosition * const m_left;
+  QCPItemPosition * const m_right;
+  QCPItemAnchor * const m_center;
   
 protected:
   // property members:
@@ -7404,8 +7422,8 @@ public:
   void scaleRange(double factor);
   void scaleRange(double factor, double center);
   void rescale(bool onlyVisiblePlottables=false);
-  double coordToAngleRad(double coord) const { return mAngleRad+(coord-mRange.lower)/mRange.size()*(mRangeReversed ? -2.0*M_PI : 2.0*M_PI); } // mention in doc that return doesn't wrap
-  double angleRadToCoord(double angleRad) const { return mRange.lower+(angleRad-mAngleRad)/(mRangeReversed ? -2.0*M_PI : 2.0*M_PI)*mRange.size(); }
+  double coordToAngleRad(double coord) const { return mAngleRad+(coord-mRange.m_lower)/mRange.size()*(mRangeReversed ? -2.0*M_PI : 2.0*M_PI); } // mention in doc that return doesn't wrap
+  double angleRadToCoord(double angleRad) const { return mRange.m_lower+(angleRad-mAngleRad)/(mRangeReversed ? -2.0*M_PI : 2.0*M_PI)*mRange.size(); }
   void pixelToCoord(QPointF pixelPos, double &angleCoord, double &radiusCoord) const;
   QPointF coordToPixel(double angleCoord, double radiusCoord) const;
   SelectablePart getPartAt(const QPointF &pos) const;

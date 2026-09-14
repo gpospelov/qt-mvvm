@@ -11,6 +11,10 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/viewmodel/standardviewitems.h"
 #include "mvvm/viewmodel/viewmodelcontroller.h"
+#include <memory>
+#include <stdexcept>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

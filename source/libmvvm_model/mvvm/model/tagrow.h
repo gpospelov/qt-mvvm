@@ -20,13 +20,13 @@ namespace ModelView {
 
 class MVVM_MODEL_EXPORT TagRow {
 public:
-    std::string tag = {};
-    int row = -1;
+    std::string m_tag = {};
+    int m_row = -1;
 
     TagRow() {}
 
-    TagRow(const std::string& name, int row = -1) : tag(name), row(row) {}
-    TagRow(const char* name, int row = -1) : tag(name), row(row) {}
+    TagRow(const std::string& name, int row = -1) : m_tag(name), m_row(row) {}
+    TagRow(const char* name, int row = -1) : m_tag(name), m_row(row) {}
 
     TagRow next() const;
 

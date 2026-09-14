@@ -12,6 +12,7 @@
 
 #include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/model/function_types.h"
+#include <memory>
 
 namespace ModelView {
 

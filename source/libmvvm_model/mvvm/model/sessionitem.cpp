@@ -15,7 +15,11 @@
 #include "mvvm/model/taginfo.h"
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/signals/modelmapper.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 
@@ -35,7 +39,7 @@ struct SessionItem::SessionItemImpl {
     std::unique_ptr<ItemMapper> m_mapper;
     std::unique_ptr<SessionItemData> m_data;
     std::unique_ptr<SessionItemTags> m_tags;
-    model_type m_modelType;
+    std::string m_modelType;
 
     SessionItemImpl(SessionItem* this_item)
         : m_self(this_item)
@@ -53,7 +57,7 @@ struct SessionItem::SessionItemImpl {
     }
 };
 
-SessionItem::SessionItem(model_type modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
+SessionItem::SessionItem(std::string modelType) : p_impl(std::make_unique<SessionItemImpl>(this))
 {
     p_impl->m_modelType = std::move(modelType);
     setData(UniqueIdGenerator::generate(), ItemDataRole::IDENTIFIER);
@@ -71,7 +75,7 @@ SessionItem::~SessionItem()
 
 //! Returns item's model type.
 
-model_type SessionItem::modelType() const
+std::string SessionItem::modelType() const
 {
     return p_impl->m_modelType;
 }

@@ -17,6 +17,8 @@
 #include "mvvm/standarditems/colormapviewportitem.h"
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 
@@ -36,10 +38,10 @@ TEST_F(ColorMapViewportPlotControllerTest, initialState)
 
     const double customplot_default_lower(0.0);
     const double customplot_default_upper(5.0);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, customplot_default_lower);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, customplot_default_upper);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, customplot_default_lower);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, customplot_default_upper);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_lower, customplot_default_lower);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_upper, customplot_default_upper);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_lower, customplot_default_lower);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_upper, customplot_default_upper);
 }
 
 //! Check ::setItem() method when no colormaps exist.
@@ -58,10 +60,10 @@ TEST_F(ColorMapViewportPlotControllerTest, setEmptyViewport)
     EXPECT_TRUE(color_map != nullptr);
 
     const double default_lower(0.0), default_upper(1.0);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, default_lower);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, default_upper);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, default_lower);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, default_upper);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_lower, default_lower);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_upper, default_upper);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_lower, default_lower);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_upper, default_upper);
 
     const int qcpmap_internal_default(10);
     EXPECT_EQ(color_map->data()->keySize(), qcpmap_internal_default);

@@ -11,7 +11,12 @@
 
 #include "google_test.h"
 #include "test_utils.h"
+#include <algorithm>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 

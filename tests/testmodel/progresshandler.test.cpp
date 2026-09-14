@@ -10,6 +10,7 @@
 #include "mvvm/utils/progresshandler.h"
 
 #include "google_test.h"
+#include <cstddef>
 
 using namespace ModelView;
 

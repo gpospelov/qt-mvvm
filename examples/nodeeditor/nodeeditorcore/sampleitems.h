@@ -14,6 +14,8 @@
 //! Classes to represent content of node editor.
 
 #include "connectableitem.h"
+#include <string>
+#include <vector>
 
 namespace NodeEditor {
 

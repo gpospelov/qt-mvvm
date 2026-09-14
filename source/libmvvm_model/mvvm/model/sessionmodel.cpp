@@ -17,6 +17,10 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/signals/modelmapper.h"
+#include <functional>
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -75,7 +79,7 @@ SessionModel::~SessionModel()
 
 //! Insert new item using item's modelType.
 
-SessionItem* SessionModel::insertNewItem(const model_type& modelType, SessionItem* parent,
+SessionItem* SessionModel::insertNewItem(const std::string& modelType, SessionItem* parent,
                                          const TagRow& tagrow)
 {
     // intentionally passing by value inside lambda
@@ -157,7 +161,7 @@ const ItemFactoryInterface* SessionModel::factory() const
 
 //! Returns SessionItem for given identifier.
 
-SessionItem* SessionModel::findItem(const identifier_type& id)
+SessionItem* SessionModel::findItem(const std::string& id)
 {
     return p_impl->m_itemManager->findItem(id);
 }
@@ -217,7 +221,7 @@ SessionItem* SessionModel::intern_insert(const item_factory_func_t& func, Sessio
     return p_impl->m_commands->insertNewItem(func, parent, tagrow);
 }
 
-void SessionModel::intern_register(const model_type& modelType, const item_factory_func_t& func,
+void SessionModel::intern_register(const std::string& modelType, const item_factory_func_t& func,
                                    const std::string& label)
 {
     p_impl->m_itemManager->factory()->registerItem(modelType, func, label);

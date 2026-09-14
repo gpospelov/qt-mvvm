@@ -12,9 +12,8 @@
 
 #include "mvvm/model_export.h"
 #include "mvvm/signals/callback_types.h"
-#include <algorithm>
-#include <functional>
 #include <list>
+#include <utility>
 
 namespace ModelView {
 

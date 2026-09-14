@@ -10,6 +10,7 @@
 #include "mvvm/model/tagrow.h"
 
 #include "google_test.h"
+#include <string>
 
 using namespace ModelView;
 
@@ -25,8 +26,8 @@ public:
 TEST_F(TagRowTest, initialState)
 {
     TagRow tagrow;
-    EXPECT_EQ(tagrow.tag, "");
-    EXPECT_EQ(tagrow.row, -1);
+    EXPECT_EQ(tagrow.m_tag, "");
+    EXPECT_EQ(tagrow.m_row, -1);
 }
 
 //! Brace initializer.
@@ -34,20 +35,20 @@ TEST_F(TagRowTest, initialState)
 TEST_F(TagRowTest, braceInitializer)
 {
     TagRow tagrow{"abc", 42};
-    EXPECT_EQ(tagrow.tag, "abc");
-    EXPECT_EQ(tagrow.row, 42);
+    EXPECT_EQ(tagrow.m_tag, "abc");
+    EXPECT_EQ(tagrow.m_row, 42);
 
     tagrow = {};
-    EXPECT_EQ(tagrow.tag, "");
-    EXPECT_EQ(tagrow.row, -1);
+    EXPECT_EQ(tagrow.m_tag, "");
+    EXPECT_EQ(tagrow.m_row, -1);
 
     tagrow = {"cde", 43};
-    EXPECT_EQ(tagrow.tag, "cde");
-    EXPECT_EQ(tagrow.row, 43);
+    EXPECT_EQ(tagrow.m_tag, "cde");
+    EXPECT_EQ(tagrow.m_row, 43);
 
     TagRow tagrow2 = {"cde"};
-    EXPECT_EQ(tagrow2.tag, "cde");
-    EXPECT_EQ(tagrow2.row, -1);
+    EXPECT_EQ(tagrow2.m_tag, "cde");
+    EXPECT_EQ(tagrow2.m_row, -1);
 }
 
 //! Equality operators.
@@ -83,8 +84,8 @@ TEST_F(TagRowTest, assignmentOperator)
     TagRow tag2{"abc", 42};
 
     tag1 = tag2;
-    EXPECT_EQ(tag1.row, 42);
-    EXPECT_EQ(tag1.tag, "abc");
+    EXPECT_EQ(tag1.m_row, 42);
+    EXPECT_EQ(tag1.m_tag, "abc");
 }
 
 //! Factory methods.
@@ -92,17 +93,17 @@ TEST_F(TagRowTest, assignmentOperator)
 TEST_F(TagRowTest, factoryMethods)
 {
     auto tagrow = TagRow::append();
-    EXPECT_EQ(tagrow.tag, "");
-    EXPECT_EQ(tagrow.row, -1);
+    EXPECT_EQ(tagrow.m_tag, "");
+    EXPECT_EQ(tagrow.m_row, -1);
 
     const std::string expected_name("tag");
     tagrow = TagRow::append(expected_name);
-    EXPECT_EQ(tagrow.tag, expected_name);
-    EXPECT_EQ(tagrow.row, -1);
+    EXPECT_EQ(tagrow.m_tag, expected_name);
+    EXPECT_EQ(tagrow.m_row, -1);
 
     tagrow = TagRow::prepend(expected_name);
-    EXPECT_EQ(tagrow.tag, expected_name);
-    EXPECT_EQ(tagrow.row, 0);
+    EXPECT_EQ(tagrow.m_tag, expected_name);
+    EXPECT_EQ(tagrow.m_row, 0);
 }
 
 //! Implicit type convertion
@@ -110,8 +111,8 @@ TEST_F(TagRowTest, factoryMethods)
 TEST_F(TagRowTest, implicitConvertion)
 {
     auto tagrow = test_method("abc");
-    EXPECT_EQ(tagrow.tag, "abc");
-    EXPECT_EQ(tagrow.row, -1);
+    EXPECT_EQ(tagrow.m_tag, "abc");
+    EXPECT_EQ(tagrow.m_row, -1);
 }
 
 //! Find next tagrow.
@@ -119,8 +120,8 @@ TEST_F(TagRowTest, implicitConvertion)
 TEST_F(TagRowTest, next)
 {
     TagRow tagrow{"tag", 0};
-    EXPECT_EQ(tagrow.next().tag, "tag");
-    EXPECT_EQ(tagrow.next().row, 1);
+    EXPECT_EQ(tagrow.next().m_tag, "tag");
+    EXPECT_EQ(tagrow.next().m_row, 1);
 }
 
 //! Find previous tagrow.
@@ -128,6 +129,6 @@ TEST_F(TagRowTest, next)
 TEST_F(TagRowTest, prev)
 {
     TagRow tagrow{"tag", 1};
-    EXPECT_EQ(tagrow.prev().tag, "tag");
-    EXPECT_EQ(tagrow.prev().row, 0);
+    EXPECT_EQ(tagrow.prev().m_tag, "tag");
+    EXPECT_EQ(tagrow.prev().m_row, 0);
 }

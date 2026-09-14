@@ -8,11 +8,15 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/removeitemcommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/commands/commandutils.h"
 #include "mvvm/interfaces/itembackupstrategy.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -21,10 +25,10 @@ std::string generate_description(const TagRow& tagrow);
 } // namespace
 
 struct RemoveItemCommand::RemoveItemCommandImpl {
-    TagRow tagrow;
-    std::unique_ptr<ItemBackupStrategy> backup_strategy;
-    Path item_path;
-    RemoveItemCommandImpl(TagRow tagrow) : tagrow(std::move(tagrow)) {}
+    TagRow m_tagrow;
+    std::unique_ptr<ItemBackupStrategy> m_backup_strategy;
+    Path m_item_path;
+    RemoveItemCommandImpl(TagRow tagrow) : m_tagrow(std::move(tagrow)) {}
 };
 
 RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
@@ -33,24 +37,24 @@ RemoveItemCommand::RemoveItemCommand(SessionItem* parent, TagRow tagrow)
 {
     setResult(false);
 
-    setDescription(generate_description(p_impl->tagrow));
-    p_impl->backup_strategy = CreateItemBackupStrategy(parent->model());
-    p_impl->item_path = pathFromItem(parent);
+    setDescription(generate_description(p_impl->m_tagrow));
+    p_impl->m_backup_strategy = CreateItemBackupStrategy(parent->model());
+    p_impl->m_item_path = pathFromItem(parent);
 }
 
 RemoveItemCommand::~RemoveItemCommand() = default;
 
 void RemoveItemCommand::undo_command()
 {
-    auto parent = itemFromPath(p_impl->item_path);
-    parent->insertItem(p_impl->backup_strategy->restoreItem(), p_impl->tagrow);
+    auto parent = itemFromPath(p_impl->m_item_path);
+    parent->insertItem(p_impl->m_backup_strategy->restoreItem(), p_impl->m_tagrow);
 }
 
 void RemoveItemCommand::execute_command()
 {
-    auto parent = itemFromPath(p_impl->item_path);
-    if (auto child = parent->takeItem(p_impl->tagrow); child) {
-        p_impl->backup_strategy->saveItem(child.get());
+    auto parent = itemFromPath(p_impl->m_item_path);
+    if (auto child = parent->takeItem(p_impl->m_tagrow); child) {
+        p_impl->m_backup_strategy->saveItem(child.get());
         setResult(true);
     } else {
         setResult(false);
@@ -62,7 +66,7 @@ namespace {
 std::string generate_description(const TagRow& tagrow)
 {
     std::ostringstream ostr;
-    ostr << "Remove item from tag '" << tagrow.tag << "', row " << tagrow.row;
+    ostr << "Remove item from tag '" << tagrow.m_tag << "', row " << tagrow.m_row;
     return ostr.str();
 }
 } // namespace

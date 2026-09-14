@@ -10,6 +10,7 @@
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/model/groupitem.h"
 #include "mvvm/model/itemutils.h"
+#include <vector>
 
 using namespace ModelView;
 

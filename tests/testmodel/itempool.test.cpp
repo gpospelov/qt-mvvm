@@ -45,7 +45,7 @@ TEST_F(ItemPoolTest, registerItem)
 
     // checking unexisting registration
     std::unique_ptr<SessionItem> item2(new SessionItem);
-    EXPECT_EQ(identifier_type(), pool->key_for_item(item2.get()));
+    EXPECT_EQ(std::string(), pool->key_for_item(item2.get()));
     EXPECT_EQ(nullptr, pool->item_for_key("ABC"));
 
     // registering second item
@@ -95,7 +95,7 @@ TEST_F(ItemPoolTest, customKey)
     EXPECT_EQ(pool.use_count(), 1l);
 
     // explicit item registration
-    const identifier_type id("abc-cde-fgh");
+    const std::string id("abc-cde-fgh");
     auto item = new SessionItem;
     pool->register_item(item, id);
 

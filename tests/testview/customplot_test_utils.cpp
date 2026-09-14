@@ -10,15 +10,18 @@
 #include "customplot_test_utils.h"
 
 #include <qcustomplot.h>
+#include <algorithm>
+#include <iterator>
+#include <vector>
 
 std::vector<double> TestUtils::binCenters(const QCPGraph* graph)
 {
-    return get_values(graph, [](auto x) { return x.key; });
+    return get_values(graph, [](auto x) { return x.m_key; });
 }
 
 std::vector<double> TestUtils::binValues(const QCPGraph* graph)
 {
-    return get_values(graph, [](auto x) { return x.value; });
+    return get_values(graph, [](auto x) { return x.m_value; });
 }
 
 std::vector<double> TestUtils::binErrors(const QCPGraph* graph)
@@ -27,7 +30,7 @@ std::vector<double> TestUtils::binErrors(const QCPGraph* graph)
     if (auto errorBars = GetPlottable<QCPErrorBars>(graph->parentPlot()); errorBars) {
         auto container = errorBars->data();
         std::transform(container->begin(), container->end(), std::back_inserter(result),
-                       [](auto x) { return x.errorPlus; });
+                       [](auto x) { return x.m_errorPlus; });
     };
     return result;
 }

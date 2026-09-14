@@ -32,12 +32,12 @@ TEST_F(UndoScenarioTest, undoViewportSetRange)
     axisItem->setProperty(ViewportAxisItem::P_MIN, 1.0);
     axisItem->setProperty(ViewportAxisItem::P_MAX, 2.0);
     QCustomPlot custom_plot;
-    ViewportAxisPlotController controller(custom_plot.xAxis);
+    ViewportAxisPlotController controller(custom_plot.m_xAxis);
     controller.setItem(axisItem);
 
     // initial axis state
-    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
-    EXPECT_EQ(custom_plot.xAxis->range().upper, 2.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_lower, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_upper, 2.0);
 
     // enabling undo/redo, and  its initial state
     model.setUndoRedoEnabled(true);
@@ -53,8 +53,8 @@ TEST_F(UndoScenarioTest, undoViewportSetRange)
     EXPECT_TRUE(stack->canUndo());
     EXPECT_EQ(stack->index(), 1);
     EXPECT_EQ(stack->count(), 1);
-    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
-    EXPECT_EQ(custom_plot.xAxis->range().upper, 20.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_lower, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_upper, 20.0);
 
     // undoing
     stack->undo();
@@ -62,8 +62,8 @@ TEST_F(UndoScenarioTest, undoViewportSetRange)
     EXPECT_FALSE(stack->canUndo());
     EXPECT_EQ(stack->index(), 0);
     EXPECT_EQ(stack->count(), 1);
-    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
-    EXPECT_EQ(custom_plot.xAxis->range().upper, 2.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_lower, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_upper, 2.0);
 
     // redoing
     stack->redo();
@@ -71,6 +71,6 @@ TEST_F(UndoScenarioTest, undoViewportSetRange)
     EXPECT_TRUE(stack->canUndo());
     EXPECT_EQ(stack->index(), 1);
     EXPECT_EQ(stack->count(), 1);
-    EXPECT_EQ(custom_plot.xAxis->range().lower, 1.0);
-    EXPECT_EQ(custom_plot.xAxis->range().upper, 20.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_lower, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot.m_xAxis->range().m_upper, 20.0);
 }

@@ -12,6 +12,7 @@
 
 #include <QGraphicsScene>
 #include <map>
+#include <vector>
 
 namespace NodeEditor {
 

@@ -12,6 +12,8 @@
 
 #include "portinfo.h"
 #include "mvvm/model/compounditem.h"
+#include <string>
+#include <vector>
 
 class QColor;
 

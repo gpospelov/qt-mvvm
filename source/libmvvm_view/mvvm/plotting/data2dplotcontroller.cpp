@@ -12,7 +12,11 @@
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 
@@ -26,16 +30,16 @@ QCPRange qcpRange(const BinnedAxisItem* axis)
 } // namespace
 
 struct Data2DPlotController::Data2DPlotControllerImpl {
-    Data2DPlotController* master{nullptr};
-    QCPColorMap* color_map{nullptr};
+    Data2DPlotController* m_master{nullptr};
+    QCPColorMap* m_color_map{nullptr};
     Data2DPlotControllerImpl(Data2DPlotController* master, QCPColorMap* color_map)
-        : master(master), color_map(color_map)
+        : m_master(master), m_color_map(color_map)
     {
         if (!color_map)
             throw std::runtime_error("Uninitialised colormap in Data2DPlotController");
     }
 
-    Data2DItem* dataItem() { return master->currentItem(); }
+    Data2DItem* dataItem() { return m_master->currentItem(); }
 
     void update_data_points()
     {
@@ -48,23 +52,23 @@ struct Data2DPlotController::Data2DPlotControllerImpl {
                 const int nbinsx = xAxis->size();
                 const int nbinsy = yAxis->size();
 
-                color_map->data()->setSize(nbinsx, nbinsy);
-                color_map->data()->setRange(qcpRange(xAxis), qcpRange(yAxis));
+                m_color_map->data()->setSize(nbinsx, nbinsy);
+                m_color_map->data()->setRange(qcpRange(xAxis), qcpRange(yAxis));
 
                 auto values = data_item->content();
                 for (int ix = 0; ix < nbinsx; ++ix)
                     for (int iy = 0; iy < nbinsy; ++iy)
-                        color_map->data()->setCell(ix, iy,
+                        m_color_map->data()->setCell(ix, iy,
                                                    values[static_cast<size_t>(ix + iy * nbinsx)]);
 
                 auto [min, max] = std::minmax_element(std::begin(values), std::end(values));
-                color_map->setDataRange(QCPRange(*min, *max));
+                m_color_map->setDataRange(QCPRange(*min, *max));
             }
         }
-        color_map->parentPlot()->replot();
+        m_color_map->parentPlot()->replot();
     }
 
-    void reset_colormap() { color_map->data()->clear(); }
+    void reset_colormap() { m_color_map->data()->clear(); }
 };
 
 Data2DPlotController::Data2DPlotController(QCPColorMap* color_map)

@@ -9,6 +9,7 @@
 
 #include "mvvm/factories/itemcataloguefactory.h"
 #include "mvvm/standarditems/standarditemincludes.h"
+#include <memory>
 
 using namespace ModelView;
 

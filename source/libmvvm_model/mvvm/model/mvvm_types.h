@@ -10,7 +10,6 @@
 #ifndef MVVM_MODEL_MVVM_TYPES_H
 #define MVVM_MODEL_MVVM_TYPES_H
 
-#include "mvvm/core/types.h"
 #include <string>
 
 namespace ModelView {
@@ -37,24 +36,24 @@ enum Appearance {
 };
 
 namespace Constants {
-const model_type BaseType = "SessionItem";
-const model_type ColorMapItemType = "ColorMap";
-const model_type ColorMapViewportItemType = "ColorMapViewport";
-const model_type CompoundItemType = "Compound";
-const model_type ContainerItemType = "Container";
-const model_type Data1DItemType = "Data1D";
-const model_type Data2DItemType = "Data2D";
-const model_type FixedBinAxisItemType = "FixedBinAxis";
-const model_type GraphItemType = "Graph";
-const model_type GraphViewportItemType = "GraphViewport";
-const model_type GroupItemType = "Group";
-const model_type LinkedItemType = "Linked";
-const model_type PenItemType = "Pen";
-const model_type PointwiseAxisItemType = "PointwiseAxis";
-const model_type PropertyType = "Property";
-const model_type TextItemType = "Text";
-const model_type VectorItemType = "Vector";
-const model_type ViewportAxisItemType = "ViewportAxis";
+const std::string BaseType = "SessionItem";
+const std::string ColorMapItemType = "ColorMap";
+const std::string ColorMapViewportItemType = "ColorMapViewport";
+const std::string CompoundItemType = "Compound";
+const std::string ContainerItemType = "Container";
+const std::string Data1DItemType = "Data1D";
+const std::string Data2DItemType = "Data2D";
+const std::string FixedBinAxisItemType = "FixedBinAxis";
+const std::string GraphItemType = "Graph";
+const std::string GraphViewportItemType = "GraphViewport";
+const std::string GroupItemType = "Group";
+const std::string LinkedItemType = "Linked";
+const std::string PenItemType = "Pen";
+const std::string PointwiseAxisItemType = "PointwiseAxis";
+const std::string PropertyType = "Property";
+const std::string TextItemType = "Text";
+const std::string VectorItemType = "Vector";
+const std::string ViewportAxisItemType = "ViewportAxis";
 } // namespace Constants
 
 } // namespace ModelView

@@ -20,16 +20,16 @@ namespace ToyItems {
 
 namespace Constants {
 
-const ModelView::model_type MultiLayerItemType = "MultiLayer";
-const ModelView::model_type LayerItemType = "Layer";
-const ModelView::model_type ParticleItemType = "Particle";
-const ModelView::model_type LatticeItemType = "Lattice";
+const std::string MultiLayerItemType = "MultiLayer";
+const std::string LayerItemType = "Layer";
+const std::string ParticleItemType = "Particle";
+const std::string LatticeItemType = "Lattice";
 
-const ModelView::model_type CylinderItemType = "Cylinder";
-const ModelView::model_type SphereItemType = "Sphere";
-const ModelView::model_type AnysoPyramidItemType = "AnysoPyramid";
+const std::string CylinderItemType = "Cylinder";
+const std::string SphereItemType = "Sphere";
+const std::string AnysoPyramidItemType = "AnysoPyramid";
 
-const ModelView::model_type ShapeGroupItemType = "ShapeGroup";
+const std::string ShapeGroupItemType = "ShapeGroup";
 } // namespace Constants
 
 //! Represents multilayer with collection of layers.

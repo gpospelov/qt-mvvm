@@ -17,6 +17,7 @@
 #include "mvvm/viewmodel/defaultviewmodel.h"
 #include <QDataWidgetMapper>
 #include <QStyleOptionViewItem>
+#include <memory>
 
 using namespace ModelView;
 
@@ -81,5 +82,5 @@ TEST_F(ViewModelDelegateTest, widgetMapper)
 
     editor->setData(43.0);
     editor->dataChanged(editor->data());
-    EXPECT_EQ(x_item->data<double>(), 43.0);
+    EXPECT_DOUBLE_EQ(x_item->data<double>(), 43.0);
 }

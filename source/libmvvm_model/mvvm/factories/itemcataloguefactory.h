@@ -11,6 +11,7 @@
 #define MVVM_FACTORIES_ITEMCATALOGUEFACTORY_H
 
 #include "mvvm/model/itemcatalogue.h"
+#include <memory>
 
 namespace ModelView {
 

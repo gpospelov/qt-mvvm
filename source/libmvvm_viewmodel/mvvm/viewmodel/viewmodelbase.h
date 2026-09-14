@@ -13,6 +13,7 @@
 #include "mvvm/viewmodel_export.h"
 #include <QAbstractItemModel>
 #include <memory>
+#include <vector>
 
 namespace ModelView {
 

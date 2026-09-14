@@ -13,6 +13,8 @@
 #include "test_utils.h"
 #include <QDebug>
 #include <QDir>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

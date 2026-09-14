@@ -13,8 +13,11 @@
 #include "mvvm/utils/numericutils.h"
 #include "mvvm/widgets/widgetutils.h"
 #include <QColor>
+#include <algorithm>
 #include <cmath>
+#include <iterator>
 #include <stdexcept>
+#include <vector>
 
 namespace {
 

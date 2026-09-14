@@ -14,6 +14,8 @@
 #include "mvvm/model/itempool.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 using ::testing::_;

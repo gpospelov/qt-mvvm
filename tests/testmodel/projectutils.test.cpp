@@ -16,6 +16,9 @@
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/project_types.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

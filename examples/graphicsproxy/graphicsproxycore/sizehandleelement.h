@@ -11,6 +11,7 @@
 #define GRAPHICSPROXYCORE_SIZEHANDLEELEMENT_H
 
 #include <QGraphicsItem>
+#include <functional>
 #include <vector>
 
 namespace GraphicsProxy {

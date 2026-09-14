@@ -18,6 +18,8 @@
 #include "mvvm/model/taginfo.h"
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -41,7 +43,7 @@ TEST_F(SessionModelTest, insertItem)
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
 
-    const model_type modelType = Constants::BaseType;
+    const std::string modelType = Constants::BaseType;
 
     // inserting single item
     auto item = model.insertItem<SessionItem>();
@@ -81,7 +83,7 @@ TEST_F(SessionModelTest, insertNewItem)
     auto pool = std::make_shared<ItemPool>();
     SessionModel model("Test", pool);
 
-    const model_type modelType = Constants::BaseType;
+    const std::string modelType = Constants::BaseType;
 
     // inserting single item
     auto item = model.insertNewItem(modelType);
@@ -124,13 +126,13 @@ TEST_F(SessionModelTest, insertNewItemWithTag)
     parent->registerTag(TagInfo::universalTag(tag1));
     auto child1 = model.insertItem<PropertyItem>(parent, {tag1, -1});
 
-    EXPECT_EQ(parent->tagRowOfItem(child1).tag, tag1);
+    EXPECT_EQ(parent->tagRowOfItem(child1).m_tag, tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 0);
 
     // adding second child
     auto child2 = model.insertItem<PropertyItem>(parent, {tag1, 0});
 
-    EXPECT_EQ(parent->tagRowOfItem(child2).tag, tag1);
+    EXPECT_EQ(parent->tagRowOfItem(child2).m_tag, tag1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child1), 1);
     EXPECT_EQ(Utils::IndexOfChild(parent, child2), 0);
 }
@@ -297,7 +299,7 @@ TEST_F(SessionModelTest, copyModelItemRootContext)
     ASSERT_TRUE(copy != item);
     EXPECT_FALSE(copy->identifier().empty());
     EXPECT_TRUE(copy->identifier() != item->identifier());
-    EXPECT_EQ(copy->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(copy->data<double>(), 42.0);
     EXPECT_EQ(model.rootItem()->children().size(), 2);
     EXPECT_TRUE(item != copy);
     std::vector<SessionItem*> expected = {item, copy};
@@ -324,7 +326,7 @@ TEST_F(SessionModelTest, copyParentWithProperty)
     ASSERT_TRUE(copy_child != nullptr);
     EXPECT_FALSE(copy->identifier().empty());
     EXPECT_TRUE(copy->identifier() != parent0->identifier());
-    EXPECT_EQ(copy_child->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(copy_child->data<double>(), 42.0);
 }
 
 //! Tests item copy for property item.
@@ -343,7 +345,7 @@ TEST_F(SessionModelTest, copyFreeItem)
 
     // copying to parent
     auto copy = model.copyItem(item.get(), parent0);
-    EXPECT_EQ(copy->data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(copy->data<double>(), 42.0);
 }
 
 //! Attempt to copy property item into the same tag.
@@ -370,7 +372,7 @@ TEST_F(SessionModelTest, findItem)
     auto parent = model.insertItem<SessionItem>();
 
     // check that we can find item using its own identofoer
-    const identifier_type id = parent->identifier();
+    const std::string id = parent->identifier();
     EXPECT_EQ(model.findItem(id), parent);
 
     // check that we can't find deleted item.
@@ -390,8 +392,8 @@ TEST_F(SessionModelTest, findItemInAlienModel)
     // inserting items in both models
     auto parent1 = model1.insertItem<SessionItem>();
     auto parent2 = model2.insertItem<SessionItem>();
-    const identifier_type id1 = parent1->identifier();
-    const identifier_type id2 = parent2->identifier();
+    const std::string id1 = parent1->identifier();
+    const std::string id2 = parent2->identifier();
 
     // checking that we can access items from both models
     EXPECT_EQ(model1.findItem(id1), parent1);

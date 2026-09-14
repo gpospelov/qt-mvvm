@@ -14,6 +14,8 @@
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -127,7 +129,7 @@ TEST_F(GroupItemTest, currentItemNoConst)
 {
     TestGroupItem item;
     item.currentItem()->setProperty("Radius", 42.0);
-    EXPECT_EQ(item.currentItem()->property<double>("Radius"), 42.0);
+    EXPECT_DOUBLE_EQ(item.currentItem()->property<double>("Radius"), 42.0);
 }
 
 TEST_F(GroupItemTest, inModelContext)

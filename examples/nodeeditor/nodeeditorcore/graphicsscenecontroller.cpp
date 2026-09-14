@@ -23,7 +23,7 @@ GraphicsSceneController::GraphicsSceneController(SampleModel* model, GraphicsSce
     setOnItemInserted([this](auto, auto) { m_scene->updateScene(); });
 
     auto on_about_to_remove = [this](SessionItem* parent, const TagRow& tagrow) {
-        auto child = parent->getItem(tagrow.tag, tagrow.row);
+        auto child = parent->getItem(tagrow.m_tag, tagrow.m_row);
         m_scene->removeViewForItem(dynamic_cast<ConnectableItem*>(child));
     };
     setOnAboutToRemoveItem(on_about_to_remove);

@@ -10,8 +10,8 @@
 #ifndef MVVM_CORE_UNIQUEIDGENERATOR_H
 #define MVVM_CORE_UNIQUEIDGENERATOR_H
 
-#include "mvvm/core/types.h"
 #include "mvvm/model_export.h"
+#include <string>
 
 namespace ModelView {
 
@@ -24,7 +24,7 @@ namespace ModelView {
 
 class MVVM_MODEL_EXPORT UniqueIdGenerator {
 public:
-    static identifier_type generate();
+    static std::string generate();
 };
 
 } // namespace ModelView

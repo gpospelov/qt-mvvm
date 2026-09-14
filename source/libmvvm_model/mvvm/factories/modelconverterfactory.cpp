@@ -11,6 +11,7 @@
 #include "mvvm/factories/itemconverterfactory.h"
 #include "mvvm/serialization/jsonitem_types.h"
 #include "mvvm/serialization/jsonmodelconverter.h"
+#include <memory>
 
 //! Creates a JSON model converter intended for model cloning.
 //! Saves a full deep copy of model in JSON. When restoring, reconstruct full copy.

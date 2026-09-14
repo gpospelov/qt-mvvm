@@ -12,6 +12,7 @@
 #include "google_test.h"
 #include "mockwidgets.h"
 #include "mvvm/model/sessionitem.h"
+#include <functional>
 #include <memory>
 
 using namespace ModelView;

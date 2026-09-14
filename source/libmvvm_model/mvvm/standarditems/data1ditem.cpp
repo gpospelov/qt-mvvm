@@ -9,7 +9,9 @@
 
 #include "mvvm/standarditems/data1ditem.h"
 #include "mvvm/standarditems/axisitems.h"
+#include <cstddef>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 

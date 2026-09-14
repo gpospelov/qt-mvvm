@@ -41,10 +41,10 @@ public:
     void setProgressCallback(ModelView::ProgressHandler::callback_t callback);
 
 private:
-    InputData input_data;
-    Result result;
-    int delay{0};
-    ModelView::ProgressHandler progress_handler;
+    InputData m_input_data;
+    Result m_result;
+    int m_delay{0};
+    ModelView::ProgressHandler m_progress_handler;
 };
 
 #endif // CONCURRENTPLOTCORE_TOYSIMULATION_H

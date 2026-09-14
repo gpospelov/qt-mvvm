@@ -25,6 +25,7 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QVBoxLayout>
+#include <cstddef>
 
 using namespace ModelView;
 

@@ -12,6 +12,7 @@
 #include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/data2ditem.h"
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 namespace {

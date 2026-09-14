@@ -11,6 +11,7 @@
 #define MVVM_SERIALIZATION_JSONITEMCONVERTER_H
 
 #include "mvvm/serialization/jsonitemconverterinterface.h"
+#include <memory>
 
 namespace ModelView {
 

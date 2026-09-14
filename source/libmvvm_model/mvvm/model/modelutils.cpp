@@ -11,6 +11,7 @@
 #include "mvvm/interfaces/undostackinterface.h"
 #include "mvvm/model/path.h"
 #include <QJsonObject>
+#include <string>
 
 using namespace ModelView;
 
@@ -58,7 +59,7 @@ void Utils::DeleteItemFromModel(SessionItem* item)
 void Utils::MoveUp(SessionItem* item)
 {
     auto tagrow = item->tagRow();
-    if (tagrow.row == 0)
+    if (tagrow.m_row == 0)
         return; // item already at the top
     item->model()->moveItem(item, item->parent(), tagrow.prev());
 }
@@ -66,7 +67,7 @@ void Utils::MoveUp(SessionItem* item)
 void Utils::MoveDown(SessionItem* item)
 {
     auto tagrow = item->tagRow();
-    if (tagrow.row == item->parent()->itemCount(tagrow.tag) - 1)
+    if (tagrow.m_row == item->parent()->itemCount(tagrow.m_tag) - 1)
         return; // item already at the buttom
     item->model()->moveItem(item, item->parent(), tagrow.next());
 }

@@ -11,6 +11,9 @@
 
 #include "google_test.h"
 #include "test_utils.h"
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 using namespace TestUtils;

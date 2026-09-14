@@ -15,7 +15,9 @@
 #include "mvvm/standarditems/data2ditem.h"
 #include <qcustomplot.h>
 #include <QSignalSpy>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 
@@ -32,7 +34,7 @@ TEST_F(Data2DPlotControllerTest, initialState)
     EXPECT_THROW(Data2DPlotController(nullptr), std::runtime_error);
 
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
     color_map->data()->clear(); // to remove default values defined in QCPColorMap
 
     Data2DPlotController controller(color_map);
@@ -48,7 +50,7 @@ TEST_F(Data2DPlotControllerTest, dataItemInInitialState)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
 
     // creating data item with single point
     SessionModel model;
@@ -69,7 +71,7 @@ TEST_F(Data2DPlotControllerTest, setAxesAfter)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
 
     // creating data item with single point
     SessionModel model;
@@ -97,7 +99,7 @@ TEST_F(Data2DPlotControllerTest, dataPoints)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
 
     // creating data item with single point
     SessionModel model;
@@ -133,7 +135,7 @@ TEST_F(Data2DPlotControllerTest, twoDataItems)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
 
     // creating data item with single point
     SessionModel model;
@@ -174,7 +176,7 @@ TEST_F(Data2DPlotControllerTest, dataRange)
 {
     // creating custom plot and empty graph on it
     auto custom_plot = std::make_unique<QCustomPlot>();
-    auto color_map = new QCPColorMap(custom_plot->xAxis, custom_plot->yAxis);
+    auto color_map = new QCPColorMap(custom_plot->m_xAxis, custom_plot->m_yAxis);
 
     // creating data item with single point
     SessionModel model;
@@ -193,6 +195,6 @@ TEST_F(Data2DPlotControllerTest, dataRange)
 
     auto range = color_map->dataRange();
     EXPECT_EQ(spy.count(), 0);
-    EXPECT_EQ(range.lower, 1.0);
-    EXPECT_EQ(range.upper, 6.0);
+    EXPECT_EQ(range.m_lower, 1.0);
+    EXPECT_EQ(range.m_upper, 6.0);
 }

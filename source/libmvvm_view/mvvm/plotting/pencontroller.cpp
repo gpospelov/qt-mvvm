@@ -11,6 +11,7 @@
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/standarditems/plottableitems.h"
 #include <qcustomplot.h>
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;

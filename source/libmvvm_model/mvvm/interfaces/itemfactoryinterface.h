@@ -10,10 +10,10 @@
 #ifndef MVVM_INTERFACES_ITEMFACTORYINTERFACE_H
 #define MVVM_INTERFACES_ITEMFACTORYINTERFACE_H
 
-#include "mvvm/core/types.h"
 #include "mvvm/model/function_types.h"
 #include "mvvm/model_export.h"
 #include <memory>
+#include <string>
 
 namespace ModelView {
 
@@ -28,7 +28,7 @@ public:
     virtual void registerItem(const std::string& modelType, item_factory_func_t func,
                               const std::string& label) = 0;
 
-    virtual std::unique_ptr<SessionItem> createItem(const model_type& modelType) const = 0;
+    virtual std::unique_ptr<SessionItem> createItem(const std::string& modelType) const = 0;
 };
 
 } // namespace ModelView

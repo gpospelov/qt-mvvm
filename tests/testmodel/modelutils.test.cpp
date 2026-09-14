@@ -12,6 +12,7 @@
 #include "google_test.h"
 #include "toyitems.h"
 #include "toymodel.h"
+#include <vector>
 
 using namespace ModelView;
 
@@ -80,7 +81,7 @@ TEST_F(ModelUtilsTest, CreateCopy)
 
     auto modelCopy = Utils::CreateCopy<ToyItems::SampleModel>(model);
     auto layerCopy = modelCopy->topItem<ToyItems::LayerItem>();
-    EXPECT_EQ(layerCopy->property<double>(ToyItems::LayerItem::P_THICKNESS), 42.0);
+    EXPECT_DOUBLE_EQ(layerCopy->property<double>(ToyItems::LayerItem::P_THICKNESS), 42.0);
 
     // Copied model has unique identifiers
     EXPECT_FALSE(model.rootItem()->identifier() == modelCopy->rootItem()->identifier());
@@ -95,7 +96,7 @@ TEST_F(ModelUtilsTest, CreateClone)
 
     auto modelCopy = Utils::CreateClone<ToyItems::SampleModel>(model);
     auto layerCopy = modelCopy->topItem<ToyItems::LayerItem>();
-    EXPECT_EQ(layerCopy->property<double>(ToyItems::LayerItem::P_THICKNESS), 42.0);
+    EXPECT_DOUBLE_EQ(layerCopy->property<double>(ToyItems::LayerItem::P_THICKNESS), 42.0);
 
     // Copied model has unique identifiers
     EXPECT_TRUE(layerCopy->identifier() == layer->identifier());

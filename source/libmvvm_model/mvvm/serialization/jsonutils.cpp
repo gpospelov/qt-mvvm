@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <stdexcept>
+#include <string>
 
 namespace {
 const std::string text_limitless = "limitless";

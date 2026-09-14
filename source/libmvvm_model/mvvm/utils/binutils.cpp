@@ -1,6 +1,7 @@
 #include "mvvm/utils/binutils.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 
 namespace {
 //! Returns buffer size

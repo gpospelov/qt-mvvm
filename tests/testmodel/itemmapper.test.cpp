@@ -14,6 +14,7 @@
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <memory>
 #include <stdexcept>
 
 using namespace ModelView;
@@ -166,8 +167,8 @@ TEST(ItemMapperTest, onPropertyChange)
 
     // perform action
     item->setProperty("height", 43.0);
-    EXPECT_EQ(item->property<double>("height"), 43.0);
-    EXPECT_EQ(property->data<double>(), 43.0);
+    EXPECT_DOUBLE_EQ(item->property<double>("height"), 43.0);
+    EXPECT_DOUBLE_EQ(property->data<double>(), 43.0);
 }
 
 //! Changing item property.
@@ -193,8 +194,8 @@ TEST(ItemMapperTest, onChildPropertyChange)
 
     // perform action
     compound2->setProperty("height", 43.0);
-    EXPECT_EQ(compound2->property<double>("height"), 43.0);
-    EXPECT_EQ(property->data<double>(), 43.0);
+    EXPECT_DOUBLE_EQ(compound2->property<double>("height"), 43.0);
+    EXPECT_DOUBLE_EQ(property->data<double>(), 43.0);
 }
 
 //! Inserting item to item.

@@ -11,6 +11,9 @@
 #include "mvvm/interfaces/projectinterface.h"
 #include "mvvm/project/project_types.h"
 #include "mvvm/project/projectutils.h"
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

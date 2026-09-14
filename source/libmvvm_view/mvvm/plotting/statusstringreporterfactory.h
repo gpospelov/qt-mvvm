@@ -15,6 +15,7 @@
 #include "mvvm/view_export.h"
 #include <functional>
 #include <memory>
+#include <string>
 
 class QCustomPlot;
 

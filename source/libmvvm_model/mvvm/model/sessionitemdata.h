@@ -35,7 +35,6 @@ public:
     bool hasData(int role) const;
 
 private:
-    void assure_validity(const Variant& variant, int role);
     container_type m_values;
 };
 

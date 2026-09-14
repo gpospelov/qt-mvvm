@@ -14,6 +14,7 @@
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include <QColor>
+#include <string>
 
 using namespace ModelView;
 

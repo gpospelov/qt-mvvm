@@ -15,6 +15,8 @@
 #include "mvvm/model/itemfactory.h"
 #include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionitemtags.h"
+#include <memory>
+#include <string>
 
 using namespace ModelView;
 
@@ -61,7 +63,7 @@ TEST_F(JsonItemCopyStrategyTest, compoundItem)
     auto copy = strategy->createCopy(&item);
 
     EXPECT_EQ(item.modelType(), copy->modelType());
-    EXPECT_EQ(copy->getItem("thickness")->data<double>(), property->data<double>());
+    EXPECT_DOUBLE_EQ(copy->getItem("thickness")->data<double>(), property->data<double>());
     EXPECT_FALSE(copy->getItem("thickness")->identifier() == property->identifier());
     EXPECT_FALSE(item.identifier() == copy->identifier());
 }

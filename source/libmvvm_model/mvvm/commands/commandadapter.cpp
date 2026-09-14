@@ -9,6 +9,8 @@
 
 #include "mvvm/commands/commandadapter.h"
 #include "mvvm/commands/abstractitemcommand.h"
+#include <memory>
+#include <utility>
 
 using namespace ModelView;
 

@@ -18,6 +18,8 @@
 #include "mvvm/standarditems/graphitem.h"
 #include "mvvm/standarditems/graphviewportitem.h"
 #include <qcustomplot.h>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 
@@ -51,10 +53,10 @@ TEST_F(GraphViewportPlotControllerTest, setItem)
     EXPECT_EQ(custom_plot->graphCount(), 0);
 
     // axis should be [0, 1] as in defaule ViewportAxisItem
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, 0.0);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, 1.0);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, 0.0);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_lower, 0.0);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_upper, 1.0);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_lower, 0.0);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_upper, 1.0);
 }
 
 //! Check ::setItem() method when ViewPortItem contains graphs.
@@ -82,10 +84,10 @@ TEST_F(GraphViewportPlotControllerTest, addGraphAndSetItem)
     EXPECT_EQ(custom_plot->graphCount(), 1);
 
     // QCustomPlot axis should correspond to
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_values[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_values[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_lower, expected_centers[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_upper, expected_centers[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_lower, expected_values[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_upper, expected_values[2]);
 }
 
 //! Checks consequitive graph adding/removal
@@ -135,10 +137,10 @@ TEST_F(GraphViewportPlotControllerTest, addAndRemoveGraphs)
 
     // Checking that viewport min, max adjusted to both graphs when manually call update_viewport()
     viewport_item->setViewportToContent();
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().lower, expected_centers[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->xAxis->range().upper, expected_centers[2]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().lower, expected_values1[0]);
-    EXPECT_DOUBLE_EQ(custom_plot->yAxis->range().upper, expected_values2[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_lower, expected_centers[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_xAxis->range().m_upper, expected_centers[2]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_lower, expected_values1[0]);
+    EXPECT_DOUBLE_EQ(custom_plot->m_yAxis->range().m_upper, expected_values2[2]);
 
     // removing one GraphItem
     model.removeItem(viewport_item, {ViewportItem::T_ITEMS, 1});

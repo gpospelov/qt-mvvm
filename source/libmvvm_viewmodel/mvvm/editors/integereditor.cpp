@@ -8,9 +8,12 @@
 // ************************************************************************** //
 
 #include "mvvm/editors/integereditor.h"
+#include "mvvm/editors/customeditor.h"
+#include <QMetaType>
 #include <QSpinBox>
 #include <QVBoxLayout>
-#include <cmath>
+#include <QWidget>
+#include <Qt>
 #include <stdexcept>
 
 namespace {
@@ -33,8 +36,7 @@ IntegerEditor::IntegerEditor(QWidget* parent) : CustomEditor(parent), m_intEdito
 
     layout->addWidget(m_intEditor);
 
-    connect(m_intEditor, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-            [=] { this->onEditingFinished(); });
+    connect(m_intEditor, &QSpinBox::valueChanged, [=] { this->onEditingFinished(); });
 
     setLayout(layout);
 
@@ -55,7 +57,7 @@ void IntegerEditor::onEditingFinished()
 
 void IntegerEditor::update_components()
 {
-    if (m_data.type() != QVariant::Int)
+    if (m_data.userType() != QMetaType::fromType<int>().id())
         throw std::runtime_error("IntegerEditor::update_components() -> Error. Wrong variant type");
 
     m_intEditor->setValue(m_data.value<int>());

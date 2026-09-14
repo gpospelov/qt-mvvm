@@ -12,6 +12,7 @@
 
 #include "mvvm/interfaces/projectmanagerinterface.h"
 #include <memory>
+#include <string>
 
 namespace ModelView {
 

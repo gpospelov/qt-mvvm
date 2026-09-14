@@ -14,7 +14,9 @@
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 
@@ -45,7 +47,7 @@ TEST_F(CopyItemCommandTest, copyChild)
     EXPECT_EQ(parent->childrenCount(), 3);
     std::vector<SessionItem*> expected = {child0, copy, child1};
     EXPECT_EQ(parent->getItems("tag1"), expected);
-    EXPECT_EQ(copy->data<double>(), 43.0);
+    EXPECT_DOUBLE_EQ(copy->data<double>(), 43.0);
 
     // undoing command
     command->undo();

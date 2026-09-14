@@ -4,7 +4,7 @@
 
 set(library_name mvvm_view)
 
-add_library(${library_name} SHARED "")
+add_library(${library_name} STATIC "")
 add_subdirectory(mvvm)
 add_library(MVVM::View ALIAS ${library_name}) # alias for build-tree usage
 
@@ -29,6 +29,12 @@ target_compile_features(${library_name} PUBLIC cxx_std_17) # clang code model in
 # -- Installation --
 
 install(TARGETS ${library_name} EXPORT mvvm-targets LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS qcustomplot ${library_name}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+	INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 set_target_properties(${library_name} PROPERTIES EXPORT_NAME View SOVERSION ${MVVM_SOVERSION} VERSION ${MVVM_BUILDVERSION})
 install(DIRECTORY mvvm/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mvvm FILES_MATCHING PATTERN "*.h")
 install(FILES ${export_filename} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mvvm)

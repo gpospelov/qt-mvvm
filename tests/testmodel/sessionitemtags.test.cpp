@@ -12,7 +12,10 @@
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/taginfo.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -158,21 +161,21 @@ TEST_F(SessionItemTagsTest, tagRowOfItem)
     tag.insertItem(child_t2_a, {tag2, 0});        // 0
 
     // checking children tag and row
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).tag, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).tag, tag1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).tag, tag2);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).row, 0);
-    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).row, 1);
-    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).row, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).m_tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).m_tag, tag1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).m_tag, tag2);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_a).m_row, 0);
+    EXPECT_EQ(tag.tagRowOfItem(child_t1_b).m_row, 1);
+    EXPECT_EQ(tag.tagRowOfItem(child_t2_a).m_row, 0);
 
     // alien item has no tag and -1 row
     auto alien = std::make_unique<SessionItem>();
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).tag, "");
-    EXPECT_EQ(tag.tagRowOfItem(alien.get()).row, -1);
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).m_tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(alien.get()).m_row, -1);
 
     // the same for nullptr
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).tag, "");
-    EXPECT_EQ(tag.tagRowOfItem(nullptr).row, -1);
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).m_tag, "");
+    EXPECT_EQ(tag.tagRowOfItem(nullptr).m_row, -1);
 }
 
 //! Testing method getItem.

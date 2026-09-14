@@ -1,72 +1,109 @@
 name: Linux
 
+# https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  # `actions:write` permission is required to delete caches
+  # See also: https://docs.github.com/en/rest/actions/cache?apiVersion=2022-11-28#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+  actions: write
+  contents: read
+
 on:
-  push:
-    branches: [ master, develop ]    
+  workflow_dispatch:
   pull_request:
+  push:
     branches: [ master, develop ]
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 3
 
-    steps:
-    - uses: actions/checkout@v6.0.2
+    env:
+      CCACHE_CACHE_KEY: ${{ github.workflow }}-ccache
 
-    - name: setup dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential cmake cmake-extras ccache qt6-base-dev qt6-tools-dev-tools libqt6svg6 qt6-declarative-dev libx11-xcb1 libxkbcommon-dev
-        
-    - name: ccache timestamp
-      id: ccache_cache_timestamp
-      shell: cmake -P {0}
-      run: |
-        string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
-        message("::set-output name=timestamp::${current_date}")
-        
-    - name: ccache files
-      uses: actions/cache@v5.0.5
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v6.0.2
+
+    - name: Install dependencies
+      uses: awalsh128/cache-apt-pkgs-action@v1.6.1
       with:
-        path: .ccache
-        key: qtmvvm-ubuntu-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
-        restore-keys: |
-          qtmvvm-ubuntu-ccache-
-          
-    - name: build
+        packages: build-essential cmake cmake-extras ccache qt6-base-dev qt6-tools-dev-tools libqt6svg6 qt6-declarative-dev libx11-xcb1 libxkbcommon-dev lcov
+        version: 1.0
+        execute_install_scripts: true
+
+    - name: Restore the ccache
+      id: restore-ccache
+      uses: actions/cache/restore@v5
+      with:
+        key: ${{ env.CCACHE_CACHE_KEY }}
+        path: ${{ github.workspace }}/.ccache
+
+    - name: Build
       env:
         CCACHE_DIR: $GITHUB_WORKSPACE/.ccache
         CCACHE_COMPRESS: "true"
         CCACHE_COMPRESSLEVEL: "6"
         CCACHE_MAXSIZE: "400M"
-        QT_QPA_PLATFORM: offscreen        
+        QT_QPA_PLATFORM: offscreen
       run: |
-        cd $GITHUB_WORKSPACE && pwd && ls
-        mkdir build && cd build
-        cmake -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ../
-        make package_source
-        make -j4        
-        
+        mkdir $GITHUB_WORKSPACE/build
+        cd $GITHUB_WORKSPACE/build
+        cmake -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release ../
+        cmake --build . --config Release -j4
+
     - name: Upload tarball
-      uses: actions/upload-artifact@v7.0.1
+      uses: actions/upload-artifact@v7
       if: success()
       with:
-         name: qt-mvvm
-         path: ./build/qt-mvvm-*.tar.gz  
+        name: qt-mvvm
+        path: ./build/qt-mvvm-*.tar.gz
 
-    - name: ctest
+    - name: Delete the previously saved ccache
+      continue-on-error: true
       env:
-        QT_QPA_PLATFORM: offscreen        
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+      if: steps.restore-ccache.outputs.cache-hit == 'true'
+      run: |
+        caches=$(gh cache list --key ${{ env.CCACHE_CACHE_KEY }} --ref ${{ github.ref }} --json id,ref,key)
+        caches_length=$(jq length <<< "$caches")
+        if [ $caches_length -gt 0 ]; then
+          echo "Deleting saved ccache keys..."
+          gh cache delete ${{ env.CCACHE_CACHE_KEY }} --ref ${{ github.ref }}
+        else
+          echo "No saved ccache keys for deleting."
+        fi
+
+    - name: Save the ccache
+      if: always()
+      uses: actions/cache/save@v5
+      with:
+        key: ${{ env.CCACHE_CACHE_KEY }}
+        path: ${{ github.workspace }}/.ccache
+
+    - name: Test
+      env:
+        QT_QPA_PLATFORM: offscreen
       run: |
         cd $GITHUB_WORKSPACE/build
-        ccache -s
-        ctest -j4
+        echo Running tests...
+        ctest -j --quiet --output-on-failure
+        echo Testing finished.
 
-    - name: upload test logs
-      uses: actions/upload-artifact@v7.0.1
+    - name: Upload test logs
+      uses: actions/upload-artifact@v7
       if: failure()
       with:
-         name: LastTest.log
-         path: ./build/Testing/Temporary/LastTest.log  
+        name: TestReport.log
+        path: ./build/Testing/Temporary/LastTest.log
+        retention-days: ${{ case(github.retention_days < 7, github.retention_days, 7) }}
+        overwrite: true

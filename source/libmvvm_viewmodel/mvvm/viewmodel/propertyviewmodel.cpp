@@ -9,6 +9,7 @@
 
 #include "mvvm/viewmodel/propertyviewmodel.h"
 #include "mvvm/viewmodel/standardviewmodelcontrollers.h"
+#include <memory>
 
 using namespace ModelView;
 

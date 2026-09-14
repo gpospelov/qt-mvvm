@@ -13,23 +13,27 @@
 #include "mvvm/utils/containerutils.h"
 #include "mvvm/viewmodel/viewmodelutils.h"
 #include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 using namespace ModelView;
 
 struct ViewItem::ViewItemImpl {
-    std::vector<std::unique_ptr<ViewItem>> children; //! buffer to hold rows x columns
-    int rows{0};
-    int columns{0};
-    SessionItem* item{nullptr};
-    int role{0};
-    ViewItem* parent_view_item{nullptr};
-    ViewItemImpl(SessionItem* item, int role) : item(item), role(role) {}
+    std::vector<std::unique_ptr<ViewItem>> m_children; //! buffer to hold m_rows x columns
+    int m_rows{0};
+    int m_columns{0};
+    SessionItem* m_item{nullptr};
+    int m_role{0};
+    ViewItem* m_parent_view_item{nullptr};
+    ViewItemImpl(SessionItem* item, int role) : m_item(item), m_role(role) {}
 
     void appendRow(std::vector<std::unique_ptr<ViewItem>> items)
     {
-        insertRow(rows, std::move(items));
+        insertRow(m_rows, std::move(items));
     }
 
     void insertRow(int row, std::vector<std::unique_ptr<ViewItem>> items)
@@ -37,61 +41,61 @@ struct ViewItem::ViewItemImpl {
         if (items.empty())
             throw std::runtime_error("Error in ViewItemImpl: attempt to insert empty row");
 
-        if (columns > 0 && items.size() != static_cast<size_t>(columns))
+        if (m_columns > 0 && items.size() != static_cast<size_t>(m_columns))
             throw std::runtime_error("Error in ViewItemImpl: wrong number of columns.");
 
-        if (row < 0 || row > rows)
+        if (row < 0 || row > m_rows)
             throw std::runtime_error("Error in ViewItemImpl: invalid row index.");
 
-        children.insert(std::next(children.begin(), row * columns),
+        m_children.insert(std::next(m_children.begin(), row * m_columns),
                         std::make_move_iterator(items.begin()),
                         std::make_move_iterator(items.end()));
 
-        columns = static_cast<int>(items.size());
-        ++rows;
+        m_columns = static_cast<int>(items.size());
+        ++m_rows;
     }
 
     void removeRow(int row)
     {
-        if (row < 0 || row >= rows)
+        if (row < 0 || row >= m_rows)
             throw std::runtime_error("Error in RefViewItem: invalid row index.");
 
-        auto begin = std::next(children.begin(), row * columns);
-        auto end = std::next(begin, columns);
-        children.erase(begin, end);
-        --rows;
-        if (rows == 0)
-            columns = 0;
+        auto begin = std::next(m_children.begin(), row * m_columns);
+        auto end = std::next(begin, m_columns);
+        m_children.erase(begin, end);
+        --m_rows;
+        if (m_rows == 0)
+            m_columns = 0;
     }
 
     ViewItem* child(int row, int column) const
     {
-        if (row < 0 || row >= rows)
+        if (row < 0 || row >= m_rows)
             throw std::runtime_error("Error in RefViewItem: wrong row)");
 
-        if (column < 0 || column >= columns)
+        if (column < 0 || column >= m_columns)
             throw std::runtime_error("Error in RefViewItem: wrong column)");
 
-        return children.at(static_cast<size_t>(column + row * columns)).get();
+        return m_children.at(static_cast<size_t>(column + row * m_columns)).get();
     }
 
-    ViewItem* parent() { return parent_view_item; }
+    ViewItem* parent() { return m_parent_view_item; }
 
     int index_of_child(const ViewItem* child)
     {
-        return Utils::IndexOfItem(children.begin(), children.end(), child);
+        return Utils::IndexOfItem(m_children.begin(), m_children.end(), child);
     }
 
-    //! Returns item data associated with this RefViewItem.
+    //! Returns m_item data associated with this RefViewItem.
 
-    QVariant data() const { return item ? item->data<QVariant>(role) : QVariant(); }
+    QVariant data() const { return m_item ? m_item->data<QVariant>(m_role) : QVariant(); }
 
-    //! Returns vector of children.
+    //! Returns vector of m_children.
 
     std::vector<ViewItem*> get_children() const
     {
         std::vector<ViewItem*> result;
-        std::transform(children.begin(), children.end(), std::back_inserter(result),
+        std::transform(m_children.begin(), m_children.end(), std::back_inserter(result),
                        [](const auto& x) { return x.get(); });
         return result;
     }
@@ -103,18 +107,18 @@ ViewItem::ViewItem(SessionItem* item, int role) : p_impl(std::make_unique<ViewIt
 
 ViewItem::~ViewItem() = default;
 
-//! Returns the number of child item rows that the item has.
+//! Returns the number of child item m_rows that the item has.
 
 int ViewItem::rowCount() const
 {
-    return p_impl->rows;
+    return p_impl->m_rows;
 }
 
-//! Returns the number of child item columns that the item has.
+//! Returns the number of child item m_columns that the item has.
 
 int ViewItem::columnCount() const
 {
-    return p_impl->columns;
+    return p_impl->m_columns;
 }
 
 //! Appends a row containing items. Number of items should be the same as columnCount()
@@ -145,9 +149,9 @@ void ViewItem::removeRow(int row)
 
 void ViewItem::clear()
 {
-    p_impl->children.clear();
-    p_impl->rows = 0;
-    p_impl->columns = 0;
+    p_impl->m_children.clear();
+    p_impl->m_rows = 0;
+    p_impl->m_columns = 0;
 }
 
 ViewItem* ViewItem::parent() const
@@ -162,12 +166,12 @@ ViewItem* ViewItem::child(int row, int column) const
 
 SessionItem* ViewItem::item() const
 {
-    return p_impl->item;
+    return p_impl->m_item;
 }
 
 int ViewItem::item_role() const
 {
-    return p_impl->role;
+    return p_impl->m_role;
 }
 
 //! Returns the row where the item is located in its parent's child table, or -1 if the item has no
@@ -176,7 +180,7 @@ int ViewItem::item_role() const
 int ViewItem::row() const
 {
     auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
-    return index >= 0 ? index / parent()->p_impl->columns : -1;
+    return index >= 0 ? index / parent()->p_impl->m_columns : -1;
 }
 
 //! Returns the column where the item is located in its parent's child table, or -1 if the item has
@@ -185,7 +189,7 @@ int ViewItem::row() const
 int ViewItem::column() const
 {
     auto index = parent() ? parent()->p_impl->index_of_child(this) : -1;
-    return index >= 0 ? index % parent()->p_impl->columns : -1;
+    return index >= 0 ? index % parent()->p_impl->m_columns : -1;
 }
 
 //! Returns the data for given role according to Qt::ItemDataRole namespace definitions.
@@ -193,7 +197,7 @@ int ViewItem::column() const
 
 QVariant ViewItem::data(int qt_role) const
 {
-    if (!p_impl->item)
+    if (!p_impl->m_item)
         return QVariant();
 
     if (qt_role == Qt::DisplayRole || qt_role == Qt::EditRole)
@@ -203,9 +207,9 @@ QVariant ViewItem::data(int qt_role) const
 #else
     else if (qt_role == Qt::TextColorRole)
 #endif
-        return Utils::TextColorRole(*p_impl->item);
+        return Utils::TextColorRole(*p_impl->m_item);
     else if (qt_role == Qt::ToolTipRole)
-        return Utils::ToolTipRole(*p_impl->item);
+        return Utils::ToolTipRole(*p_impl->m_item);
     else
         return QVariant();
 }
@@ -215,8 +219,8 @@ QVariant ViewItem::data(int qt_role) const
 
 bool ViewItem::setData(const QVariant& value, int qt_role)
 {
-    if (p_impl->item && qt_role == Qt::EditRole)
-        return p_impl->item->setData(Utils::toCustomVariant(value), p_impl->role);
+    if (p_impl->m_item && qt_role == Qt::EditRole)
+        return p_impl->m_item->setData(Utils::toCustomVariant(value), p_impl->m_role);
     return false;
 }
 
@@ -236,5 +240,5 @@ std::vector<ViewItem*> ViewItem::children() const
 
 void ViewItem::setParent(ViewItem* parent)
 {
-    p_impl->parent_view_item = parent;
+    p_impl->m_parent_view_item = parent;
 }

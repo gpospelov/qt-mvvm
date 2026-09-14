@@ -10,8 +10,13 @@
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/model/sessionitem.h"
 #include "mvvm/model/sessionmodel.h"
+#include "mvvm/signals/callback_types.h"
 #include "mvvm/signals/callbackcontainer.h"
+#include "mvvm/signals/modellistener.h"
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -62,12 +67,12 @@ struct ItemMapper::ItemMapperImpl {
 
         // data of item's property changed
         if (nestling == 1)
-            callOnPropertyChange(m_item, m_item->tagRowOfItem(item).tag);
+            callOnPropertyChange(m_item, m_item->tagRowOfItem(item).m_tag);
 
         // child property changed
         if (nestling == 2) {
             if (auto parent = item->parent())
-                callOnChildPropertyChange(parent, parent->tagRowOfItem(item).tag);
+                callOnChildPropertyChange(parent, parent->tagRowOfItem(item).m_tag);
         }
     }
 
@@ -149,21 +154,21 @@ ItemMapper::ItemMapper(SessionItem* item)
 
     p_impl->m_item = item;
 
-    auto on_data_change = [this](auto item, auto role) { p_impl->processDataChange(item, role); };
+    auto on_data_change = [this](auto item_, auto role_) { p_impl->processDataChange(item_, role_); };
     ModelListener::setOnDataChange(on_data_change);
 
-    auto on_item_inserted = [this](auto item, auto tagrow) {
-        p_impl->processItemInserted(item, tagrow);
+    auto on_item_inserted = [this](auto item_, const auto& tagrow_) {
+        p_impl->processItemInserted(item_, tagrow_);
     };
     ModelListener::setOnItemInserted(on_item_inserted, this);
 
-    auto on_item_removed = [this](auto item, auto tagrow) {
-        p_impl->processItemRemoved(item, tagrow);
+    auto on_item_removed = [this](auto item_, const auto& tagrow_) {
+        p_impl->processItemRemoved(item_, tagrow_);
     };
     ModelListener::setOnItemRemoved(on_item_removed, this);
 
-    auto on_about_to_remove_item = [this](auto item, auto tagrow) {
-        p_impl->processAboutToRemoveItem(item, tagrow);
+    auto on_about_to_remove_item = [this](auto item_, const auto& tagrow_) {
+        p_impl->processAboutToRemoveItem(item_, tagrow_);
     };
     ModelListener::setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }

@@ -13,6 +13,7 @@
 #include "mvvm/serialization/jsonvariantconverter.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include <string>
 
 using namespace ModelView;
 
@@ -47,12 +48,11 @@ TEST_F(JsonItemFormatAssistantTest, isSessionItem)
 TEST_F(JsonItemFormatAssistantTest, isValidDataRole)
 {
     JsonItemFormatAssistant assistant;
-    JsonVariantConverter variant_converter;
 
     // valid json object representing DataRole
     QJsonObject object;
     object[JsonItemFormatAssistant::roleKey] = 42;
-    object[JsonItemFormatAssistant::variantKey] = variant_converter.get_json(QVariant(1.23));
+    object[JsonItemFormatAssistant::variantKey] = JsonVariantConverter::get_json(QVariant(1.23));
     EXPECT_TRUE(assistant.isSessionItemData(object));
 
     // invalid json object which can't represent DataRole
@@ -63,8 +63,8 @@ TEST_F(JsonItemFormatAssistantTest, isValidDataRole)
     // another invalid json object
     QJsonObject object3;
     object3[JsonItemFormatAssistant::roleKey] = 42;
-    object3[JsonItemFormatAssistant::variantKey] = variant_converter.get_json(QVariant(1.23));
-    object3["abc"] = variant_converter.get_json(QVariant::fromValue(std::string("xxx")));
+    object3[JsonItemFormatAssistant::variantKey] = JsonVariantConverter::get_json(QVariant(1.23));
+    object3["abc"] = JsonVariantConverter::get_json(QVariant::fromValue(std::string("xxx")));
     EXPECT_FALSE(assistant.isSessionItemData(object3));
 }
 

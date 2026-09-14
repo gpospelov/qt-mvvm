@@ -11,6 +11,7 @@
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/signals/itemmapper.h"
 #include <QColor>
+#include <string>
 
 using namespace ModelView;
 

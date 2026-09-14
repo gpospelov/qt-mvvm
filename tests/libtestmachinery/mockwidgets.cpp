@@ -13,6 +13,7 @@
 #include "mvvm/model/tagrow.h"
 #include "mvvm/signals/itemmapper.h"
 #include "mvvm/signals/modelmapper.h"
+#include <string>
 
 // ----------------------------------------------------------------------------
 
@@ -40,39 +41,39 @@ void MockWidgetForItem::setItem(ModelView::SessionItem* item)
     if (!m_item)
         return;
 
-    auto on_item_destroy = [this](ModelView::SessionItem* item) {
+    auto on_item_destroy = [this](ModelView::SessionItem* item_) {
         m_item = nullptr;
-        onItemDestroy(item);
+        onItemDestroy(item_);
     };
     m_item->mapper()->setOnItemDestroy(on_item_destroy, this);
 
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
-        onDataChange(item, role);
+    auto on_data_change = [this](ModelView::SessionItem* item_, int role_) {
+        onDataChange(item_, role_);
     };
     m_item->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_property_change = [this](ModelView::SessionItem* item, std::string name) {
-        onPropertyChange(item, name);
+    auto on_property_change = [this](ModelView::SessionItem* item_, std::string name_) {
+        onPropertyChange(item_, name_);
     };
     m_item->mapper()->setOnPropertyChange(on_property_change, this);
 
-    auto on_child_property_change = [this](ModelView::SessionItem* item, std::string name) {
-        onChildPropertyChange(item, name);
+    auto on_child_property_change = [this](ModelView::SessionItem* item_, std::string name_) {
+        onChildPropertyChange(item_, name_);
     };
     m_item->mapper()->setOnChildPropertyChange(on_child_property_change, this);
 
-    auto on_item_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onItemInserted(item, tagrow);
+    auto on_item_inserted = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onItemInserted(item_, tagrow_);
     };
     m_item->mapper()->setOnItemInserted(on_item_inserted, this);
 
-    auto on_item_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onItemRemoved(item, tagrow);
+    auto on_item_removed = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onItemRemoved(item_, tagrow_);
     };
     m_item->mapper()->setOnItemRemoved(on_item_removed, this);
 
-    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onAboutToRemoveItem(item, tagrow);
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onAboutToRemoveItem(item_, tagrow_);
     };
     m_item->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 }
@@ -103,37 +104,37 @@ void MockWidgetForModel::setModel(ModelView::SessionModel* model)
     if (!m_model)
         return;
 
-    auto on_data_change = [this](ModelView::SessionItem* item, int role) {
-        onDataChange(item, role);
+    auto on_data_change = [this](ModelView::SessionItem* item_, int role_) {
+        onDataChange(item_, role_);
     };
     m_model->mapper()->setOnDataChange(on_data_change, this);
 
-    auto on_item_inserted = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onItemInserted(item, tagrow);
+    auto on_item_inserted = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onItemInserted(item_, tagrow_);
     };
     m_model->mapper()->setOnItemInserted(on_item_inserted, this);
 
-    auto on_item_removed = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onItemRemoved(item, tagrow);
+    auto on_item_removed = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onItemRemoved(item_, tagrow_);
     };
     m_model->mapper()->setOnItemRemoved(on_item_removed, this);
 
-    auto on_about_to_remove_item = [this](ModelView::SessionItem* item, ModelView::TagRow tagrow) {
-        onAboutToRemoveItem(item, tagrow);
+    auto on_about_to_remove_item = [this](ModelView::SessionItem* item_, ModelView::TagRow tagrow_) {
+        onAboutToRemoveItem(item_, tagrow_);
     };
     m_model->mapper()->setOnAboutToRemoveItem(on_about_to_remove_item, this);
 
-    auto on_model_destroyed = [this](ModelView::SessionModel* model) {
+    auto on_model_destroyed = [this](ModelView::SessionModel* model_) {
         m_model = nullptr;
-        onModelDestroyed(model);
+        onModelDestroyed(model_);
     };
     m_model->mapper()->setOnModelDestroyed(on_model_destroyed, this);
 
-    auto on_model_about_reset = [this](ModelView::SessionModel* model) {
-        onModelAboutToBeReset(model);
+    auto on_model_about_reset = [this](ModelView::SessionModel* model_) {
+        onModelAboutToBeReset(model_);
     };
     m_model->mapper()->setOnModelAboutToBeReset(on_model_about_reset, this);
 
-    auto on_model_reset = [this](ModelView::SessionModel* model) { onModelReset(model); };
+    auto on_model_reset = [this](ModelView::SessionModel* model_) { onModelReset(model_); };
     m_model->mapper()->setOnModelReset(on_model_reset, this);
 }

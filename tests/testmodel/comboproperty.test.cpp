@@ -12,6 +12,8 @@
 #include "google_test.h"
 #include "mvvm/model/comparators.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

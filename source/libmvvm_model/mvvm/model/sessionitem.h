@@ -18,6 +18,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <string>
 
 namespace ModelView {
 
@@ -32,14 +33,14 @@ class SessionItemTags;
 
 class MVVM_MODEL_EXPORT SessionItem {
 public:
-    explicit SessionItem(model_type modelType = Constants::BaseType);
+    explicit SessionItem(std::string modelType = Constants::BaseType);
     virtual ~SessionItem();
     SessionItem(const SessionItem&) = delete;
     SessionItem& operator=(const SessionItem&) = delete;
 
     // basic item properties
 
-    model_type modelType() const;
+    std::string modelType() const;
 
     std::string identifier() const;
 

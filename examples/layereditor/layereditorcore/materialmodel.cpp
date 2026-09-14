@@ -13,6 +13,9 @@
 #include "mvvm/standarditems/containeritem.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include <QColor>
+#include <memory>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

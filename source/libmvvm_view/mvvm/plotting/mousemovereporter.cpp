@@ -11,17 +11,19 @@
 #include "mvvm/plotting/mouseposinfo.h"
 #include <qcustomplot.h>
 #include <QMouseEvent>
+#include <memory>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 
 struct MouseMoveReporter::MouseMoveReporterImpl {
-    MouseMoveReporter* reporter{nullptr};
-    QCustomPlot* custom_plot{nullptr};
-    callback_t callback;
+    MouseMoveReporter* const m_reporter{nullptr};
+    QCustomPlot* const m_custom_plot{nullptr};
+    const callback_t m_callback;
     MouseMoveReporterImpl(MouseMoveReporter* reporter, QCustomPlot* custom_plot,
                           callback_t callback)
-        : reporter(reporter), custom_plot(custom_plot), callback(std::move(callback))
+        : m_reporter(reporter), m_custom_plot(custom_plot), m_callback(std::move(callback))
     {
         if (!custom_plot)
             throw std::runtime_error("MouseMoveReporter: not initialized custom plot.");
@@ -35,21 +37,21 @@ struct MouseMoveReporter::MouseMoveReporterImpl {
         auto on_mouse_move = [this](QMouseEvent* event) {
             double x = pixelToXaxisCoord(event->pos().x());
             double y = pixelToYaxisCoord(event->pos().y());
-            if (callback)
-                callback({x, y, axesRangeContains(x, y)});
+            if (m_callback)
+                m_callback({x, y, axesRangeContains(x, y)});
         };
 
-        QObject::connect(custom_plot, &QCustomPlot::mouseMove, on_mouse_move);
+        QObject::connect(m_custom_plot, &QCustomPlot::mouseMove, on_mouse_move);
     }
 
-    double pixelToXaxisCoord(double pixel) const { return custom_plot->xAxis->pixelToCoord(pixel); }
+    double pixelToXaxisCoord(double pixel) const { return m_custom_plot->m_xAxis->pixelToCoord(pixel); }
 
-    double pixelToYaxisCoord(double pixel) const { return custom_plot->yAxis->pixelToCoord(pixel); }
+    double pixelToYaxisCoord(double pixel) const { return m_custom_plot->m_yAxis->pixelToCoord(pixel); }
 
     bool axesRangeContains(double xpos, double ypos) const
     {
-        return custom_plot->xAxis->range().contains(xpos)
-               && custom_plot->yAxis->range().contains(ypos);
+        return m_custom_plot->m_xAxis->range().contains(xpos)
+               && m_custom_plot->m_yAxis->range().contains(ypos);
     }
 };
 

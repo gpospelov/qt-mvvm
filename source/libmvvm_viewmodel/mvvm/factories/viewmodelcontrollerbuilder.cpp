@@ -11,7 +11,9 @@
 #include "mvvm/interfaces/childrenstrategyinterface.h"
 #include "mvvm/interfaces/rowstrategyinterface.h"
 #include "mvvm/viewmodel/viewmodelcontroller.h"
+#include <memory>
 #include <stdexcept>
+#include <utility>
 
 namespace ModelView {
 

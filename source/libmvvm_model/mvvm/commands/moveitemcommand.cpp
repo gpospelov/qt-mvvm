@@ -8,11 +8,15 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/moveitemcommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/model/itemutils.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -28,7 +32,7 @@ struct MoveItemCommand::MoveItemCommandImpl {
     TagRow original_tagrow;
     MoveItemCommandImpl(TagRow tagrow) : target_tagrow(std::move(tagrow))
     {
-        if (target_tagrow.row < 0)
+        if (target_tagrow.m_row < 0)
             throw std::runtime_error("MoveItemCommand() -> Error. Uninitialized target row");
     }
 };
@@ -45,14 +49,14 @@ MoveItemCommand::MoveItemCommand(SessionItem* item, SessionItem* new_parent, Tag
     p_impl->original_parent_path = pathFromItem(item->parent());
     p_impl->original_tagrow = item->tagRow();
 
-    if (Utils::IsSinglePropertyTag(*item->parent(), p_impl->original_tagrow.tag))
+    if (Utils::IsSinglePropertyTag(*item->parent(), p_impl->original_tagrow.m_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
-    if (Utils::IsSinglePropertyTag(*new_parent, p_impl->target_tagrow.tag))
+    if (Utils::IsSinglePropertyTag(*new_parent, p_impl->target_tagrow.m_tag))
         throw std::runtime_error("MoveItemCommand::MoveItemCommand() -> Single property tag.");
 
     if (item->parent() == new_parent) {
-        if (p_impl->target_tagrow.row >= new_parent->itemCount(p_impl->target_tagrow.tag))
+        if (p_impl->target_tagrow.m_row >= new_parent->itemCount(p_impl->target_tagrow.m_tag))
             throw std::runtime_error(
                 "MoveCommand::MoveCommand() -> move index exceeds number of items in a tag");
     }
@@ -116,7 +120,7 @@ void check_input_data(const SessionItem* item, const SessionItem* parent)
 std::string generate_description(const TagRow& tagrow)
 {
     std::ostringstream ostr;
-    ostr << "Move item to tag '" << tagrow.tag << "', row:" << tagrow.row;
+    ostr << "Move item to tag '" << tagrow.m_tag << "', row:" << tagrow.m_row;
     return ostr.str();
 }
 } // namespace

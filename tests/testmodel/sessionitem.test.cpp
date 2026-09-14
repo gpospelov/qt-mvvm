@@ -16,9 +16,11 @@
 #include "mvvm/model/sessionitemdata.h"
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/taginfo.h"
-#include "mvvm/model/variant_constants.h"
 #include <memory>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 
@@ -88,14 +90,14 @@ TEST_F(SessionItemTest, setDataAndImplicitConversion)
         SessionItem item;
         const int role = ItemDataRole::DATA;
         EXPECT_TRUE(item.setData(43.0, ItemDataRole::DATA));
-        EXPECT_EQ(item.data<QVariant>(role).typeName(), Constants::double_type_name);
+        EXPECT_STREQ(item.data<QVariant>(role).typeName(), QMetaType::fromType<double>().name());
     }
 
     {
         SessionItem item;
         const int role = ItemDataRole::DATA;
         EXPECT_TRUE(item.setData(43, ItemDataRole::DATA));
-        EXPECT_EQ(item.data<QVariant>(role).typeName(), Constants::int_type_name);
+        EXPECT_STREQ(item.data<QVariant>(role).typeName(), QMetaType::fromType<int>().name());
     }
 }
 
@@ -121,7 +123,7 @@ TEST_F(SessionItemTest, setDoubleData)
     SessionItem item;
     const double expected = 42.0;
     EXPECT_TRUE(item.setData(expected));
-    EXPECT_EQ(item.data<double>(), expected);
+    EXPECT_DOUBLE_EQ(item.data<double>(), expected);
 }
 
 TEST_F(SessionItemTest, setIntData)
@@ -165,7 +167,7 @@ TEST_F(SessionItemTest, displayName)
     // checking setter
     item.setDisplayName("width");
     EXPECT_EQ(item.displayName(), "width");
-    EXPECT_EQ(item.data<double>(), 42.0);
+    EXPECT_DOUBLE_EQ(item.data<double>(), 42.0);
 }
 
 //! Attempt to set the different Variant to already existing role.
@@ -547,14 +549,14 @@ TEST_F(SessionItemTest, tag)
     auto child_t1_b = parent->insertItem({tag1, -1});
     auto child_t2_b = parent->insertItem({tag2, 1}); // between child_t2_a and child_t2_c
 
-    EXPECT_EQ(child_t1_a->tagRow().tag, "tag1");
-    EXPECT_EQ(child_t1_b->tagRow().tag, "tag1");
-    EXPECT_EQ(child_t2_a->tagRow().tag, "tag2");
-    EXPECT_EQ(child_t2_b->tagRow().tag, "tag2");
-    EXPECT_EQ(child_t2_c->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t1_a->tagRow().m_tag, "tag1");
+    EXPECT_EQ(child_t1_b->tagRow().m_tag, "tag1");
+    EXPECT_EQ(child_t2_a->tagRow().m_tag, "tag2");
+    EXPECT_EQ(child_t2_b->tagRow().m_tag, "tag2");
+    EXPECT_EQ(child_t2_c->tagRow().m_tag, "tag2");
 
     SessionItem parentless_item;
-    EXPECT_EQ(parentless_item.tagRow().tag, "");
+    EXPECT_EQ(parentless_item.tagRow().m_tag, "");
 }
 
 //! Checks row of item in its tag
@@ -576,17 +578,17 @@ TEST_F(SessionItemTest, tagRow)
     auto child_t1_b = parent->insertItem({tag1, -1}); // 1
     auto child_t2_b = parent->insertItem({tag2, 1});  // 1 between child_t2_a and child_t2_c
 
-    EXPECT_EQ(child_t1_a->tagRow().row, 0);
-    EXPECT_EQ(child_t1_b->tagRow().row, 1);
-    EXPECT_EQ(child_t2_a->tagRow().row, 0);
-    EXPECT_EQ(child_t2_b->tagRow().row, 1);
-    EXPECT_EQ(child_t2_c->tagRow().row, 2);
+    EXPECT_EQ(child_t1_a->tagRow().m_row, 0);
+    EXPECT_EQ(child_t1_b->tagRow().m_row, 1);
+    EXPECT_EQ(child_t2_a->tagRow().m_row, 0);
+    EXPECT_EQ(child_t2_b->tagRow().m_row, 1);
+    EXPECT_EQ(child_t2_c->tagRow().m_row, 2);
 
-    EXPECT_EQ(child_t1_a->tagRow().tag, "tag1");
-    EXPECT_EQ(child_t1_b->tagRow().tag, "tag1");
-    EXPECT_EQ(child_t2_a->tagRow().tag, "tag2");
-    EXPECT_EQ(child_t2_b->tagRow().tag, "tag2");
-    EXPECT_EQ(child_t2_c->tagRow().tag, "tag2");
+    EXPECT_EQ(child_t1_a->tagRow().m_tag, "tag1");
+    EXPECT_EQ(child_t1_b->tagRow().m_tag, "tag1");
+    EXPECT_EQ(child_t2_a->tagRow().m_tag, "tag2");
+    EXPECT_EQ(child_t2_b->tagRow().m_tag, "tag2");
+    EXPECT_EQ(child_t2_c->tagRow().m_tag, "tag2");
 }
 
 //! Checks row of item in its tag
@@ -608,17 +610,17 @@ TEST_F(SessionItemTest, tagRowOfItem)
     auto child_t1_b = parent->insertItem({tag1, -1}); // 1
     auto child_t2_b = parent->insertItem({tag2, 1});  // 1 between child_t2_a and child_t2_c
 
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).row, 0);
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).row, 1);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).row, 0);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).row, 1);
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).row, 2);
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).m_row, 0);
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).m_row, 1);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).m_row, 0);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).m_row, 1);
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).m_row, 2);
 
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).tag, "tag1");
-    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).tag, "tag1");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).tag, "tag2");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).tag, "tag2");
-    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).tag, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_a).m_tag, "tag1");
+    EXPECT_EQ(parent->tagRowOfItem(child_t1_b).m_tag, "tag1");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_a).m_tag, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_b).m_tag, "tag2");
+    EXPECT_EQ(parent->tagRowOfItem(child_t2_c).m_tag, "tag2");
 }
 
 //! Checks item appearance (enabled/disabled and editable/readonly).

@@ -12,6 +12,7 @@
 
 #include "mvvm/interfaces/celldecoratorinterface.h"
 #include <optional>
+#include <string>
 
 namespace ModelView {
 

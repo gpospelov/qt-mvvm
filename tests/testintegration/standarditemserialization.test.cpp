@@ -8,9 +8,11 @@
 // ************************************************************************** //
 
 #include "google_test.h"
-#include <QJsonObject>
 #include "mvvm/model/modelutils.h"
+#include "mvvm/standarditems/colormapitem.h"
 #include "mvvm/standarditems/standarditemincludes.h"
+#include <QJsonObject>
+#include <vector>
 
 using namespace ModelView;
 
@@ -41,6 +43,8 @@ TEST_F(StandardItemsSerializationTest, allItems)
     model.insertItem<TextItem>();
     model.insertItem<VectorItem>();
     model.insertItem<ViewportAxisItem>();
+
+    EXPECT_EQ(model.rootItem()->childrenCount(), 17);
 
     auto modelCopy = Utils::CreateCopy(model);
     EXPECT_EQ(model.rootItem()->childrenCount(), modelCopy->rootItem()->childrenCount());

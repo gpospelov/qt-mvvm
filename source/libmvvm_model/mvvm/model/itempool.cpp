@@ -9,7 +9,9 @@
 
 #include "mvvm/model/itempool.h"
 #include "mvvm/core/uniqueidgenerator.h"
+#include <cstddef>
 #include <stdexcept>
+#include <utility>
 
 using namespace ModelView;
 
@@ -20,7 +22,7 @@ size_t ItemPool::size() const
     return m_key_to_item.size();
 }
 
-identifier_type ItemPool::register_item(SessionItem* item, identifier_type key)
+std::string ItemPool::register_item(SessionItem* item, std::string key)
 
 {
     if (m_item_to_key.find(item) != m_item_to_key.end())
@@ -56,7 +58,7 @@ void ItemPool::unregister_item(SessionItem* item)
     m_key_to_item.erase(it2);
 }
 
-identifier_type ItemPool::key_for_item(const SessionItem* item) const
+std::string ItemPool::key_for_item(const SessionItem* item) const
 {
     const auto it = m_item_to_key.find(item);
     if (it != m_item_to_key.end())
@@ -65,7 +67,7 @@ identifier_type ItemPool::key_for_item(const SessionItem* item) const
     return {};
 }
 
-SessionItem* ItemPool::item_for_key(const identifier_type& key) const
+SessionItem* ItemPool::item_for_key(const std::string& key) const
 {
     auto it = m_key_to_item.find(key);
     if (it != m_key_to_item.end())

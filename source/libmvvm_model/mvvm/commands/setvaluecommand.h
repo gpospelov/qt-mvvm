@@ -12,6 +12,7 @@
 
 #include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/core/variant.h"
+#include <memory>
 
 namespace ModelView {
 

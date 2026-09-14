@@ -12,10 +12,13 @@
 #include "google_test.h"
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/externalproperty.h"
-#include "mvvm/model/variant_constants.h"
 #include <QColor>
+#include <QHash>
+#include <cstddef>
 #include <functional>
-#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 
@@ -31,68 +34,10 @@ public:
 
 TEST_F(CustomVariantsTest, VariantFromTemplateArgument)
 {
-    EXPECT_EQ(variantFromArgument(true).typeName(), Constants::bool_type_name);
-    EXPECT_EQ(variantFromArgument(1).typeName(), Constants::int_type_name);
-    EXPECT_EQ(variantFromArgument(42.0).typeName(), Constants::double_type_name);
-    EXPECT_EQ(variantFromArgument(std::string("abc")).typeName(), Constants::string_type_name);
-}
-
-//! Variant compatibility.
-
-TEST_F(CustomVariantsTest, VariantName)
-{
-    const std::vector<double> vec{1, 2};
-    const ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
-    EXPECT_EQ(Utils::VariantName(QVariant()), Constants::invalid_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(true)), Constants::bool_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(1)), Constants::int_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(42.0)), Constants::double_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(std::string("string"))),
-              Constants::string_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(vec)), Constants::vector_double_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(combo)), Constants::comboproperty_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(QColor(Qt::red))),
-              Constants::qcolor_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(ExternalProperty())),
-              Constants::extproperty_type_name);
-    EXPECT_EQ(Utils::VariantName(QVariant::fromValue(RealLimits())),
-              Constants::reallimits_type_name);
-}
-
-//! Variant compatibility.
-
-TEST_F(CustomVariantsTest, CompatibleVariantTypes)
-{
-    QVariant undefined;
-    QVariant bool_variant = QVariant::fromValue(true);
-    QVariant int_variant = QVariant::fromValue(1);
-    QVariant double_variant = QVariant::fromValue(42.0);
-    QVariant string_variant = QVariant::fromValue(std::string("string"));
-    std::vector<double> vec{1, 2};
-    QVariant vector_variant = QVariant::fromValue(vec);
-    ComboProperty combo = ComboProperty::createFrom({"a1", "a2", "s3"});
-    QVariant combo_variant = QVariant::fromValue(combo);
-    QVariant color_variant = QVariant::fromValue(QColor(Qt::red));
-    QVariant extprop_variant = QVariant::fromValue(ExternalProperty());
-    QVariant limits_variant = QVariant::fromValue(RealLimits());
-
-    std::vector<QVariant> variants = {bool_variant,   int_variant,     double_variant,
-                                      string_variant, vector_variant,  combo_variant,
-                                      color_variant,  extprop_variant, limits_variant};
-    for (size_t i = 0; i < variants.size(); ++i) {
-        EXPECT_TRUE(Utils::CompatibleVariantTypes(undefined, variants[i]));
-        EXPECT_FALSE(Utils::VariantType(undefined) == Utils::VariantType(variants[i]));
-        for (size_t j = 0; j < variants.size(); ++j) {
-            if (i == j) {
-                EXPECT_TRUE(Utils::VariantType(variants[i]) == Utils::VariantType(variants[j]));
-                EXPECT_TRUE(Utils::CompatibleVariantTypes(variants[i], variants[j]));
-            }
-            else {
-                EXPECT_FALSE(Utils::CompatibleVariantTypes(variants[i], variants[j]));
-                EXPECT_FALSE(Utils::VariantType(variants[i]) == Utils::VariantType(variants[j]));
-            }
-        }
-    }
+    EXPECT_EQ(variantFromArgument(true).userType(), QMetaType::fromType<bool>().id());
+    EXPECT_EQ(variantFromArgument(1).userType(), QMetaType::fromType<int>().id());
+    EXPECT_EQ(variantFromArgument(42.0).userType(), QMetaType::fromType<double>().id());
+    EXPECT_EQ(variantFromArgument(std::string("abc")).userType(), QMetaType::fromType<std::string>().id());
 }
 
 //! Test variant equality reported by SessionItemUtils::isTheSame
@@ -220,7 +165,8 @@ TEST_F(CustomVariantsTest, isVariantType)
         {QVariant::fromValue(std::vector<double>({1, 2})), Utils::IsDoubleVectorVariant},
         {QVariant::fromValue(QColor(Qt::red)), Utils::IsColorVariant},
         {QVariant::fromValue(ExternalProperty()), Utils::IsExtPropertyVariant},
-        {QVariant::fromValue(RealLimits()), Utils::IsRealLimitsVariant}};
+        {QVariant::fromValue(RealLimits()), Utils::IsRealLimitsVariant}
+    };
 
     for (size_t i = 0; i < data.size(); ++i) {
         auto is_variant_func = data[i].second;

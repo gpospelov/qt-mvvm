@@ -12,6 +12,7 @@
 #include "graphwidget.h"
 #include <QCoreApplication>
 #include <QSettings>
+#include <memory>
 
 namespace {
 const QString main_window_group = "MainWindow";

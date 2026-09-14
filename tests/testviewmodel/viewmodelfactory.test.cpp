@@ -15,6 +15,7 @@
 #include "mvvm/viewmodel/labeldatarowstrategy.h"
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include <memory>
 
 using namespace ModelView;
 

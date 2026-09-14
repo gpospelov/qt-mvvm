@@ -13,6 +13,7 @@
 #include "mvvm/editors/externalpropertycomboeditor.h"
 #include "mvvm/model/externalproperty.h"
 #include <QModelIndex>
+#include <memory>
 
 using namespace ModelView;
 

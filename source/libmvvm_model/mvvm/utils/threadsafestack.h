@@ -13,11 +13,10 @@
 #include "mvvm/model_export.h"
 #include <atomic>
 #include <condition_variable>
+#include <exception>
 #include <memory>
 #include <mutex>
 #include <stack>
-#include <stdexcept>
-#include <thread>
 
 //! @file threadsafestack.h
 //! @brief Thread-safe stack borrowed from Anthony Williams, C++ Concurrency in Action, Second

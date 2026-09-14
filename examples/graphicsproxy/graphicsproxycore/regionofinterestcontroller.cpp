@@ -11,6 +11,7 @@
 #include "regionofinterestitem.h"
 #include "regionofinterestview.h"
 #include "mvvm/plotting/sceneadapterinterface.h"
+#include <memory>
 
 using namespace ModelView;
 

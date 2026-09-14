@@ -16,7 +16,6 @@
 #include "mvvm/model_export.h"
 #include <functional>
 #include <memory>
-#include <vector>
 
 class QJsonObject;
 

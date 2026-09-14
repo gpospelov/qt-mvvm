@@ -11,6 +11,9 @@
 #define MVVM_EDITORS_SCIENTIFICSPINBOXEDITOR_H
 
 #include "mvvm/editors/customeditor.h"
+#include "mvvm/viewmodel_export.h"
+#include <QObject>
+#include <QWidget>
 
 namespace ModelView {
 
@@ -28,7 +31,10 @@ public:
     void setDecimals(int decimals);
     void setSingleStep(double step);
 
-    bool is_persistent() const override;
+    [[nodiscard]] bool is_persistent() const override
+    {
+      return true;
+    }
 
 private slots:
     void onEditingFinished();

@@ -9,6 +9,7 @@
 
 #include "mvvm/factories/projectmanagerfactory.h"
 #include "mvvm/project/projectmanagerdecorator.h"
+#include <memory>
 
 namespace ModelView {
 std::unique_ptr<ProjectManagerInterface>

@@ -11,6 +11,8 @@
 #define MVVM_STANDARDITEMS_COLORMAPVIEWPORTITEM_H
 
 #include "mvvm/standarditems/viewportitem.h"
+#include <string>
+#include <utility>
 
 namespace ModelView {
 

@@ -15,6 +15,7 @@
 #include "sceneutils.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <memory>
 
 namespace {
 const int round_par = 5;

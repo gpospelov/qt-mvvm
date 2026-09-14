@@ -12,8 +12,8 @@
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include <QColor>
-#include <memory>
 #include <stdexcept>
+#include <string>
 
 using namespace ModelView;
 

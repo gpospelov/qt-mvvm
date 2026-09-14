@@ -8,9 +8,16 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/insertnewitemcommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
+#include "mvvm/model/function_types.h"
+#include "mvvm/model/mvvm_types.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <QVariant>
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -19,12 +26,12 @@ std::string generate_description(const std::string& modelType, const TagRow& tag
 } // namespace
 
 struct InsertNewItemCommand::InsertNewItemCommandImpl {
-    item_factory_func_t factory_func;
-    TagRow tagrow;
-    Path item_path;
-    std::string initial_identifier;
+    item_factory_func_t m_factory_func;
+    TagRow m_tagrow;
+    Path m_item_path;
+    std::string m_initial_identifier;
     InsertNewItemCommandImpl(item_factory_func_t func, TagRow tagrow)
-        : factory_func(std::move(func)), tagrow(std::move(tagrow))
+        : m_factory_func(std::move(func)), m_tagrow(std::move(tagrow))
     {
     }
 };
@@ -34,32 +41,32 @@ InsertNewItemCommand::InsertNewItemCommand(item_factory_func_t func, SessionItem
     : AbstractItemCommand(parent), p_impl(std::make_unique<InsertNewItemCommandImpl>(func, tagrow))
 {
     setResult(nullptr);
-    p_impl->item_path = pathFromItem(parent);
+    p_impl->m_item_path = pathFromItem(parent);
 }
 
 InsertNewItemCommand::~InsertNewItemCommand() = default;
 
 void InsertNewItemCommand::undo_command()
 {
-    auto parent = itemFromPath(p_impl->item_path);
-    auto item = parent->takeItem(p_impl->tagrow);
+    auto parent = itemFromPath(p_impl->m_item_path);
+    auto item = parent->takeItem(p_impl->m_tagrow);
     // saving identifier for later redo
-    if (p_impl->initial_identifier.empty())
-        p_impl->initial_identifier = item->identifier();
+    if (p_impl->m_initial_identifier.empty())
+        p_impl->m_initial_identifier = item->identifier();
     setResult(nullptr);
 }
 
 void InsertNewItemCommand::execute_command()
 {
-    auto parent = itemFromPath(p_impl->item_path);
-    auto child = p_impl->factory_func().release();
+    auto parent = itemFromPath(p_impl->m_item_path);
+    auto child = p_impl->m_factory_func().release();
     // here we restore original identifier to get exactly same item on consequitive undo/redo
-    if (!p_impl->initial_identifier.empty())
-        child->setData(QVariant::fromValue(p_impl->initial_identifier), ItemDataRole::IDENTIFIER,
+    if (!p_impl->m_initial_identifier.empty())
+        child->setData(QVariant::fromValue(p_impl->m_initial_identifier), ItemDataRole::IDENTIFIER,
                        /*direct*/ true);
 
-    setDescription(generate_description(child->modelType(), p_impl->tagrow));
-    if (parent->insertItem(child, p_impl->tagrow)) {
+    setDescription(generate_description(child->modelType(), p_impl->m_tagrow));
+    if (parent->insertItem(child, p_impl->m_tagrow)) {
         setResult(child);
     }
     else {
@@ -72,7 +79,7 @@ namespace {
 std::string generate_description(const std::string& modelType, const TagRow& tagrow)
 {
     std::ostringstream ostr;
-    ostr << "New item type '" << modelType << "' tag:'" << tagrow.tag << "', row:" << tagrow.row;
+    ostr << "New item type '" << modelType << "' tag:'" << tagrow.m_tag << "', row:" << tagrow.m_row;
     return ostr.str();
 }
 } // namespace

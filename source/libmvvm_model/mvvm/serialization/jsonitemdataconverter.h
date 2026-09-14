@@ -18,16 +18,16 @@ class QJsonObject;
 
 namespace ModelView {
 
-class JsonVariantConverterInterface;
-
 //! Default converter of SessionItemData to/from json object.
 
 class MVVM_MODEL_EXPORT JsonItemDataConverter : public JsonItemDataConverterInterface {
 public:
     using accept_strategy_t = std::function<bool(int)>;
 
-    JsonItemDataConverter(accept_strategy_t to_json_accept = {},
-                          accept_strategy_t from_json_accept = {});
+    JsonItemDataConverter(accept_strategy_t to_json_accept = {}, accept_strategy_t from_json_accept = {})
+        : m_to_json_accept(to_json_accept), m_from_json_accept(from_json_accept)
+    {
+    }
 
     ~JsonItemDataConverter() override;
 
@@ -45,7 +45,6 @@ private:
 
     accept_strategy_t m_to_json_accept;   //!< callback to find whether to write role to json
     accept_strategy_t m_from_json_accept; //!< callback to find whether to read role from json
-    std::unique_ptr<JsonVariantConverterInterface> m_variant_converter;
 };
 
 } // namespace ModelView

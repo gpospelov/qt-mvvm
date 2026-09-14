@@ -12,6 +12,8 @@
 #include "google_test.h"
 #include "mvvm/model/sessionitem.h"
 #include <complex>
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

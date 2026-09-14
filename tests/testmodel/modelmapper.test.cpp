@@ -15,6 +15,7 @@
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/tagrow.h"
+#include <memory>
 
 using namespace ModelView;
 using ::testing::_;

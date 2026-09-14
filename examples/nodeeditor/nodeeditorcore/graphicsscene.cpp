@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QGraphicsSceneDragDropEvent>
 #include <QMimeData>
+#include <stdexcept>
 
 namespace {
 const double scene_origin_x{0.0};

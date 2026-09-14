@@ -13,7 +13,7 @@
 
 using namespace ModelView;
 
-ViewportItem::ViewportItem(const ModelView::model_type& model) : CompoundItem(model) {}
+ViewportItem::ViewportItem(const std::string& model) : CompoundItem(model) {}
 
 ViewportAxisItem* ViewportItem::xAxis() const
 {

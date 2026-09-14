@@ -11,7 +11,12 @@
 #include "mvvm/model/comboproperty.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/utils/containerutils.h"
+#include <algorithm>
+#include <iterator>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace ModelView;
 
@@ -29,7 +34,7 @@ std::vector<std::string> modelTypes(const std::vector<SessionItem*>& items)
 
 GroupItem::~GroupItem() = default;
 
-GroupItem::GroupItem(model_type modelType) : SessionItem(std::move(modelType)), m_index_to_select(0)
+GroupItem::GroupItem(std::string modelType) : SessionItem(std::move(modelType)), m_index_to_select(0)
 {
     registerTag(TagInfo::universalTag(T_GROUP_ITEMS), /*set_as_default*/ true);
     setData(ComboProperty());

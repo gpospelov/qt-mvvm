@@ -13,6 +13,7 @@
 #include "mvvm/viewmodel/propertytableviewmodel.h"
 #include "mvvm/viewmodel/propertyviewmodel.h"
 #include "mvvm/viewmodel/topitemsviewmodel.h"
+#include <memory>
 
 using namespace ModelView;
 

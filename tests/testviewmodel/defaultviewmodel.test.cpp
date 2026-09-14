@@ -10,9 +10,8 @@
 #include "mvvm/viewmodel/defaultviewmodel.h"
 
 #include "folderbasedtest.h"
-#include "google_test.h"
-#include "test_utils.h"
 #include "mvvm/model/compounditem.h"
+#include "mvvm/model/propertyitem.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/serialization/jsondocument.h"
 #include "mvvm/serialization/jsonitem_types.h"
@@ -24,8 +23,17 @@
 #include "mvvm/standarditems/graphviewportitem.h"
 #include "mvvm/standarditems/vectoritem.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include "test_utils.h"
+#include <Qt>
 #include <QJsonObject>
+#include <QList>
 #include <QSignalSpy>
+#include <QString>
+#include <QVector>
+#include <gtest/gtest.h>
+#include <memory>
+#include <stdexcept>
+#include <vector>
 
 using namespace ModelView;
 
@@ -642,7 +650,6 @@ TEST_F(DefaultViewModelTest, horizontalLabels)
 
 TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
 {
-    JsonModelConverter converter(ConverterMode::project);
     QJsonObject object;
 
     // preparing jsob object
@@ -664,7 +671,8 @@ TEST_F(DefaultViewModelTest, jsonConverterLoadModel)
     QSignalSpy spyRemove(&viewmodel, &DefaultViewModel::rowsRemoved);
     QSignalSpy spyAboutReset(&viewmodel, &DefaultViewModel::modelAboutToBeReset);
     QSignalSpy spyReset(&viewmodel, &DefaultViewModel::modelReset);
-
+    
+    JsonModelConverter converter(ConverterMode::project);
     converter.from_json(object, model);
 
     EXPECT_EQ(spyInsert.count(), 1); // FIXME shouldn't it be '0'?

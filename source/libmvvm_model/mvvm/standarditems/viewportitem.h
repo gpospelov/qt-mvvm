@@ -11,6 +11,8 @@
 #define MVVM_STANDARDITEMS_VIEWPORTITEM_H
 
 #include "mvvm/model/compounditem.h"
+#include <string>
+#include <utility>
 
 namespace ModelView {
 
@@ -25,7 +27,7 @@ public:
     static inline const std::string P_YAXIS = "P_YAXIS";
     static inline const std::string T_ITEMS = "T_ITEMS";
 
-    ViewportItem(const model_type& model);
+    ViewportItem(const std::string& model);
 
     ViewportAxisItem* xAxis() const;
 

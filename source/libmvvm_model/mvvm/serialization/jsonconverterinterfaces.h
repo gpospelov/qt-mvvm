@@ -14,6 +14,5 @@
 #include "mvvm/serialization/jsonitemdataconverterinterface.h"
 #include "mvvm/serialization/jsonmodelconverterinterface.h"
 #include "mvvm/serialization/jsontaginfoconverterinterface.h"
-#include "mvvm/serialization/jsonvariantconverterinterface.h"
 
 #endif // MVVM_SERIALIZATION_JSONCONVERTERINTERFACES_H

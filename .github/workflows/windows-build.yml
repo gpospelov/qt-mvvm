@@ -1,50 +1,47 @@
 name: Windows
 
-env:
-  CCACHE_VERSION: 3.7.7
-  NINJA_VERSION: 1.10.0
+# https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  # `actions:write` permission is required to delete caches
+  # See also: https://docs.github.com/en/rest/actions/cache?apiVersion=2022-11-28#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+  actions: write
+  contents: read
 
 on:
-  push:
-    branches: [ master, develop ]    
+  workflow_dispatch:
   pull_request:
+  push:
     branches: [ master, develop ]
 
 jobs:
+
   build:
+
     runs-on: windows-latest
     strategy:
       max-parallel: 3
 
+    env:
+      CCACHE_CACHE_KEY: ${{ github.workflow }}-ccache
+
     steps:
-    - uses: actions/checkout@v6.0.2
 
-    - name: Download ccache and Ninja
+    - name: Checkout code
+      uses: actions/checkout@v6.0.2
+
+    - name: Install ccache
       id: ccache
+      env:
+        CCACHE_VERSION: 4.13.6
       shell: cmake -P {0}
       run: |
-        set(ccache_url "https://github.com/cristianadam/ccache/releases/download/v$ENV{CCACHE_VERSION}/${{ runner.os }}.tar.xz")
-        file(DOWNLOAD "${ccache_url}" ./ccache.tar.xz SHOW_PROGRESS)
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ccache.tar.xz)
-        
-        set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v$ENV{NINJA_VERSION}/ninja-win.zip")
-        file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
-
-    - name: ccache timestamp
-      id: ccache_cache_timestamp
-      shell: cmake -P {0}
-      run: |
-        string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
-        message("::set-output name=timestamp::${current_date}")
-        
-    - name: ccache files 
-      uses: actions/cache@v5.0.5
-      with:
-        path: .ccache
-        key: qtmvvm-win-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
-        restore-keys: |
-          qtmvvm-win-ccache-
+        set(ccache_url "https://github.com/ccache/ccache/releases/download/v$ENV{CCACHE_VERSION}/ccache-$ENV{CCACHE_VERSION}-windows-x86_64.zip")
+        file(DOWNLOAD "${ccache_url}" ./ccache.zip SHOW_PROGRESS)
+        execute_process(COMMAND 7z e ccache.zip -aoa -bb3 -r ccache.exe)
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
@@ -60,7 +57,23 @@ jobs:
         cache: 'true'
         cache-key-prefix: 'install-qt-action'
 
-    - name: build
+    - name: Find VS path
+      shell: cmd
+      run: |
+        dir ${{github.workspace}}\Qt
+        dir ${{github.workspace}}\Qt\6.10.3\msvc2022_64
+        for /F "delims=" %%G IN ('vswhere -latest -property installationPath') DO set "_VSInstallationPath=%%G"
+        echo Visual Studio found at: %_VSInstallationPath%
+        >> %GITHUB_ENV% echo VSInstallationPath="%_VSInstallationPath%"
+
+    - name: Restore the ccache
+      id: restore-ccache
+      uses: actions/cache/restore@v5
+      with:
+        key: ${{ env.CCACHE_CACHE_KEY }}
+        path: ${{ github.workspace }}/.ccache
+
+    - name: Build
       shell: cmd
       env:
         CCACHE_BASEDIR: $GITHUB_WORKSPACE
@@ -68,33 +81,60 @@ jobs:
         CCACHE_COMPRESS: "true"
         CCACHE_COMPRESSLEVEL: "6"
         CCACHE_MAXSIZE: "1000M"
+        QT_QPA_PLATFORM: offscreen
       run: |
-        call "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+        call "%VSInstallationPath:"=%\VC\Auxiliary\Build\vcvars64.bat"
         set QTDIR=${{github.workspace}}\Qt\6.10.3\msvc2022_64
-        set PATH=${{github.workspace}};%QTDIR%\bin;%PATH%
-        cd ${{github.workspace}}
-        dir
-        mkdir build
-        cd build
-        cmake -G "Visual Studio 17 2022" -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe" ..
-        ccache -z
-        ccache -p
+        echo QTDIR=%QTDIR%
+        set PATH=%PATH%;%QTDIR%;%QTDIR%\bin;${{github.workspace}}
+        mkdir ${{github.workspace}}\build
+        cd ${{github.workspace}}\build
+        cmake -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_BUILD_TYPE=Release -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded" -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe" ..
         cmake --build . --config Release -j4
-        
-    - name: ctest
-      if: success()
-      shell: cmd
-      run: |
-        echo %QTDIR%
-        set PATH=%QTDIR%\bin;%PATH%
-        echo %PATH%
-        cd ${{github.workspace}}\build
-        ccache -s
-        ctest --output-on-failure
 
-    - name: ctest output
-      if: failure()
+    - name: Delete the previously saved ccache
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+      if: steps.restore-ccache.outputs.cache-hit == 'true'
+      run: |
+        $caches = gh cache list --key ${{ env.CCACHE_CACHE_KEY }} --ref ${{ github.ref }} --json id,ref,key | ConvertFrom-Json
+        if ($caches.count -ne 0)
+        {
+          echo "Deleting saved ccache keys..."
+          gh cache delete ${{ env.CCACHE_CACHE_KEY }} --ref ${{ github.ref }}
+        }
+        else
+        {
+          echo "No saved ccache keys for deleting."
+        }
+
+    - name: Save the ccache
+      if: always()
+      uses: actions/cache/save@v5
+      with:
+        key: ${{ env.CCACHE_CACHE_KEY }}
+        path: ${{ github.workspace }}/.ccache
+
+    - name: Test
+      env:
+        QT_QPA_PLATFORM: offscreen
       shell: cmd
       run: |
+        call "%VSInstallationPath:"=%\VC\Auxiliary\Build\vcvars64.bat"
+        set QTDIR=${{github.workspace}}\Qt\6.10.3\msvc2022_64
+        set PATH=%PATH%;%QTDIR%;%QTDIR%\bin;${{github.workspace}}
         cd ${{github.workspace}}\build
-        type Testing\Temporary\LastTest.log
+        echo Running tests...
+        ctest -j --quiet --output-on-failure
+        echo Testing finished.
+
+    - name: Upload test logs
+      uses: actions/upload-artifact@v7
+      if: failure()
+      with:
+        name: TestReport.log
+        path: ./build/Testing/Temporary/LastTest.log
+        retention-days: ${{ case(github.retention_days < 7, github.retention_days, 7) }}
+        overwrite: true

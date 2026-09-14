@@ -10,6 +10,8 @@
 #include "connectableitem.h"
 #include "mvvm/model/modelutils.h"
 #include <QColor>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 

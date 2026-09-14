@@ -11,6 +11,9 @@
 #define MVVM_EDITORS_INTEGEREDITOR_H
 
 #include "mvvm/editors/customeditor.h"
+#include "mvvm/viewmodel_export.h"
+#include <QObject>
+#include <QWidget>
 
 class QSpinBox;
 
@@ -25,6 +28,11 @@ public:
     explicit IntegerEditor(QWidget* parent = nullptr);
 
     void setRange(int minimum, int maximum);
+    
+    [[nodiscard]] bool is_persistent() const override
+    {
+      return true;
+    }
 
 private slots:
     void onEditingFinished();

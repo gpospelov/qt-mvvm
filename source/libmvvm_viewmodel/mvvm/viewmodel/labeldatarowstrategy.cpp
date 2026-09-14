@@ -9,6 +9,8 @@
 
 #include "mvvm/viewmodel/labeldatarowstrategy.h"
 #include "mvvm/viewmodel/standardviewitems.h"
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

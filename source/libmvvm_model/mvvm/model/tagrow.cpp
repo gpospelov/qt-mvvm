@@ -8,21 +8,22 @@
 // ************************************************************************** //
 
 #include "mvvm/model/tagrow.h"
+#include <string>
 
-//! Constructs new tagrow representing next row in given tag.
+//! Constructs new tagrow representing next m_row in given m_tag.
 //! No validity check.
 
 ModelView::TagRow ModelView::TagRow::next() const
 {
-    return {tag, row + 1};
+    return {m_tag, m_row + 1};
 }
 
-//! Constructs new tagrow representing previous row in given tag.
+//! Constructs new tagrow representing previous m_row in given m_tag.
 //! No validity check.
 
 ModelView::TagRow ModelView::TagRow::prev() const
 {
-    return {tag, row - 1};
+    return {m_tag, m_row - 1};
 }
 
 //! Returns TagRow corresponding to the append to tag_name.
@@ -43,7 +44,7 @@ ModelView::TagRow ModelView::TagRow::prepend(const std::string& tag_name)
 
 bool ModelView::TagRow::operator==(const ModelView::TagRow& other) const
 {
-    return row == other.row && tag == other.tag;
+    return m_row == other.m_row && m_tag == other.m_tag;
 }
 
 bool ModelView::TagRow::operator!=(const ModelView::TagRow& other) const

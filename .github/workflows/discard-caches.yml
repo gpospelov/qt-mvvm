@@ -1,0 +1,44 @@
+name: DiscardCaches
+
+## Delete caches pertaining to a branch that is getting deleted or a pull request that is getting closed.
+## This avoids leaving dangling caches which will never be used.
+
+permissions:
+  # `actions:write` permission is required to delete caches
+  # See also: https://docs.github.com/en/rest/actions/cache?apiVersion=2022-11-28#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+  actions: write
+  contents: read
+
+on:
+  workflow_dispatch:
+  delete:
+  pull_request:
+    types: [closed]
+
+jobs:
+
+  delete_caches:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Delete Caches
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+      if: ${{ github.event_name == 'delete' }}
+      run: |
+        echo "[delete] Deleting the caches of refs/heads/${{ github.event.ref }} - ${{ github.event.ref_type }}"
+        gh cache delete --ref refs/heads/${{ github.event.ref }} --succeed-on-no-caches --all
+
+    - name: Delete Caches
+      continue-on-error: true
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+      if: ${{ github.event_name == 'pull_request' }}
+      run: |
+        echo "[pull_request] Deleting the caches of refs/pull/${{ github.event.pull_request.number }}/merge"
+        gh cache delete --ref refs/pull/${{ github.event.pull_request.number }}/merge --succeed-on-no-caches --all

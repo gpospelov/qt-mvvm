@@ -10,6 +10,8 @@
 #include "mvvm/model/sessionitemtags.h"
 #include "mvvm/model/sessionitemcontainer.h"
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -63,42 +65,42 @@ int SessionItemTags::itemCount(const std::string& tag_name) const
 
 bool SessionItemTags::canInsertItem(const SessionItem* item, const TagRow &tagrow) const
 {
-    auto tag_container = container(tagrow.tag);
-    // negative row means appending to the vector
-    auto row = tagrow.row < 0 ? tag_container->itemCount() : tagrow.row;
-    return container(tagrow.tag)->canInsertItem(item, row);
+    auto tag_container = container(tagrow.m_tag);
+    // negative m_row means appending to the vector
+    auto row = tagrow.m_row < 0 ? tag_container->itemCount() : tagrow.m_row;
+    return container(tagrow.m_tag)->canInsertItem(item, row);
 }
 
-//! Inserts item in container with given tag name and at given row.
-//! Returns true in the case of success. If tag name is empty, default tag will be used.
+//! Inserts item in container with given m_tag name and at given row.
+//! Returns true in the case of success. If m_tag name is empty, default m_tag will be used.
 
 bool SessionItemTags::insertItem(SessionItem* item, const TagRow& tagrow)
 {
-    auto tag_container = container(tagrow.tag);
-    // negative row means appending to the vector
-    auto row = tagrow.row < 0 ? tag_container->itemCount() : tagrow.row;
-    return container(tagrow.tag)->insertItem(item, row);
+    auto tag_container = container(tagrow.m_tag);
+    // negative m_row means appending to the vector
+    auto row = tagrow.m_row < 0 ? tag_container->itemCount() : tagrow.m_row;
+    return container(tagrow.m_tag)->insertItem(item, row);
 }
 
 //! Returns true if item can be taken.
 
 bool SessionItemTags::canTakeItem(const TagRow& tagrow) const
 {
-    return container(tagrow.tag)->canTakeItem(tagrow.row);
+    return container(tagrow.m_tag)->canTakeItem(tagrow.m_row);
 }
 
-//! Removes item at given row and for given tag, returns it to the user.
+//! Removes item at given m_row and for given m_tag, returns it to the user.
 
 SessionItem* SessionItemTags::takeItem(const TagRow& tagrow)
 {
-    return container(tagrow.tag)->takeItem(tagrow.row);
+    return container(tagrow.m_tag)->takeItem(tagrow.m_row);
 }
 
-//! Returns item at given row of given tag.
+//! Returns item at given m_row of given m_tag.
 
 SessionItem* SessionItemTags::getItem(const TagRow& tagrow) const
 {
-    return container(tagrow.tag)->itemAt(tagrow.row);
+    return container(tagrow.m_tag)->itemAt(tagrow.m_row);
 }
 
 //! Returns vector of items in the container with given name.

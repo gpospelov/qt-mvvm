@@ -18,6 +18,7 @@
 #include <QHeaderView>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <memory>
 
 using namespace ModelView;
 

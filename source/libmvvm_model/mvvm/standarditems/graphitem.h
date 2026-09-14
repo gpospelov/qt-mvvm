@@ -11,6 +11,8 @@
 #define MVVM_STANDARDITEMS_GRAPHITEM_H
 
 #include "mvvm/model/compounditem.h"
+#include <string>
+#include <vector>
 
 namespace ModelView {
 

@@ -10,6 +10,8 @@
 #include "mvvm/project/projectchangecontroller.h"
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/project/modelhaschangedcontroller.h"
+#include <memory>
+#include <vector>
 
 using namespace ModelView;
 

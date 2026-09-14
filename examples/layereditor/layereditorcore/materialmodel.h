@@ -12,6 +12,7 @@
 
 #include "mvvm/model/compounditem.h"
 #include "mvvm/model/sessionmodel.h"
+#include <string>
 #include <vector>
 
 class QColor;

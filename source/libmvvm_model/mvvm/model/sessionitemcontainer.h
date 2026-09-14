@@ -12,6 +12,7 @@
 
 #include "mvvm/model/taginfo.h"
 #include "mvvm/model_export.h"
+#include <string>
 #include <vector>
 
 namespace ModelView {

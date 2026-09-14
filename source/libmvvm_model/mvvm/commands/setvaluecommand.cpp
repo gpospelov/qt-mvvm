@@ -8,10 +8,14 @@
 // ************************************************************************** //
 
 #include "mvvm/commands/setvaluecommand.h"
+#include "mvvm/commands/abstractitemcommand.h"
 #include "mvvm/core/variant.h"
 #include "mvvm/model/path.h"
 #include "mvvm/model/sessionitem.h"
+#include <memory>
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace {
 std::string generate_description(const std::string& str, int role);

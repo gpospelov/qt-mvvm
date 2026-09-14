@@ -10,6 +10,9 @@
 #include "mvvm/standarditems/graphviewportitem.h"
 #include "mvvm/standarditems/graphitem.h"
 #include <algorithm>
+#include <iterator>
+#include <string>
+#include <utility>
 #include <vector>
 
 using namespace ModelView;

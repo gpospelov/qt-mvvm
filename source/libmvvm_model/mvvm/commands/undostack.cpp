@@ -9,6 +9,9 @@
 
 #include "mvvm/commands/undostack.h"
 #include "mvvm/commands/commandadapter.h"
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 

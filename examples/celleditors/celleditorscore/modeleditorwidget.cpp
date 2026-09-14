@@ -16,6 +16,7 @@
 #include <QHeaderView>
 #include <QTableView>
 #include <QTreeView>
+#include <memory>
 
 using namespace ModelView;
 

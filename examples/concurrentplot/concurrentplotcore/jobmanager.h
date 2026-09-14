@@ -13,6 +13,9 @@
 #include "toysimulation.h"
 #include "mvvm/utils/threadsafestack.h"
 #include <QObject>
+#include <atomic>
+#include <thread>
+#include <vector>
 
 //! Handles all thread activity for running job simulation in the background.
 
@@ -37,12 +40,12 @@ public slots:
 private:
     void wait_and_run();
 
-    std::thread sim_thread;
-    ModelView::threadsafe_stack<double> requested_values;
-    ModelView::threadsafe_stack<ToySimulation::Result> simulation_results;
-    std::atomic<bool> is_running;
-    bool interrupt_request{false};
-    int delay{0};
+    std::thread m_sim_thread;
+    ModelView::threadsafe_stack<double> m_requested_values;
+    ModelView::threadsafe_stack<ToySimulation::Result> m_simulation_results;
+    std::atomic<bool> m_is_running;
+    bool m_interrupt_request{false};
+    int m_delay{0};
 };
 
 #endif // CONCURRENTPLOTCORE_JOBMANAGER_H

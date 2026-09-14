@@ -17,6 +17,8 @@
 #include "mvvm/model/sessionmodel.h"
 #include "mvvm/model/taginfo.h"
 #include "mvvm/standarditems/vectoritem.h"
+#include <string>
+#include <vector>
 
 using namespace ModelView;
 
@@ -47,7 +49,7 @@ public:
     {
         std::vector<ChildrenData> result;
         for (auto child : children)
-            result.push_back({child->modelType(), child->tagRow().tag});
+            result.push_back({child->modelType(), child->tagRow().m_tag});
         return result;
     }
 };

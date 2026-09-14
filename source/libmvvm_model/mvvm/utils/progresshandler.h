@@ -11,6 +11,7 @@
 #define MVVM_UTILS_PROGRESSHANDLER_H
 
 #include "mvvm/model_export.h"
+#include <cstddef>
 #include <functional>
 #include <mutex>
 
@@ -40,11 +41,11 @@ public:
     void reset();
 
 private:
-    std::mutex mutex;
-    callback_t runner_callback;
-    size_t max_ticks_count{0};
-    size_t completed_ticks{0};
-    bool interrupt_request{false};
+    std::mutex m_mutex;
+    callback_t m_runner_callback;
+    size_t m_max_ticks_count{0};
+    size_t m_completed_ticks{0};
+    bool m_interrupt_request{false};
 };
 
 } // namespace ModelView

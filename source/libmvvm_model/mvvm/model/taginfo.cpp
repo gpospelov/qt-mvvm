@@ -11,6 +11,9 @@
 #include "mvvm/utils/containerutils.h"
 #include <sstream>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 
 ModelView::TagInfo::TagInfo() : m_min(0), m_max(-1) {}
 

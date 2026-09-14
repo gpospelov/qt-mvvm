@@ -10,6 +10,7 @@
 #include "connectableitemcontroller.h"
 #include "connectableview.h"
 #include "sampleitems.h"
+#include <memory>
 
 using namespace ModelView;
 

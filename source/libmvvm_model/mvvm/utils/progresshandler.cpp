@@ -8,17 +8,20 @@
 // ************************************************************************** //
 
 #include "mvvm/utils/progresshandler.h"
+#include <cstddef>
+#include <mutex>
+#include <utility>
 
 using namespace ModelView;
 
 ProgressHandler::ProgressHandler(ProgressHandler::callback_t callback, size_t max_ticks_count)
-    : runner_callback(std::move(callback)), max_ticks_count(max_ticks_count)
+    : m_runner_callback(std::move(callback)), m_max_ticks_count(max_ticks_count)
 {
 }
 
 void ProgressHandler::subscribe(ProgressHandler::callback_t callback)
 {
-    runner_callback = std::move(callback);
+    m_runner_callback = std::move(callback);
 }
 
 //! Sets expected ticks count, representing progress of a computation.
@@ -26,12 +29,12 @@ void ProgressHandler::subscribe(ProgressHandler::callback_t callback)
 void ProgressHandler::setMaxTicksCount(size_t value)
 {
     reset();
-    max_ticks_count = value;
+    m_max_ticks_count = value;
 }
 
 bool ProgressHandler::has_interrupt_request() const
 {
-    return interrupt_request;
+    return m_interrupt_request;
 }
 
 //! Increment number of completed computation steps. Performs callback to inform
@@ -39,18 +42,18 @@ bool ProgressHandler::has_interrupt_request() const
 
 void ProgressHandler::setCompletedTicks(size_t value)
 {
-    std::unique_lock<std::mutex> lock(mutex);
-    completed_ticks += value;
-    if (completed_ticks > max_ticks_count)
-        max_ticks_count = completed_ticks + 1;
-    int percentage_done = static_cast<int>(100.0 * completed_ticks / max_ticks_count);
-    interrupt_request = runner_callback ? runner_callback(percentage_done) : interrupt_request;
+    std::unique_lock<std::mutex> lock(m_mutex);
+    m_completed_ticks += value;
+    if (m_completed_ticks > m_max_ticks_count)
+        m_max_ticks_count = m_completed_ticks + 1;
+    int percentage_done = static_cast<int>(100.0 * m_completed_ticks / m_max_ticks_count);
+    m_interrupt_request = m_runner_callback ? m_runner_callback(percentage_done) : m_interrupt_request;
 }
 
 //! Resets progress.
 
 void ProgressHandler::reset()
 {
-    interrupt_request = false;
-    completed_ticks = 0;
+    m_interrupt_request = false;
+    m_completed_ticks = 0;
 }

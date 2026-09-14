@@ -10,10 +10,18 @@
 #include "mvvm/editors/defaulteditorfactory.h"
 #include "mvvm/editors/customeditor.h"
 #include "mvvm/editors/editor_constants.h"
+#include "mvvm/editors/editorbuilders.h"
+#include "mvvm/model/comboproperty.h"
 #include "mvvm/model/customvariants.h"
+#include "mvvm/model/externalproperty.h"
 #include "mvvm/model/sessionitem.h"
-#include "mvvm/model/variant_constants.h"
 #include "mvvm/viewmodel/viewmodel.h"
+#include <QColor>
+#include <QModelIndex>
+#include <Qt>
+#include <memory>
+#include <string>
+#include <utility>
 
 using namespace ModelView;
 
@@ -29,8 +37,7 @@ const SessionItem* itemFromIndex(const QModelIndex& index)
 
 // ----------------------------------------------------------------------------
 
-void AbstractEditorFactory::registerBuilder(const std::string& name,
-                                            EditorBuilders::builder_t builder)
+void AbstractEditorFactory::registerBuilder(const std::string& name, EditorBuilders::builder_t builder)
 {
     m_nameToBuilderMap[name] = std::move(builder);
 }
@@ -48,18 +55,13 @@ RoleDependentEditorFactory::RoleDependentEditorFactory()
     // registering set of builders for given editor types
     registerBuilder(Constants::BoolEditorType, EditorBuilders::BoolEditorBuilder());
     registerBuilder(Constants::ColorEditorType, EditorBuilders::ColorEditorBuilder());
-    registerBuilder(Constants::ComboPropertyEditorType,
-                    EditorBuilders::ComboPropertyEditorBuilder());
+    registerBuilder(Constants::ComboPropertyEditorType, EditorBuilders::ComboPropertyEditorBuilder());
     registerBuilder(Constants::DoubleEditorType, EditorBuilders::DoubleEditorBuilder());
-    registerBuilder(Constants::ExternalPropertyEditorType,
-                    EditorBuilders::ExternalPropertyEditorBuilder());
+    registerBuilder(Constants::ExternalPropertyEditorType, EditorBuilders::ExternalPropertyEditorBuilder());
     registerBuilder(Constants::IntegerEditorType, EditorBuilders::IntegerEditorBuilder());
-    registerBuilder(Constants::ScientficDoubleEditorType,
-                    EditorBuilders::ScientificDoubleEditorBuilder());
-    registerBuilder(Constants::ScientficSpinBoxEditorType,
-                    EditorBuilders::ScientificSpinBoxEditorBuilder());
-    registerBuilder(Constants::SelectableComboPropertyEditorType,
-                    EditorBuilders::SelectableComboPropertyEditorBuilder());
+    registerBuilder(Constants::ScientficDoubleEditorType, EditorBuilders::ScientificDoubleEditorBuilder());
+    registerBuilder(Constants::ScientficSpinBoxEditorType, EditorBuilders::ScientificSpinBoxEditorBuilder());
+    registerBuilder(Constants::SelectableComboPropertyEditorType, EditorBuilders::SelectableComboPropertyEditorBuilder());
 }
 
 //! Creates cell editor basing on item role. It is expected that the index belongs to a ViewModel.
@@ -85,24 +87,24 @@ RoleDependentEditorFactory::createItemEditor(const SessionItem* item) const
 VariantDependentEditorFactory::VariantDependentEditorFactory()
 {
     // registering set of builders for given variant names
-    registerBuilder(Constants::bool_type_name, EditorBuilders::BoolEditorBuilder());
-    registerBuilder(Constants::int_type_name, EditorBuilders::IntegerEditorBuilder());
-    registerBuilder(Constants::double_type_name, EditorBuilders::ScientificSpinBoxEditorBuilder());
-    registerBuilder(Constants::qcolor_type_name, EditorBuilders::ColorEditorBuilder());
-    registerBuilder(Constants::comboproperty_type_name,
-                    EditorBuilders::ComboPropertyEditorBuilder());
-    registerBuilder(Constants::extproperty_type_name,
-                    EditorBuilders::ExternalPropertyEditorBuilder());
+    registerBuilder(QMetaType::fromType<bool>().name(), EditorBuilders::BoolEditorBuilder());
+    registerBuilder(QMetaType::fromType<int>().name(), EditorBuilders::IntegerEditorBuilder());
+    registerBuilder(QMetaType::fromType<double>().name(), EditorBuilders::ScientificSpinBoxEditorBuilder());
+    registerBuilder(QMetaType::fromType<QColor>().name(), EditorBuilders::ColorEditorBuilder());
+    registerBuilder(QMetaType::fromType<ModelView::ComboProperty>().name(), EditorBuilders::ComboPropertyEditorBuilder());
+    registerBuilder(QMetaType::fromType<ModelView::ExternalProperty>().name(), EditorBuilders::ExternalPropertyEditorBuilder());
 }
 
 //! Creates cell editor basing on variant name.
 
-std::unique_ptr<CustomEditor>
-VariantDependentEditorFactory::createEditor(const QModelIndex& index) const
+std::unique_ptr<CustomEditor> VariantDependentEditorFactory::createEditor(const QModelIndex& index) const
 {
-    auto item = itemFromIndex(index);
-    auto value = item ? item->data<QVariant>() : index.data(Qt::EditRole);
-    auto builder = findBuilder(Utils::VariantName(value));
+    const SessionItem *const item = itemFromIndex(index);
+
+    const QVariant value = (item != nullptr) ? item->data<QVariant>() : index.data(Qt::EditRole);
+    if (!value.isValid()) return std::unique_ptr<CustomEditor>();
+
+    const EditorBuilders::builder_t builder = findBuilder(value.typeName());
     return builder ? builder(item) : std::unique_ptr<CustomEditor>();
 }
 

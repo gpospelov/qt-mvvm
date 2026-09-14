@@ -15,6 +15,8 @@
 #include "mvvm/viewmodel/standardchildrenstrategies.h"
 #include "mvvm/viewmodel/viewmodelbase.h"
 #include "mvvm/viewmodel/viewmodelcontroller.h"
+#include <memory>
+#include <stdexcept>
 
 using namespace ModelView;
 

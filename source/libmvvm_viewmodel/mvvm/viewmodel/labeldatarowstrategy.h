@@ -11,6 +11,8 @@
 #define MVVM_VIEWMODEL_LABELDATAROWSTRATEGY_H
 
 #include "mvvm/interfaces/rowstrategyinterface.h"
+#include <memory>
+#include <vector>
 
 namespace ModelView {
 

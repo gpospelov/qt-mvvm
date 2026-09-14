@@ -15,6 +15,8 @@
 #include "mvvm/model/externalproperty.h"
 #include <QModelIndex>
 #include <QStyleOptionViewItem>
+#include <optional>
+#include <string>
 
 using namespace ModelView;
 
